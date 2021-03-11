@@ -8,27 +8,9 @@
                 <li class="body">
                     <ul class="menu app_sortcut list-unstyled">
                         <li>
-                            <a href="{{route('pages.gallery')}}">
-                                <div class="icon-circle mb-2 bg-blue"><i class="zmdi zmdi-camera"></i></div>
-                                <p class="mb-0">Photos</p>
-                            </a>
-                        </li>
-                        <li>
                             <a href="javascript:void(0);">
                                 <div class="icon-circle mb-2 bg-amber"><i class="zmdi zmdi-translate"></i></div>
                                 <p class="mb-0">Translate</p>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="{{route('app.calendar')}}">
-                                <div class="icon-circle mb-2 bg-green"><i class="zmdi zmdi-calendar"></i></div>
-                                <p class="mb-0">Calendar</p>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="{{route('app.contact-list')}}">
-                                <div class="icon-circle mb-2 bg-purple"><i class="zmdi zmdi-account-calendar"></i></div>
-                                <p class="mb-0">Contacts</p>
                             </a>
                         </li>
                         <li>
@@ -211,6 +193,6 @@
         <li><a href="javascript:void(0);" class="app_google_drive" title="Google Drive"><i class="zmdi zmdi-google-drive"></i></a></li>
         <li><a href="javascript:void(0);" class="app_group_work" title="Group Work"><i class="zmdi zmdi-group-work"></i></a></li>
         <li><a href="javascript:void(0);" class="js-right-sidebar" title="Setting"><i class="zmdi zmdi-settings zmdi-hc-spin"></i></a></li>
-        <li><a href="{{route('authentication.login')}}" class="mega-menu" title="Sign Out"><i class="zmdi zmdi-power"></i></a></li>
+        <li><a href="#" class="mega-menu" title="Sign Out"><i class="zmdi zmdi-power"></i></a></li>
     </ul>
 </div>
