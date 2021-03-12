@@ -38,7 +38,7 @@ class OfficersController extends Controller
     public function store(Request $request)
     {
         $this->validate($request,[
-            'username' => 'required|min:5',
+            'username' => 'required|min:5|unique:petugas_nioni',
             'officerName' => 'required|min:3',
             'role' => 'required',
         ]);

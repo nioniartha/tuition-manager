@@ -5,28 +5,46 @@
 <link rel="stylesheet" href="{{asset('assets/plugins/jquery-datatable/dataTables.bootstrap4.min.css')}}"/>
 @stop
 @section('content')
-<!-- Basic Examples -->
-<div class="row clearfix">
-    @if(count($errors) > 0) 
-        <div class="alert alert-danger">
-            <ul>
-                @foreach($errors->all() as $error)
-                    <li>{{$error}}</li>
-                @endforeach
-            </ul>
-        </div>
-    @endif
 
-    @if(session('success'))
-        <div class="alert alert-success" role="alert">
-            {{session('success')}}
+@if(count($errors) > 0)
+@foreach($errors->all() as $error) 
+<div class="alert alert-danger" role="alert">
+    <div class="container">
+            <div class="alert-icon">
+                <i class="zmdi zmdi-block"></i>
+            </div>
+            <strong>Oh snap!</strong> {{$error}}
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">
+                    <i class="zmdi zmdi-close"></i>
+                </span>
+            </button>
+    </div>
+</div>
+@endforeach
+@endif
+
+@if(session('success'))
+    <div class="alert alert-success" role="alert">
+        <div class="container">
+            <div class="alert-icon">
+                <i class="zmdi zmdi-thumb-up"></i>
+            </div>
+            <strong>Well done!</strong>  {{session('success')}}
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">
+                    <i class="zmdi zmdi-close"></i>
+                </span>
+            </button>
         </div>
-    @endif
+    </div>
+@endif
+
+
+
+<div class="row clearfix">
     <div class="col-lg-12">
         <div class="card">
-            <div class="header">
-                <h2><strong>Basic</strong> Examples </h2>
-            </div>
             <div class="body">
                 <button type="button" class="btn btn-primary float-right btn-sm" data-toggle="modal" data-target="#exampleModal">
                     Add Officer
@@ -62,7 +80,7 @@
 
                                         @method('DELETE')
 
-                                        <button type="submit" class="btn btn-danger btn-block">Delete</button>
+                                        <button type="submit" class="btn btn-danger btn-block" onclick="return confirm('Are you sure?')">Delete</button>
                                     </form>
                                 </td>
                             </tr>
@@ -94,22 +112,23 @@
                                     <div class="body">
                                         <form id="form_validation" action="officers" method="post" enctype="multipart/form-data">
                                             {{csrf_field()}}
-                                            <div class="form-group form-float {{$errors->has('username') ? ' has-danger' : ''}}">
+                                            <div class="form-group form-float {{$errors->has('username') ? 'has-danger' : ''}}">
                                                 <input type="text" class="form-control" placeholder="Username" name="username" required value="{{old('username')}}">
-                                            </div>
+                                            </div>                                  
+                                                     
                                             <div class="form-group form-float">
-                                                <input type="text" class="form-control" placeholder="Officer Name" name="officerName" required>
+                                                <input type="text" class="form-control" placeholder="Officer Name" name="officerName" required value="{{old('officerName')}}" >
                                             </div>
                                             <div class="form-group form-float">
                                             <p class="text-danger"> * Default password : password</p>
                                             </div>
                                             <div class="form-group">
                                                 <div class="radio inlineblock m-r-20">
-                                                    <input type="radio" name="role" id="admin" class="with-gap" value="admin">
+                                                    <input type="radio" name="role" id="admin" class="with-gap" value="admin" {{(old('role') == 'admin') ? 'checked' : ''}}>
                                                     <label for="admin">Admin</label>
                                                 </div>                                
                                                 <div class="radio inlineblock">
-                                                    <input type="radio" name="role" id="officer" class="with-gap" value="officer" checked="">
+                                                    <input type="radio" name="role" id="officer" class="with-gap" value="officer" {{(old('role') == 'officer') ? 'checked' : ''}}>
                                                     <label for="officer">Officer</label>
                                                 </div>
                                             </div>
