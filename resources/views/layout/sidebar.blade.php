@@ -20,6 +20,7 @@
                 <a href="#Module" class="menu-toggle"><i class="zmdi zmdi-apps"></i> <span>Modules</span></a>
                 <ul class="ml-menu">
                     <li class="{{ Request::segment(2) === 'officers' ? 'active' : null }}"><a href="{{route('officers.index')}}">Officers</a></li>
+                    <li class="{{ Request::segment(2) === 'vocational' ? 'active' : null }}"><a href="{{route('vocational.index')}}">Vocational</a></li>
                 </ul>
             </li>
         </ul>
