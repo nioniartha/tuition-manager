@@ -11,4 +11,9 @@ class Vocational extends Model
     protected $fillable = [
         'jurusan'
     ];
+
+    public function kelas()
+    {
+        return $this->hasMany(Kelas::class);
+    }
 }

@@ -1,5 +1,5 @@
 @extends('layout.master')
-@section('title', 'Officers')
+@section('title', 'Tuition')
 @section('parentPageTitle', 'Modules')
 @section('page-style')
 <link rel="stylesheet" href="{{asset('assets/plugins/jquery-datatable/dataTables.bootstrap4.min.css')}}"/>
@@ -53,7 +53,6 @@
                     <table id="officersDataTables" class="table table-bordered table-striped table-hover js-basic-example dataTable">
                         <thead> 
                             <tr>
-                                <th>No</th>
                                 <th>Username</th>
                                 <th>Officer Name</th>
                                 <th>Level</th>
@@ -62,7 +61,6 @@
                         </thead>
                         <tfoot>
                             <tr>
-                                <th>No</th>
                                 <th>Username</th>
                                 <th>Officer Name</th>
                                 <th>Level</th>
@@ -70,10 +68,8 @@
                             </tr>
                         </tfoot>
                         <tbody>
-                        <?php $i = 1; ?>
                         @foreach($officers_nioni as $officer_nioni)
                             <tr>
-                                <td>{{ $i }}</td>
                                 <td>{{ $officer_nioni->username}}</td>
                                 <td>{{ $officer_nioni->nama_petugas}}</td>
                                 <td>{{ $officer_nioni->level}}</td>
@@ -88,7 +84,6 @@
                                     </form>
                                 </td>
                             </tr>
-                        <?php $i++; ?>
                         @endforeach
                         </tbody>
                     </table>
@@ -125,7 +120,7 @@
                                                 <input type="text" class="form-control" placeholder="Officer Name" name="officerName" required value="{{old('officerName')}}" >
                                             </div>
                                             <div class="form-group form-float">
-                                                <p class="text-danger"> * Default password : password</p>
+                                            <p class="text-danger"> * Default password : password</p>
                                             </div>
                                             <div class="form-group">
                                                 <div class="radio inlineblock m-r-20">

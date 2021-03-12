@@ -53,19 +53,23 @@
                     <table id="vocationalDataTables" class="table table-bordered table-striped table-hover js-basic-example dataTable">
                         <thead> 
                             <tr>
+                                <th>No</th>
                                 <th>Vocational</th>
                                 <th>Action</th>
                             </tr>
                         </thead>
                         <tfoot>
                             <tr>
+                                <th>No</th>
                                 <th>Vocational</th>
                                 <th>Action</th>
                             </tr>
                         </tfoot>
                         <tbody>
+                        <?php $i = 1; ?>
                         @foreach($vocationals_nioni as $vocational_nioni)
                             <tr>
+                                <td>{{ $i }}</td>
                                 <td>{{ $vocational_nioni->jurusan}}</td>
                                 <td>
                                     <a href="vocational/{{ $vocational_nioni->id_jurusan}}/edit" class="btn btn-warning btn-block">Edit</a>
@@ -78,6 +82,7 @@
                                     </form>
                                 </td>
                             </tr>
+                        <?php $i++; ?>
                         @endforeach
                         </tbody>
                     </table>
