@@ -24,4 +24,6 @@ Route::get('module', function () { return redirect('module/officers'); });
 Route::resource('module/officers', 'OfficersController');
 Route::resource('module/vocational', 'VocationalController');
 Route::resource('module/class', 'KelasController');
+Route::resource('module/tuition', 'TuitionController');
+Route::resource('module/students', 'StudentsController');
 

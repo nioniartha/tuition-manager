@@ -115,7 +115,7 @@
                             <div class="col-lg-12 col-md-12 col-sm-12">
                                 <div class="card">
                                     <div class="body">
-                                        <form id="form_validation" action="officers" method="post" enctype="multipart/form-data">
+                                        <form id="form_validation" action="officers" method="post" enctype="multipart/form-data" novalidate="novalidate">
                                             {{csrf_field()}}
                                             <div class="form-group form-float {{$errors->has('username') ? 'has-danger' : ''}}">
                                                 <input type="text" class="form-control" placeholder="Username" name="username" required value="{{old('username')}}">

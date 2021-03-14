@@ -22,6 +22,8 @@
                     <li class="{{ Request::segment(2) === 'officers' ? 'active' : null }}"><a href="{{route('officers.index')}}">Officers</a></li>
                     <li class="{{ Request::segment(2) === 'vocational' ? 'active' : null }}"><a href="{{route('vocational.index')}}">Vocational</a></li>
                     <li class="{{ Request::segment(2) === 'class' ? 'active' : null }}"><a href="{{route('class.index')}}">Class</a></li>
+                    <li class="{{ Request::segment(2) === 'tuition' ? 'active' : null }}"><a href="{{route('tuition.index')}}">Tuition</a></li>
+                    <li class="{{ Request::segment(2) === 'students' ? 'active' : null }}"><a href="{{route('students.index')}}">Students</a></li>
                 </ul>
             </li>
         </ul>

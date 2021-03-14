@@ -17,4 +17,8 @@ class Kelas extends Model
     {
         return $this->belongsTo(Vocational::class);
     }
+    public function students()
+    {
+        return $this->hasMany(Students::class);
+    }
 }

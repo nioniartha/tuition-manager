@@ -3,10 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Kelas;
-use App\Vocational;
+use App\Tuition;
 
-class KelasController extends Controller
+class TuitionController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -15,14 +14,9 @@ class KelasController extends Controller
      */
     public function index()
     {
-        $class_nioni = Kelas::all();
-        $vocational_nioni = Vocational::pluck('jurusan', 'id_jurusan');
+        $tuition_nioni = Tuition::all();
 
-        return view ('kelas.kelas')
-                ->with('class_nioni',$class_nioni)
-                ->with('vocational_nioni', $vocational_nioni);
-        // return response()->json(['name' => $class_nioni]);
-
+        return view ('tuition.tuition')->with('tuitions_nioni',$tuition_nioni);
     }
 
     /**
@@ -32,7 +26,7 @@ class KelasController extends Controller
      */
     public function create()
     {
-        
+        //
     }
 
     /**
@@ -43,17 +37,7 @@ class KelasController extends Controller
      */
     public function store(Request $request)
     {
-        $this->validate($request,[
-            'kelas' => 'required',
-            'vocational_id_jurusan' => 'required'
-        ]);
-        // insert
-        $class_nioni = new Kelas;
-        $class_nioni->kelas = $request->kelas;
-        $class_nioni->vocational_id_jurusan = $request->vocational_id_jurusan;
-        $class_nioni->save();
-
-        return redirect('/module/class')->with('success', 'New class have been added successfully');
+        //
     }
 
     /**
@@ -75,12 +59,8 @@ class KelasController extends Controller
      */
     public function edit($id)
     {
-        $class_nioni = Kelas::find($id);
-        $vocational_nioni = Vocational::pluck('jurusan', 'id_jurusan');
-
-        return view ('kelas.kelas_edit')
-                ->with('class_nioni',$class_nioni)
-                ->with('vocational_nioni', $vocational_nioni);
+        $tuition_nioni = Tuition::find($id);
+        return view ('tuition.tuition_edit')->with('tuitions_nioni',$tuition_nioni);
     }
 
     /**
@@ -103,8 +83,8 @@ class KelasController extends Controller
      */
     public function destroy($id)
     {
-        $class_nioni = Kelas::find($id);
-        $class_nioni->delete();
-        return redirect('/module/class')->with('success', 'Class Deleted');
+        $tuition_nioni = Tuition::find($id);
+        $tuition_nioni->delete();
+        return redirect('/module/tuition')->with('success', 'Tuition Deleted');
     }
 }

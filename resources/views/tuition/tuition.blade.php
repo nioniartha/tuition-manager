@@ -3,6 +3,8 @@
 @section('parentPageTitle', 'Modules')
 @section('page-style')
 <link rel="stylesheet" href="{{asset('assets/plugins/jquery-datatable/dataTables.bootstrap4.min.css')}}"/>
+<link rel="stylesheet" href="{{asset('assets/plugins/bootstrap-material-datetimepicker/css/bootstrap-material-datetimepicker.css')}}"/>
+<link rel="stylesheet" href="{{asset('assets/plugins/bootstrap-select/css/bootstrap-select.css')}}"/>
 @stop
 @section('content')
 
@@ -47,35 +49,32 @@
         <div class="card">
             <div class="body">
                 <button type="button" class="btn btn-primary float-right btn-sm" data-toggle="modal" data-target="#exampleModal">
-                    Add Officer
+                    Add Tuition
                 </button>  
                 <div class="table-responsive">
-                    <table id="officersDataTables" class="table table-bordered table-striped table-hover js-basic-example dataTable">
+                    <table id="tuitionDataTables" class="table table-bordered table-striped table-hover js-basic-example dataTable">
                         <thead> 
                             <tr>
-                                <th>Username</th>
-                                <th>Officer Name</th>
-                                <th>Level</th>
+                                <th>School Year</th>
+                                <th>Nominal</th>
                                 <th>Action</th>
                             </tr>
                         </thead>
                         <tfoot>
                             <tr>
-                                <th>Username</th>
-                                <th>Officer Name</th>
-                                <th>Level</th>
+                                <th>School Year</th>
+                                <th>Nominal</th>
                                 <th>Action</th>
                             </tr>
                         </tfoot>
                         <tbody>
-                        @foreach($officers_nioni as $officer_nioni)
+                        @foreach($tuitions_nioni as $tuition_nioni)
                             <tr>
-                                <td>{{ $officer_nioni->username}}</td>
-                                <td>{{ $officer_nioni->nama_petugas}}</td>
-                                <td>{{ $officer_nioni->level}}</td>
+                                <td>{{ $tuition_nioni->tahun}}</td>
+                                <td>{{ $tuition_nioni->nominal}}</td>
                                 <td>
-                                    <a href="officers/{{ $officer_nioni->id_petugas}}/edit" class="btn btn-warning btn-block">Edit</a>
-                                    <form action="{{ action('OfficersController@destroy', $officer_nioni->id_petugas) }}" method="POST">
+                                    <a href="tuition/{{ $tuition_nioni->id_spp}}/edit" class="btn btn-warning btn-block">Edit</a>
+                                    <form action="{{ action('TuitionController@destroy', $tuition_nioni->id_spp) }}" method="POST">
                                         @csrf
 
                                         @method('DELETE')
@@ -100,7 +99,7 @@
             <div class="modal-dialog" role="document">
                     <div class="modal-content">
                                 <div class="modal-header">
-                         <h5 class="modal-title" id="exampleModalLabel">Add Officer</h5>
+                         <h5 class="modal-title" id="exampleModalLabel">Add Tuition</h5>
                          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                          <span aria-hidden="true">&times;</span>
                          </button>
@@ -110,32 +109,27 @@
                             <div class="col-lg-12 col-md-12 col-sm-12">
                                 <div class="card">
                                     <div class="body">
-                                        <form id="form_validation" action="officers" method="post" enctype="multipart/form-data">
+                                    <form id="form_validation" action="tuition" method="post" enctype="multipart/form-data">
                                             {{csrf_field()}}
-                                            <div class="form-group form-float {{$errors->has('username') ? 'has-danger' : ''}}">
-                                                <input type="text" class="form-control" placeholder="Username" name="username" required value="{{old('username')}}">
-                                            </div>                                  
-                                                     
-                                            <div class="form-group form-float">
-                                                <input type="text" class="form-control" placeholder="Officer Name" name="officerName" required value="{{old('officerName')}}" >
+                                            
+                                            <div class="form-group form-float {{$errors->has('kelas') ? ' has-danger' : ''}}" >
+                                                <select name="tahun_ajaran" class="form-control ">
+                                                    <option value="">-- Please select year--</option>
+                                                    <option value="">2021 - 2022</option>
+                                                    <option value="">2022 - 2023</option>
+                                                    <option value="">2023 - 2024</option>
+                                                </select>
+                                                @if($errors->has('kelas'))          
+                                                    <span class="help-block"> {{$errors->first('kelas')}}</span>
+                                                @endif
                                             </div>
-                                            <div class="form-group form-float">
-                                            <p class="text-danger"> * Default password : password</p>
-                                            </div>
-                                            <div class="form-group">
-                                                <div class="radio inlineblock m-r-20">
-                                                    <input type="radio" name="role" id="admin" class="with-gap" value="admin" {{(old('role') == 'admin') ? 'checked' : ''}}>
-                                                    <label for="admin">Admin</label>
-                                                </div>                                
-                                                <div class="radio inlineblock">
-                                                    <input type="radio" name="role" id="officer" class="with-gap" value="officer" {{(old('role') == 'officer') ? 'checked' : ''}}>
-                                                    <label for="officer">Officer</label>
-                                                </div>
+                                            <div class="form-group form-float {{$errors->has('vocational') ? 'has-danger' : ''}}">
+                                                <input type="text" class="form-control" placeholder="Nominal" name="nominal" required value="{{old('nominal')}}">
                                             </div>
                                             <div class="modal-footer">
                                                 <button class="btn btn-raised btn-primary waves-effect" type="submit">Submit</button>
                                             </div>
-                                        </form>
+                                    </form>
                                     </div>
                                 </div>
                             </div>
@@ -154,4 +148,7 @@
 <script src="{{asset('assets/plugins/jquery-datatable/buttons/buttons.html5.min.js')}}"></script>
 <script src="{{asset('assets/plugins/jquery-datatable/buttons/buttons.print.min.js')}}"></script>
 <script src="{{asset('assets/js/pages/tables/jquery-datatable.js')}}"></script>
+<script src="{{asset('assets/plugins/momentjs/moment.js')}}"></script>
+<script src="{{asset('assets/plugins/bootstrap-material-datetimepicker/js/bootstrap-material-datetimepicker.js')}}"></script>
+<script src="{{asset('assets/js/pages/forms/basic-form-elements.js')}}"></script>
 @stop
