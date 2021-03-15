@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Students;
+use App\Kelas;
+use App\Tuition;
 
 class StudentsController extends Controller
 {
@@ -14,10 +16,16 @@ class StudentsController extends Controller
      */
     public function index()
     {
-        $students_nioni = Students::all();
+        $students_nioni = Students::with('kelas')->with('tuition')->get();
+        $class_nioni = Kelas::with('vocational')->get();
+        $tuition_nioni = Tuition::all();
 
-        // return response()->json(['name' => $students_nioni]);
-        return view ('students.students')->with('students_nioni',$students_nioni);
+        // return response()->json(['name' => $class_nioni]);
+
+        return view ('students.students')
+                ->with('students_nioni',$students_nioni)
+                ->with('class_nioni', $class_nioni)
+                ->with('tuition_nioni', $tuition_nioni);
     }
 
     /**
@@ -38,7 +46,27 @@ class StudentsController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $this->validate($request,[
+            'nisn' => 'required|unique:siswa_nioni',
+            'nis' => 'required|unique:siswa_nioni',
+            'kelas' => 'required',
+            'fullName' => 'required',
+            'notelp' => 'required|max:13',
+            'address' => 'required',
+            'tuition_id_spp' => 'required'
+        ]);
+
+        $student_nioni = new Students;
+        $student_nioni->nisn = $request->nisn;
+        $student_nioni->nis = $request->nis;
+        $student_nioni->kelas_id_kelas = $request->kelas;
+        $student_nioni->nama = $request->fullName;
+        $student_nioni->no_telp = $request->notelp;
+        $student_nioni->alamat = $request->address;
+        $student_nioni->tuition_id_spp = $request->tuition_id_spp;
+        $student_nioni->save();
+
+        return redirect('/module/students')->with('success', 'New Student have been added successfully');
     }
 
     /**
@@ -60,7 +88,18 @@ class StudentsController extends Controller
      */
     public function edit($id)
     {
-        //
+        $students_nioni = Students::find($id);
+        $class_nioni = Kelas::with('vocational')->get();
+        $tuition_nioni = Tuition::all();
+
+        // dd($students_nioni);
+
+        // return response()->json(['name' => $class_nioni]);
+
+        return view ('students.students_edit')
+                ->with('students_nioni',$students_nioni)
+                ->with('class_nioni', $class_nioni)
+                ->with('tuition_nioni', $tuition_nioni);
     }
 
     /**
@@ -72,7 +111,18 @@ class StudentsController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        // dd($request->kelas);
+        Students::find($id)->update([
+            'nisn' => $request->nisn,
+            'nis' => $request->nis,
+            'nama' => $request->fullName,
+            'no_telp' => $request->notelp,
+            'alamat' => $request->address,
+            'kelas_id_kelas' => $request->kelas,
+            'tuition_id_spp' => $request->tuition_id_spp
+        ]);
+
+        return redirect('/module/students')->with('success', 'New Student have been updated successfully');
     }
 
     /**

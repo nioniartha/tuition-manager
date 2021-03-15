@@ -16,10 +16,10 @@ class CreateKelasNioniTable extends Migration
         Schema::create('kelas_nioni', function (Blueprint $table) {
             $table->increments('id_kelas');
             $table->string('kelas');
-            $table->integer('id_jurusan')->unsigned();
+            $table->integer('vocational_id_jurusan')->unsigned();
             $table->timestamps();
 
-            $table->foreign('id_jurusan')->references('id_jurusan')->on('jurusan_nioni')->onDelete('cascade');
+            $table->foreign('vocational_id_jurusan')->references('id_jurusan')->on('jurusan_nioni')->onDelete('cascade');
         });
     }
 

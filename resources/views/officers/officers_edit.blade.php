@@ -5,13 +5,41 @@
 <link rel="stylesheet" href="{{asset('assets/plugins/jquery-datatable/dataTables.bootstrap4.min.css')}}"/>
 @stop
 @section('content')
+@if(count($errors) > 0)
+@foreach($errors->all() as $error) 
+<div class="alert alert-danger" role="alert">
+    <div class="container">
+            <div class="alert-icon">
+                <i class="zmdi zmdi-block"></i>
+            </div>
+            <strong>Oh snap!</strong> {{$error}}
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">
+                    <i class="zmdi zmdi-close"></i>
+                </span>
+            </button>
+    </div>
+</div>
+@endforeach
+@endif
+
+@if(session('success'))
+    <div class="alert alert-success" role="alert">
+        <div class="container">
+            <div class="alert-icon">
+                <i class="zmdi zmdi-thumb-up"></i>
+            </div>
+            <strong>Well done!</strong>  {{session('success')}}
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">
+                    <i class="zmdi zmdi-close"></i>
+                </span>
+            </button>
+        </div>
+    </div>
+@endif
 <!-- Basic Examples -->
 <div class="row clearfix">
-    @if(session('success'))
-        <div class="alert alert-success" role="alert">
-            {{session('success')}}
-        </div>
-    @endif
     <div class="col-lg-12 col-md-12 col-sm-12">
         <div class="card">
             <div class="body">
@@ -24,13 +52,13 @@
                     <div class="form-group form-float">
                         <input type="text" class="form-control" placeholder="Officer Name" name="nama_petugas" required value="{{ $officer_nioni->nama_petugas}}">
                     </div>
-                    <div class="form-group">
+                    <div class="form-group" required>
                         <div class="radio inlineblock m-r-20">
-                            <input type="radio" name="level" id="admin" class="with-gap" value="admin"  {{ ($officer_nioni->level == "admin")? "checked" : "" }}>
+                            <input type="radio" name="level" id="admin" class="with-gap" value="admin"  {{$officer_nioni->level == 'admin'  ? 'checked' : ''}}>
                             <label for="admin">Admin</label>
                         </div>                                
                         <div class="radio inlineblock">
-                            <input type="radio" name="level" id="officer" class="with-gap" value="officer" {{ ($officer_nioni->level == "officers")? "checked" : "" }} >
+                            <input type="radio" name="level" id="officer" class="with-gap" value="officer" {{$officer_nioni->level == 'officer'  ? 'checked' : ''}} >
                             <label for="officer">Officer</label>
                         </div>
                     </div>

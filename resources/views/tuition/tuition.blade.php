@@ -71,7 +71,7 @@
                         @foreach($tuitions_nioni as $tuition_nioni)
                             <tr>
                                 <td>{{ $tuition_nioni->tahun}}</td>
-                                <td>{{ $tuition_nioni->nominal}}</td>
+                                <td>@currency($tuition_nioni->nominal)</td>
                                 <td>
                                     <a href="tuition/{{ $tuition_nioni->id_spp}}/edit" class="btn btn-warning btn-block">Edit</a>
                                     <form action="{{ action('TuitionController@destroy', $tuition_nioni->id_spp) }}" method="POST">
@@ -113,18 +113,21 @@
                                             {{csrf_field()}}
                                             
                                             <div class="form-group form-float {{$errors->has('kelas') ? ' has-danger' : ''}}" >
-                                                <select name="tahun_ajaran" class="form-control ">
+                                                <select name="tahun" class="form-control ">
                                                     <option value="">-- Please select year--</option>
-                                                    <option value="">2021 - 2022</option>
-                                                    <option value="">2022 - 2023</option>
-                                                    <option value="">2023 - 2024</option>
+                                                    <?php
+                                                        $date2=date('Y', strtotime('+1 Years'));
+                                                        for($i=date('Y'); $i<$date2+5;$i++){
+                                                            echo '<option value='.$i.'-'.($i+1).'>'.$i.'-'.($i+1).'</option>';
+                                                        }
+                                                    ?>
                                                 </select>
                                                 @if($errors->has('kelas'))          
                                                     <span class="help-block"> {{$errors->first('kelas')}}</span>
                                                 @endif
                                             </div>
                                             <div class="form-group form-float {{$errors->has('vocational') ? 'has-danger' : ''}}">
-                                                <input type="text" class="form-control" placeholder="Nominal" name="nominal" required value="{{old('nominal')}}">
+                                                <input type="number" class="form-control" id="nominal" placeholder="Nominal" name="nominal" required value="{{old('nominal')}}">
                                             </div>
                                             <div class="modal-footer">
                                                 <button class="btn btn-raised btn-primary waves-effect" type="submit">Submit</button>
@@ -140,6 +143,12 @@
 
 @stop
 @section('page-script')
+<script type="text/javascript">
+    $(document).ready(function(){
+        $('#nominal').mask('0.000.000.000.000.000', {reverse: true});
+    });       
+</script>
+
 <script src="{{asset('assets/bundles/datatablescripts.bundle.js')}}"></script>
 <script src="{{asset('assets/plugins/jquery-datatable/buttons/dataTables.buttons.min.js')}}"></script>
 <script src="{{asset('assets/plugins/jquery-datatable/buttons/buttons.bootstrap4.min.js')}}"></script>
@@ -151,4 +160,5 @@
 <script src="{{asset('assets/plugins/momentjs/moment.js')}}"></script>
 <script src="{{asset('assets/plugins/bootstrap-material-datetimepicker/js/bootstrap-material-datetimepicker.js')}}"></script>
 <script src="{{asset('assets/js/pages/forms/basic-form-elements.js')}}"></script>
+<script src="https://cdn.rawgit.com/igorescobar/jQuery-Mask-Plugin/1ef022ab/dist/jquery.mask.min.js"></script>
 @stop

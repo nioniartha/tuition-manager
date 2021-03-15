@@ -88,14 +88,11 @@ class OfficersController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $this->validate($request,[
-            'username' => 'required',
-            'nama_petugas' => 'required',
-            'level' => 'required',
+        Officers::find($id)->update([
+            'username' => $request->username,
+            'nama_petugas' => $request->nama_petugas,
+            'level' => $request->level,
         ]);
-
-        $officers_nioni = Officers::find($id);
-        $officers_nioni->update($request->all());
 
         return redirect('/module/officers')->with('success', 'Officer updated');
 

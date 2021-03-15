@@ -20,12 +20,12 @@ class CreateSiswaNioniTable extends Migration
             $table->string('nama');
             $table->string('no_telp', 13);
             $table->text('alamat');
-            $table->integer('id_kelas')->unsigned();
-            $table->integer('id_spp')->unsigned();
+            $table->integer('kelas_id_kelas')->unsigned();
+            $table->integer('tuition_id_spp')->unsigned();
             $table->timestamps();
             
-            $table->foreign('id_kelas')->references('id_kelas')->on('kelas_nioni')->onDelete('cascade');
-            $table->foreign('id_spp')->references('id_spp')->on('spp_nioni')->onDelete('cascade');
+            $table->foreign('kelas_id_kelas')->references('id_kelas')->on('kelas_nioni')->onDelete('cascade');
+            $table->foreign('tuition_id_spp')->references('id_spp')->on('spp_nioni')->onDelete('cascade');
         });
     }
 

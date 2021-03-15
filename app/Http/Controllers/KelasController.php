@@ -21,7 +21,7 @@ class KelasController extends Controller
         return view ('kelas.kelas')
                 ->with('class_nioni',$class_nioni)
                 ->with('vocational_nioni', $vocational_nioni);
-        // return response()->json(['name' => $class_nioni]);
+        // return response()->json(['name' => $vocational_nioni]);
 
     }
 
@@ -92,7 +92,12 @@ class KelasController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        Kelas::find($id)->update([
+            'kelas' => $request->kelas,
+            'vocational_id_jurusan' => $request->vocational_id_jurusan,
+        ]);
+
+        return redirect('/module/class')->with('success', 'Class updated');
     }
 
     /**

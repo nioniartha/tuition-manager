@@ -10,7 +10,7 @@ class Kelas extends Model
     protected $primaryKey = 'id_kelas';
     protected $fillable = [
         'kelas',
-        'id_jurusan'
+        'vocational_id_jurusan'
     ];
 
     public function vocational()

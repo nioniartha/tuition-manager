@@ -82,12 +82,9 @@ class VocationalController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $this->validate($request,[
-            'jurusan' => 'required',
+        Vocational::find($id)->update([
+            'jurusan' => $request->jurusan
         ]);
-
-        $vocational_nioni = Vocational::find($id);
-        $vocational_nioni->update($request->all());
 
         return redirect('/module/vocational')->with('success', 'Vocational updated');
 

@@ -14,8 +14,8 @@ class Students extends Model
         'nama',
         'no_telp',
         'alamat',
-        'id_kelas',
-        'id_spp'
+        'kelas_id_kelas',
+        'tuition_id_spp'
     ];
 
     public function kelas()

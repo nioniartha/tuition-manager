@@ -1,5 +1,5 @@
 @extends('layout.master')
-@section('title', 'Tuition')
+@section('title', 'Students')
 @section('parentPageTitle', 'Modules')
 @section('page-style')
 <link rel="stylesheet" href="{{asset('assets/plugins/jquery-datatable/dataTables.bootstrap4.min.css')}}"/>
@@ -44,33 +44,51 @@
     <div class="col-lg-12 col-md-12 col-sm-12">
         <div class="card">
             <div class="body">
-            <form id="form_validation" action="{{ action('KelasController@update', $class_nioni->id_kelas) }}" method="post" enctype="multipart/form-data">
+            <form id="form_validation" action="{{ action('StudentsController@update', $students_nioni->id_siswa) }}" method="post" enctype="multipart/form-data">
                 {{csrf_field()}}
                 {{method_field('PUT')}}                        
-                <div class="form-group form-float {{$errors->has('kelas') ? ' has-danger' : ''}}" >
-                    <select name="kelas" class="form-control show-tick">
-                        <option value="">-- Please select class--</option>
-                        <option {{$class_nioni->kelas == 'X'  ? 'selected' : ''}} value="X">X</option>
-                        <option {{$class_nioni->kelas == 'XI'  ? 'selected' : ''}} value="XI">XI</option>
-                        <option {{$class_nioni->kelas == 'XII'  ? 'selected' : ''}} value="XII">XII</option>
-                        <option {{$class_nioni->kelas == 'XIII' ? 'selected' : ''}} value="XIII">XIII</option>
+                <div class="form-group form-float {{$errors->has('nisn') ? 'has-danger' : ''}}">
+                    <input type="number" class="form-control" placeholder="Nisn" name="nisn" required value="{{ $students_nioni->nisn }}">
+                </div>                                  
+                                                     
+                <div class="form-group form-float">
+                    <input type="number" class="form-control" placeholder="Nis" name="nis" required value="{{ $students_nioni->nis }}" >
+                </div>
+
+                <div class="form-group form-float">
+                    <input type="text" class="form-control" placeholder="Full Name" name="fullName" required value="{{$students_nioni->nama}}" >
+                </div>
+
+                <div class="form-group form-float {{$errors->has('kelas') ? ' has-danger' : ''}}">
+                    <select name = "kelas" class="form-control show-tick">
+                            <option value="">-- Please select class--</option>
+                            @foreach ($class_nioni as $v_nioni)
+                            <option {{$students_nioni->kelas_id_kelas == $v_nioni->id_kelas  ? 'selected' : ''}} value="{{ $v_nioni->id_kelas }}">{{ $v_nioni->id_kelas }} {{ $v_nioni->kelas}} {{ $v_nioni->vocational->jurusan}}</option>
+                            @endforeach
                     </select>
                     @if($errors->has('kelas'))          
                         <span class="help-block"> {{$errors->first('kelas')}}</span>
                     @endif
                 </div>
 
-                <div class="form-group form-float {{$errors->has('vocational_id_jurusan') ? ' has-danger' : ''}}">
-                    <select name = "vocational_id_jurusan" class="form-control show-tick">
-                        <option value="">-- Please select vocational--</option>
-                        @foreach ($vocational_nioni as $id_nioni => $v_nioni)
-                            <option {{$class_nioni->vocational_id_jurusan == $id_nioni  ? 'selected' : ''}} value="{{ $id_nioni }}">{{ $v_nioni }}</option>
+                <div class="form-group form-float">
+                    <input type="number" class="form-control" placeholder="Phone Number" name="notelp" required value="{{$students_nioni->no_telp}}" >
+                </div>
+
+                <div class="form-group form-float">
+                    <textarea name="address" cols="30" rows="5" placeholder="Address" class="form-control no-resize" required="" aria-required="true"> {{$students_nioni->alamat}} </textarea>
+                </div>
+                <div class="form-group form-float {{$errors->has('tahun') ? ' has-danger' : ''}}" >
+                    <select name="tuition_id_spp" class="form-control ">
+                        <option value="">-- Please select batch year --</option>
+                        @foreach ($tuition_nioni as $id_nioni => $v_nioni)
+                        <option {{$students_nioni->tuition_id_spp == $v_nioni->id_spp  ? 'selected' : ''}} value="{{ $v_nioni->id_spp }}">{{ $v_nioni->tahun}} - @currency($v_nioni->nominal)</option>
                         @endforeach
                     </select>
-                    @if($errors->has('vocational_id_jurusan'))          
-                        <span class="help-block"> {{$errors->first('vocational_id_jurusan')}}</span>
-                    @endif
-                </div>
+                @if($errors->has('tahun'))          
+                    <span class="help-block"> {{$errors->first('tahun')}}</span>
+                @endif
+                </div>  
                 <div class="modal-footer">
                     <button class="btn btn-raised btn-primary waves-effect" type="submit">Submit</button>
                 </div>
