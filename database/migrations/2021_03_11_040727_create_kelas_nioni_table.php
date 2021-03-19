@@ -16,6 +16,7 @@ class CreateKelasNioniTable extends Migration
         Schema::create('kelas_nioni', function (Blueprint $table) {
             $table->increments('id_kelas');
             $table->string('kelas');
+            $table->char('nama_kelas');
             $table->integer('vocational_id_jurusan')->unsigned();
             $table->timestamps();
 

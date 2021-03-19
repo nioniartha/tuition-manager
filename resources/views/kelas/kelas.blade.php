@@ -56,16 +56,18 @@
                         <thead> 
                             <tr>
                                 <th>No</th>
-                                <th>Class Name</th>
+                                <th>Grade</th>
                                 <th>Vocational</th>
+                                <th>Class Name</th>
                                 <th>Action</th>
                             </tr>
                         </thead>
                         <tfoot>
                             <tr>
                                 <th>No</th>
-                                <th>Class Name</th>
+                                <th>Grade</th>
                                 <th>Vocational</th>
+                                <th>Class Name</th>
                                 <th>Action</th>
                             </tr>
                         </tfoot>
@@ -76,6 +78,7 @@
                                 <td>{{ $i }}</td>
                                 <td>{{ $value_nioni->kelas}}</td>
                                 <td>{{ $value_nioni->vocational->jurusan}}</td>
+                                <td>{{ $value_nioni->nama_kelas}}</td>
                                 <td>
                                     <a href="class/{{ $value_nioni->id_kelas}}/edit" class="btn btn-warning btn-block">Edit</a>
                                     <form action="{{ action('KelasController@destroy', $value_nioni->id_kelas) }}" method="POST">
@@ -140,7 +143,18 @@
                                                 @endif
                                             </div>
                                             
-                                            
+                                            <div class="form-group form-float {{$errors->has('nama_kelas') ? ' has-danger' : ''}}" >
+                                                <select name="nama_kelas" class="form-control show-tick">
+                                                    <option value="">-- Please select class name--</option>
+                                                    <option value="A">A</option>
+                                                    <option value="B">B</option>
+                                                    <option value="C">C</option>
+                                                    <option value="D">D</option>
+                                                </select>
+                                                @if($errors->has('nama_kelas'))          
+                                                    <span class="help-block"> {{$errors->first('kelas')}}</span>
+                                                @endif
+                                            </div>
 
                                             <div class="modal-footer">
                                                 <button class="btn btn-raised btn-primary waves-effect" type="submit">Submit</button>

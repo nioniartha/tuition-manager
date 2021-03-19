@@ -15,7 +15,7 @@ class CreateSppNioniTable extends Migration
     {
         Schema::create('spp_nioni', function (Blueprint $table) {
             $table->increments('id_spp');
-            $table->year('tahun');
+            $table->string('tahun');
             $table->double('nominal');
             $table->timestamps();
         });

@@ -45,11 +45,13 @@ class KelasController extends Controller
     {
         $this->validate($request,[
             'kelas' => 'required',
+            'nama_kelas' => 'required',
             'vocational_id_jurusan' => 'required'
         ]);
         // insert
         $class_nioni = new Kelas;
         $class_nioni->kelas = $request->kelas;
+        $class_nioni->nama_kelas = $request->nama_kelas;
         $class_nioni->vocational_id_jurusan = $request->vocational_id_jurusan;
         $class_nioni->save();
 
@@ -94,6 +96,7 @@ class KelasController extends Controller
     {
         Kelas::find($id)->update([
             'kelas' => $request->kelas,
+            'nama_kelas' => $request->nama_kelas,
             'vocational_id_jurusan' => $request->vocational_id_jurusan,
         ]);
 

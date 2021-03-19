@@ -71,6 +71,19 @@
                         <span class="help-block"> {{$errors->first('vocational_id_jurusan')}}</span>
                     @endif
                 </div>
+
+                <div class="form-group form-float {{$errors->has('nama_kelas') ? ' has-danger' : ''}}" >
+                    <select name="nama_kelas" class="form-control show-tick">
+                        <option value="">-- Please select class name--</option>
+                        <option {{$class_nioni->nama_kelas == 'A'  ? 'selected' : ''}} value="A">A</option>
+                        <option {{$class_nioni->nama_kelas == 'B'  ? 'selected' : ''}} value="B">B</option>
+                        <option {{$class_nioni->nama_kelas == 'C'  ? 'selected' : ''}} value="C">C</option>
+                        <option {{$class_nioni->nama_kelas == 'D'  ? 'selected' : ''}} value="D">D</option>
+                    </select>
+                @if($errors->has('nama_kelas'))          
+                    <span class="help-block"> {{$errors->first('kelas')}}</span>
+                @endif
+                </div>
                 <div class="modal-footer">
                     <button class="btn btn-raised btn-primary waves-effect" type="submit">Submit</button>
                 </div>
