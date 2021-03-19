@@ -116,8 +116,9 @@
                                                 <select name="tahun" class="form-control ">
                                                     <option value="">-- Please select year--</option>
                                                     <?php
-                                                        $date2=date('Y', strtotime('+1 Years'));
-                                                        for($i=date('Y'); $i<$date2+5;$i++){
+                                                        $date = date('Y', strtotime('-5 Years'));
+                                                        $date2 = date('Y', strtotime('+1 Years'));
+                                                        for($i = $date; $i < $date2 + 4; $i++){
                                                             echo '<option value='.$i.'-'.($i+1).'>'.$i.'-'.($i+1).'</option>';
                                                         }
                                                     ?>
