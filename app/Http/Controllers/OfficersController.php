@@ -12,6 +12,12 @@ class OfficersController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+    
+    public function __construct()
+    {
+        $this->middleware('auth:admin');
+    }
+
     public function index()
     {
         $officers_nioni = Officers::all();

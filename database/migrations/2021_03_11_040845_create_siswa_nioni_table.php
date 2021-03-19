@@ -16,6 +16,7 @@ class CreateSiswaNioniTable extends Migration
         Schema::create('siswa_nioni', function (Blueprint $table) {
             $table->increments('id_siswa');
             $table->string('nisn')->unique();
+            $table->rememberToken();
             $table->string('nis');
             $table->string('nama');
             $table->string('no_telp', 13);

@@ -63,7 +63,7 @@
                     <select name = "kelas" class="form-control show-tick">
                             <option value="">-- Please select class--</option>
                             @foreach ($class_nioni as $v_nioni)
-                            <option {{$students_nioni->kelas_id_kelas == $v_nioni->id_kelas  ? 'selected' : ''}} value="{{ $v_nioni->id_kelas }}">{{ $v_nioni->id_kelas }} {{ $v_nioni->kelas}} {{ $v_nioni->vocational->jurusan}}</option>
+                            <option {{$students_nioni->kelas_id_kelas == $v_nioni->id_kelas  ? 'selected' : ''}} value="{{ $v_nioni->id_kelas }}">{{ $v_nioni->kelas}} {{ $v_nioni->vocational->jurusan}}</option>
                             @endforeach
                     </select>
                     @if($errors->has('kelas'))          

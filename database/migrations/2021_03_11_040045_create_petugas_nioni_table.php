@@ -18,7 +18,8 @@ class CreatePetugasNioniTable extends Migration
             $table->string('username');
             $table->string('password');
             $table->string('nama_petugas');
-            $table->enum('level', ['admin', 'petugas']);
+            $table->string('level', 20);
+            $table->rememberToken();
             $table->timestamps();
         });
     }

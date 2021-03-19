@@ -13,17 +13,25 @@
 
 // Route::get('/', function () {return view('welcome');});
 
-Route::get('/', function () { return redirect('dashboard/index'); });
+// hanya untuk tamu yg belum auth
+Route::get('/login', 'AuthenticationController@login')->name('login')->middleware('guest');
+Route::post('/login', 'AuthenticationController@postLogin');
+Route::get('/logout', 'AuthenticationController@logout');;
 
-/* Dashboard */
-Route::get('dashboard', function () { return redirect('dashboard/index'); });
-Route::get('dashboard/index', 'DashboardController@index')->name('dashboard.index');
+Route::group(['middleware' => ['auth:admin']], function(){
+   
+    Route::get('/', function () { return redirect('dashboard/index'); });
 
-/* Module */
-Route::get('module', function () { return redirect('module/officers'); });
-Route::resource('module/officers', 'OfficersController');
-Route::resource('module/vocational', 'VocationalController');
-Route::resource('module/class', 'KelasController');
-Route::resource('module/tuition', 'TuitionController');
-Route::resource('module/students', 'StudentsController');
+    /* Dashboard */
+    Route::get('dashboard', function () { return redirect('dashboard/index'); });
+    Route::get('dashboard/index', 'DashboardController@index')->name('dashboard.index');
+    
+    /* Module */
+    Route::get('module', function () { return redirect('module/officers'); });
+    Route::resource('module/officers', 'OfficersController');
+    Route::resource('module/vocational', 'VocationalController');
+    Route::resource('module/class', 'KelasController');
+    Route::resource('module/tuition', 'TuitionController');
+    Route::resource('module/students', 'StudentsController');
+});
 

@@ -10,12 +10,13 @@
                 <div class="user-info">
                     <div class="image"><a href="#"><img src="{{ url('../assets/images/profile_av.jpg') }}" alt="User"></a></div>
                     <div class="detail">
-                        <h4>Nioni</h4>
-                        <small>Super Admin</small>
+                        <h4>{{ Auth::guard('admin')->user()->nama_petugas }}</h4>
+                        <small>{{ Auth::guard('admin')->user()->level }}</small>
                     </div>
                 </div>
             </li>            
             <li class="{{ Request::segment(1) === 'dashboard' ? 'active open' : null }}"><a href="{{route('dashboard.index')}}"><i class="zmdi zmdi-home"></i><span>Dashboard</span></a></li>
+            @if(Auth::guard('admin')->user()->level == 'admin')
             <li class="{{ Request::segment(1) === 'module' ? 'active open' : null }}">
                 <a href="#Module" class="menu-toggle"><i class="zmdi zmdi-apps"></i> <span>Modules</span></a>
                 <ul class="ml-menu">
@@ -26,6 +27,7 @@
                     <li class="{{ Request::segment(2) === 'students' ? 'active' : null }}"><a href="{{route('students.index')}}">Students</a></li>
                 </ul>
             </li>
+            @endif
         </ul>
     </div>
 </aside>

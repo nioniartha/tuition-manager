@@ -19,14 +19,14 @@ class CreatePembayaranNioniTable extends Migration
             $table->string('bulan_dibayar');
             $table->string('tahun_dibayar');
             $table->double('jumlah_bayar');
-            $table->integer('id_petugas')->unsigned();
-            $table->integer('id_siswa')->unsigned();
-            $table->integer('id_spp')->unsigned();
+            $table->integer('officers_id_petugas')->unsigned();
+            $table->integer('students_id_siswa')->unsigned();
+            $table->integer('tuition_id_spp')->unsigned();
             $table->timestamps();
 
-            $table->foreign('id_petugas')->references('id_petugas')->on('petugas_nioni')->onDelete('cascade');
-            $table->foreign('id_siswa')->references('id_siswa')->on('siswa_nioni')->onDelete('cascade');
-            $table->foreign('id_spp')->references('id_spp')->on('spp_nioni')->onDelete('cascade');
+            $table->foreign('officers_id_petugas')->references('id_petugas')->on('petugas_nioni')->onDelete('cascade');
+            $table->foreign('students_id_siswa')->references('id_siswa')->on('siswa_nioni')->onDelete('cascade');
+            $table->foreign('tuition_id_spp')->references('id_spp')->on('spp_nioni')->onDelete('cascade');
         });
     }
 

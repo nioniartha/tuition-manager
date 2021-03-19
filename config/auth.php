@@ -46,6 +46,15 @@ return [
             'provider' => 'users',
             'hash' => false,
         ],
+        'admin' => [
+            'driver' => 'session',
+            'provider' => 'petugas_nioni',
+        ],
+        
+        'student' => [
+            'driver' => 'session',
+            'provider' => 'siswa_nioni',
+        ],
     ],
 
     /*
@@ -69,6 +78,16 @@ return [
         'users' => [
             'driver' => 'eloquent',
             'model' => App\User::class,
+        ],
+
+        'petugas_nioni' => [
+            'driver' => 'eloquent',
+            'model' => App\Officers::class,
+        ],
+
+        'siswa_nioni' => [
+            'driver' => 'eloquent',
+            'model' => App\Students::class,
         ],
 
         // 'users' => [

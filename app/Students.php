@@ -3,9 +3,14 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Notifications\Notifiable;
+use Illuminate\Foundation\Auth\User as Authenticatable;
 
-class Students extends Model
+class Students extends Authenticatable
 {
+    use Notifiable;
+    protected $guard = 'student';
+
     protected $table = 'siswa_nioni';
     protected $primaryKey = 'id_siswa';
     protected $fillable = [
@@ -16,6 +21,10 @@ class Students extends Model
         'alamat',
         'kelas_id_kelas',
         'tuition_id_spp'
+    ];
+
+    protected $hidden = [
+        'remember_token',
     ];
 
     public function kelas()
