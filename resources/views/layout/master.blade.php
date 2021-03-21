@@ -76,7 +76,8 @@
                     </div>
                 </div>
             </div>
-            <div class="container-fluid">                
+            <div class="container-fluid">
+            @include('sweetalert::alert')                
                 @yield('content')
             </div>
         </section>

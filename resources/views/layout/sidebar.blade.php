@@ -16,6 +16,7 @@
                 </div>
             </li>            
             <li class="{{ Request::segment(1) === 'dashboard' ? 'active open' : null }}"><a href="{{route('dashboard.index')}}"><i class="zmdi zmdi-home"></i><span>Dashboard</span></a></li>
+            <li class="{{ Request::segment(1) === 'payment' ? 'active open' : null }}"><a href="{{route('payment.payment')}}"><i class="zmdi zmdi-money-box"></i><span>Payment</span></a></li>
             @if(Auth::guard('admin')->user()->level == 'admin')
             <li class="{{ Request::segment(1) === 'module' ? 'active open' : null }}">
                 <a href="#Module" class="menu-toggle"><i class="zmdi zmdi-apps"></i> <span>Modules</span></a>

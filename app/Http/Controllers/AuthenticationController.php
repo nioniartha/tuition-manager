@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Routing\Controller as BaseController;
 use Illuminate\Http\Request;
 use Auth;
+use Alert;
 
 class AuthenticationController extends Controller
 {
@@ -25,7 +26,8 @@ class AuthenticationController extends Controller
           // Passwordnya pake bcrypt
         if (Auth::guard('admin')->attempt(['username' => $request->username, 'password' => $request->password])) {
             // if successful, then redirect to their intended location
-          return redirect()->intended('dashboard');
+            Alert::success('Success', 'Login Succes');
+            return redirect()->intended('dashboard');
         } 
 
         return redirect('/login')->with('error', 'Wrong username/password');

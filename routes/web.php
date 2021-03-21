@@ -25,7 +25,11 @@ Route::group(['middleware' => ['auth:admin']], function(){
     /* Dashboard */
     Route::get('dashboard', function () { return redirect('dashboard/index'); });
     Route::get('dashboard/index', 'DashboardController@index')->name('dashboard.index');
-    
+
+    /* Payment */
+    Route::get('payment', function () {return view('payment.payment');})->name('payment.payment');
+    Route::get('payment/autocomplete', 'PaymentController@autocomplete')->name('payment.autocomplete');
+
     /* Module */
     Route::get('module', function () { return redirect('module/officers'); });
     Route::resource('module/officers', 'OfficersController');
@@ -33,5 +37,6 @@ Route::group(['middleware' => ['auth:admin']], function(){
     Route::resource('module/class', 'KelasController');
     Route::resource('module/tuition', 'TuitionController');
     Route::resource('module/students', 'StudentsController');
+
 });
 

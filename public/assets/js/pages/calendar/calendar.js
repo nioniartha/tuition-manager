@@ -74,7 +74,7 @@ $(function() {
 
     var current = yyyy + '-' + mm + '-';
 
-    var calendar = $('#calendar');
+    var calendar = $('#calendar0');
 
 
 
@@ -132,11 +132,11 @@ $(function() {
 
         header: {
 
-            left: 'title',
+            left: 'prev,next today',
 
-            center: '',
-
-            right: 'month, agendaWeek, agendaDay, prev, next'
+            center: 'title',
+            
+            right:'resourceDay,resourceWeek,resourceNextWeeks,resourceMonth'
 
         },
 
@@ -259,5 +259,10 @@ $(function() {
         }
 
     });
+
+    calendar.changeView('timeGrid', {
+        start: '2017-06-01',
+        end: '2017-06-05'
+      });
 
 });
