@@ -30,26 +30,20 @@ class PaymentController extends Controller
     	}
     }
 
-    public function autocomplete(Request $request) {
-        $term = Input::get('term');
-	
-        $results = array();
-        
-        $queries = DB::table('user')
-                    ->where("nisn","LIKE",'%'.$request->cari.'%')
-                    ->where("nis","LIKE",'%'.$request->cari.'%')
-                    ->where("nama","LIKE",'%'.$request->cari.'%')
-                    ->where("alamat","LIKE",'%'.$request->cari.'%')
-                    ->take(5)
-                    ->get();
-        
-        foreach ($queries as $query)
-        {
-            $results[] = [ 'id' => $query->id, 'value' => $query->first_name.' '.$query->last_name ];
-        }
+    public function search(Request $request) {
 
-        return Response::json($results);
+        $student_nioni = Students::with('kelas.vocational')
+                            ->with('tuition')
+                            ->where('id_siswa', $request->data)
+                            ->get();
+
+
+        // return view ('payment.payment')
+        //         ->with('student_nioni',$student_nioni);
+
+        return response()->json($student_nioni);
     }
+    
 
     /**
      * Show the form for creating a new resource.

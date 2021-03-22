@@ -209,7 +209,10 @@
 <div class="row clearfix js-sweetalert">
     <div class="card">
         <div class="body">
-            <select class="cari form-control"  name="cari"></select>            
+            <form action="">
+                <select class="cari form-control" id="searchStudent" name="cari"></select> 
+
+            </form>
         </div>
             
             
@@ -413,33 +416,18 @@
                     <div role="tabpanel" class="tab-pane active" id="profile">
                         <div class="row">                
                             <div class="col-md-12 col-lg-8 col-xl-8">
+                                <?php $student_nioni = null ?>
                                 <div class="card">
                                     <div class="body">                            
-                                        <div id="calendar"></div>
+                            
+                                    <h5 id="name" ></h5>
+                                        <p id = "nisn"></p>
+                                        <p id = "nis"></p>
+                                        <p id = "class"></p>
+                                        <p id = "telp"></p>           
                                     </div>
                                 </div>
-                            </div>
-                            <div class="col-md-12 col-lg-4 col-xl-4">
-                                <div class="card">
-                                    <div class="event_list">
-                                        <button type="button" class="btn btn-info btn-block waves-effect" data-toggle="modal" data-target="#addevent">Add Events</button>
-                                        <div class="e_list">
-                                            <h5 class="e_name">11 September <span class="badge badge-primary float-right">Conference</span></h5>
-                                            <address><i class="zmdi zmdi-pin"></i> 123 6th St. Melbourne, FL 32904</address>
-                                            <p class="e_details">Lorem Ipsum is simply dummy text of the printing and typesetting industry.</p>
-                                        </div>
-                                        <div class="e_list">
-                                            <h5 class="e_name">12 November <span class="badge badge-success float-right">Birthday Party</span></h5>
-                                            <address><i class="zmdi zmdi-pin"></i> 123 6th St. Melbourne, FL 32904</address>
-                                            <p class="e_details">It is a long established fact that a reader will be distracted</p>
-                                        </div>
-                                        <div class="e_list">
-                                            <h5 class="e_name">16 December <span class="badge badge-danger float-right">Repeating</span></h5>
-                                            <address><i class="zmdi zmdi-pin"></i> 123 6th St. Melbourne, FL 32904</address>
-                                            <p class="e_details">Contrary to popular belief, Lorem Ipsum is not simply random text.</p>
-                                        </div>
-                                    </div>
-                                </div>
+                                
                             </div>
                         </div>
                             
@@ -503,6 +491,31 @@
         cache: true
         }
     });
+
+    $("#searchStudent").change(function () {
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    }
+        });
+        $.ajax({
+            type: "POST",
+            url: '{{route('payment.search')}}',
+            data: { 
+                data: $("#searchStudent").val() 
+            },
+            dataType: 'json',
+            success: function(response) {
+            // use console.log for debugging, and access the property of the deserialised object
+                console.log(response); 
+                $("#name").text(response[0].nama);
+                $("#nisn").text("Nisn : " + response[0].nisn);
+                $("#nis").text("Nis : " + response[0].nis);
+                $("#class").text("Class : " + response[0].kelas.kelas + " " + response[0].kelas.vocational.jurusan + " " + response[0].kelas.nama_kelas);
+            }
+        });
+    });
+ 
 
 </script>
 @stop
