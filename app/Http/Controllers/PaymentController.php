@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Students;
+use DB;
 
 class PaymentController extends Controller
 {
@@ -14,7 +15,19 @@ class PaymentController extends Controller
      */
     public function index()
     {
-        //
+        return view('payment.payment');
+    }
+
+    public function loadData(Request $request)
+    {
+    	if ($request->has('q')) {
+    		$cari = $request->q;
+    		$data = DB::table('siswa_nioni')->select('id_siswa', 'nisn', 'nama')
+                            ->where("nisn","LIKE",'%'.$request->cari.'%')
+                            ->orWhere("nama","LIKE",'%'.$request->cari.'%')
+                            ->get();
+    		return response()->json($data);
+    	}
     }
 
     public function autocomplete(Request $request) {
@@ -22,7 +35,7 @@ class PaymentController extends Controller
 	
         $results = array();
         
-        $queries = DB::table('users')
+        $queries = DB::table('user')
                     ->where("nisn","LIKE",'%'.$request->cari.'%')
                     ->where("nis","LIKE",'%'.$request->cari.'%')
                     ->where("nama","LIKE",'%'.$request->cari.'%')
