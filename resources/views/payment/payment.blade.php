@@ -223,57 +223,32 @@
                 <h2><strong>Tuition</strong> fee</h2>
             </div>
             <div class="body">  
-                <ul class="nav nav-tabs p-0 mb-3">
+                <ul class="nav nav-tabs p-0 mb-2">
                     <li class="nav-item"><a class="nav-link active" data-toggle="tab" href="#profile">PROFILE</a></li>
                     <li class="nav-item"><a class="nav-link " data-toggle="tab" href="#home">PAYMENT</a></li>
                 </ul>                        
                 
                 <div class="tab-content">
                     <div role="tabpanel" class="tab-pane in " id="home">
-                        <div class="row">                
+                        <div class="row"  id="payment">                
                             <div class="col-md-12 col-lg-8 col-xl-8">
                                 <div class="card">
-                                    <div class="body">                            
-                                        <div class="options">
-                                            <label class="option">
-                                                    <div class="checkBox" type="checkbox">
-                                                        Jul
-                                                        <svg width="140" height="65" viewBox="0 0 140 65" xmlns="http://www.w3.org/2000/svg">
-                                                            <rect x="10" class="button" width="128.8" height="63.9"/>
-                                                            <rect x="0" y="22.5" class="box" width="20" height="20"/>
-                                                            <polyline class="checkMark" points="4.5,32.6 8.7,36.8 16.5,29.1"/>
-                                                        </svg>
-                                                    </div>
-                                                    <div class="on-checked"></div>
-                                            </label>
-                                            <label class="option">
-                                                    <div class="checkBox" type="checkbox">
-                                                        Aug
-                                                        <svg width="140" height="65" viewBox="0 0 140 65" xmlns="http://www.w3.org/2000/svg">
-                                                            <rect x="10" class="button" width="128.8" height="63.9"/>
-                                                            <rect x="0" y="22.5" class="box" width="20" height="20"/>
-                                                            <polyline class="checkMark" points="4.5,32.6 8.7,36.8 16.5,29.1"/>
-                                                        </svg>
-                                                    </div>
-                                                    <div class="on-checked"></div>
-                                            </label>
-                                            <label class="option">
-                                                    <div class="checkBox" type="checkbox">
-                                                        Sep
-                                                        <svg width="140" height="65" viewBox="0 0 140 65" xmlns="http://www.w3.org/2000/svg">
-                                                            <rect x="10" class="button" width="128.8" height="63.9"/>
-                                                            <rect x="0" y="22.5" class="box" width="20" height="20"/>
-                                                            <polyline class="checkMark" points="4.5,32.6 8.7,36.8 16.5,29.1"/>
-                                                        </svg>
-                                                    </div>
-                                                    <div class="on-checked"></div>
-                                            </label>
-                                        </div>
+                                    <div class="body">
+                                        <ul class="nav nav-tabs nav-tabs-warning p-0 mb-3">
+                                            <li class="nav-item"><a class="nav-link active" data-toggle="tab" href="#">2017 - 2018 </a></li>
+                                            <li class="nav-item"><a class="nav-link " data-toggle="tab" href="#">2019 - 2020</a></li>
+                                            <li class="nav-item"><a class="nav-link " data-toggle="tab" href="#">2020 - 2021</a></li>
+                                        </ul>
+                                        
+                                        <?php
+                                            $months = array(1 => 'Jan', 2 => 'Feb', 3 => 'Mar', 4 => 'Apr', 5 => 'May', 6 => 'Jun', 7 => 'Jul', 8 => 'Aug', 9 => 'Sep', 10 => 'Oct', 11 => 'Nov', 12 => 'Dec');
+                                        ?>
 
                                         <div class="options">
+                                        @foreach($months as $month)
                                             <label class="option">
                                                     <div class="checkBox" type="checkbox">
-                                                        Oct
+                                                        {{ $month }}
                                                         <svg width="140" height="65" viewBox="0 0 140 65" xmlns="http://www.w3.org/2000/svg">
                                                             <rect x="10" class="button" width="128.8" height="63.9"/>
                                                             <rect x="0" y="22.5" class="box" width="20" height="20"/>
@@ -282,115 +257,10 @@
                                                     </div>
                                                     <div class="on-checked"></div>
                                             </label>
-                                            <label class="option">
-                                                    <div class="checkBox" type="checkbox">
-                                                        Nov
-                                                        <svg width="140" height="65" viewBox="0 0 140 65" xmlns="http://www.w3.org/2000/svg">
-                                                            <rect x="10" class="button" width="128.8" height="63.9"/>
-                                                            <rect x="0" y="22.5" class="box" width="20" height="20"/>
-                                                            <polyline class="checkMark" points="4.5,32.6 8.7,36.8 16.5,29.1"/>
-                                                        </svg>
-                                                    </div>
-                                                    <div class="on-checked"></div>
-                                            </label>
-                                            <label class="option">
-                                                    <div class="checkBox" type="checkbox">
-                                                        Dec
-                                                        <svg width="140" height="65" viewBox="0 0 140 65" xmlns="http://www.w3.org/2000/svg">
-                                                            <rect x="10" class="button" width="128.8" height="63.9"/>
-                                                            <rect x="0" y="22.5" class="box" width="20" height="20"/>
-                                                            <polyline class="checkMark" points="4.5,32.6 8.7,36.8 16.5,29.1"/>
-                                                        </svg>
-                                                        
-
-                                                    </div>
-                                                    <div class="on-checked"></div>
-                                            </label>
+                                        @endforeach
                                         </div>
 
-                                        <div class="options">
-                                            <label class="option">
-                                                    <div class="checkBox" type="checkbox">
-                                                        Jan
-                                                        <svg width="140" height="65" viewBox="0 0 140 65" xmlns="http://www.w3.org/2000/svg">
-                                                            <rect x="10" class="button" width="128.8" height="63.9"/>
-                                                            <rect x="0" y="22.5" class="box" width="20" height="20"/>
-                                                            <polyline class="checkMark" points="4.5,32.6 8.7,36.8 16.5,29.1"/>
-                                                        </svg>
-                                                        
 
-                                                    </div>
-                                                    <div class="on-checked"></div>
-                                            </label>
-                                            <label class="option">
-                                                    <div class="checkBox" type="checkbox">
-                                                        Feb
-                                                        <svg width="140" height="65" viewBox="0 0 140 65" xmlns="http://www.w3.org/2000/svg">
-                                                            <rect x="10" class="button" width="128.8" height="63.9"/>
-                                                            <rect x="0" y="22.5" class="box" width="20" height="20"/>
-                                                            <polyline class="checkMark" points="4.5,32.6 8.7,36.8 16.5,29.1"/>
-                                                        </svg>
-                                                        
-
-                                                    </div>
-                                                    <div class="on-checked"></div>
-                                            </label>
-                                            <label class="option">
-                                                    <div class="checkBox" type="checkbox">
-                                                        Mar
-                                                        <svg width="140" height="65" viewBox="0 0 140 65" xmlns="http://www.w3.org/2000/svg">
-                                                            <rect x="10" class="button" width="128.8" height="63.9"/>
-                                                            <rect x="0" y="22.5" class="box" width="20" height="20"/>
-                                                            <polyline class="checkMark" points="4.5,32.6 8.7,36.8 16.5,29.1"/>
-                                                        </svg>
-                                                        
-
-                                                    </div>
-                                                    <div class="on-checked"></div>
-                                            </label>
-                                        </div>
-
-                                        <div class="options">
-                                            <label class="option">
-                                                    <div class="checkBox" type="checkbox">
-                                                        Apr
-                                                        <svg width="140" height="65" viewBox="0 0 140 65" xmlns="http://www.w3.org/2000/svg">
-                                                            <rect x="10" class="button" width="128.8" height="63.9"/>
-                                                            <rect x="0" y="22.5" class="box" width="20" height="20"/>
-                                                            <polyline class="checkMark" points="4.5,32.6 8.7,36.8 16.5,29.1"/>
-                                                        </svg>
-                                                        
-
-                                                    </div>
-                                                    <div class="on-checked"></div>
-                                            </label>
-                                            <label class="option">
-                                                    <div class="checkBox" type="checkbox">
-                                                        May
-                                                        <svg width="140" height="65" viewBox="0 0 140 65" xmlns="http://www.w3.org/2000/svg">
-                                                            <rect x="10" class="button" width="128.8" height="63.9"/>
-                                                            <rect x="0" y="22.5" class="box" width="20" height="20"/>
-                                                            <polyline class="checkMark" points="4.5,32.6 8.7,36.8 16.5,29.1"/>
-                                                        </svg>
-                                                        
-
-                                                    </div>
-                                                    <div class="on-checked"></div>
-                                            </label>
-                                            <label class="option">
-                                                    <div class="checkBox" type="checkbox">
-                                                        Jun
-                                                        <svg width="140" height="65" viewBox="0 0 140 65" xmlns="http://www.w3.org/2000/svg">
-                                                            <rect x="10" class="button" width="128.8" height="63.9"/>
-                                                            <rect x="0" y="22.5" class="box" width="20" height="20"/>
-                                                            <polyline class="checkMark" points="4.5,32.6 8.7,36.8 16.5,29.1"/>
-                                                        </svg>
-                                                        
-
-                                                    </div>
-                                                    <div class="on-checked"></div>
-                                            </label>
-                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -418,11 +288,10 @@
                             <div class="col-md-12 col-lg-8 col-xl-8">
                                 <?php $student_nioni = null ?>
                                 <div class="card">
-                                    <div class="body">                            
-                            
-                                    <h5 id="name" ></h5>
+                                    <div class="body">  
                                         <p id = "nisn"></p>
                                         <p id = "nis"></p>
+                                        <p id = "name"></p>
                                         <p id = "class"></p>
                                         <p id = "telp"></p>           
                                     </div>
@@ -445,6 +314,7 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/js/select2.min.js"></script>
 <script>
     var showAlert = true;
+    $("#payment").hide();
 
     // for checkbox
     $('input[type="checkbox"]').on('change', (event) => {
@@ -512,6 +382,7 @@
                 $("#nisn").text("Nisn : " + response[0].nisn);
                 $("#nis").text("Nis : " + response[0].nis);
                 $("#class").text("Class : " + response[0].kelas.kelas + " " + response[0].kelas.vocational.jurusan + " " + response[0].kelas.nama_kelas);
+                $("#payment").show();
             }
         });
     });
