@@ -70,7 +70,8 @@
                         <tbody>
                         @foreach($tuitions_nioni as $tuition_nioni)
                             <tr>
-                                <td>{{ $tuition_nioni->tahun}}</td>
+                                <?php $tuition_int = (int)$tuition_nioni->tahun + 1; ?>
+                                <td>{{$tuition_nioni->tahun}} - {{$tuition_int}}</td>
                                 <td>@currency($tuition_nioni->nominal)</td>
                                 <td>
                                     <a href="tuition/{{ $tuition_nioni->id_spp}}/edit" class="btn btn-warning btn-block">Edit</a>
@@ -119,7 +120,7 @@
                                                         $date = date('Y', strtotime('-5 Years'));
                                                         $date2 = date('Y', strtotime('+1 Years'));
                                                         for($i = $date; $i < $date2 + 4; $i++){
-                                                            echo '<option value='.$i.'-'.($i+1).'>'.$i.'-'.($i+1).'</option>';
+                                                            echo '<option value='.$i.'>'.$i.'-'.($i+1).'</option>';
                                                         }
                                                     ?>
                                                 </select>

@@ -234,31 +234,51 @@
                             <div class="col-md-12 col-lg-8 col-xl-8">
                                 <div class="card">
                                     <div class="body">
-                                        <ul class="nav nav-tabs nav-tabs-warning p-0 mb-3">
-                                            <li class="nav-item"><a class="nav-link active" data-toggle="tab" href="#">2017 - 2018 </a></li>
-                                            <li class="nav-item"><a class="nav-link " data-toggle="tab" href="#">2019 - 2020</a></li>
-                                            <li class="nav-item"><a class="nav-link " data-toggle="tab" href="#">2020 - 2021</a></li>
-                                        </ul>
-                                        
-                                        <?php
-                                            $months = array(1 => 'Jan', 2 => 'Feb', 3 => 'Mar', 4 => 'Apr', 5 => 'May', 6 => 'Jun', 7 => 'Jul', 8 => 'Aug', 9 => 'Sep', 10 => 'Oct', 11 => 'Nov', 12 => 'Dec');
-                                        ?>
 
-                                        <div class="options">
-                                        @foreach($months as $month)
-                                            <label class="option">
-                                                    <div class="checkBox" type="checkbox">
-                                                        {{ $month }}
-                                                        <svg width="140" height="65" viewBox="0 0 140 65" xmlns="http://www.w3.org/2000/svg">
-                                                            <rect x="10" class="button" width="128.8" height="63.9"/>
-                                                            <rect x="0" y="22.5" class="box" width="20" height="20"/>
-                                                            <polyline class="checkMark" points="4.5,32.6 8.7,36.8 16.5,29.1"/>
-                                                        </svg>
-                                                    </div>
-                                                    <div class="on-checked"></div>
-                                            </label>
-                                        @endforeach
+                                    <ul class="nav nav-tabs p-0 mb-3 nav-tabs-warning" id="tab-tahun">
+                                    </ul>                        
+                                    <!-- Tab panes -->
+                                    <div class="tab-content">
+                                        <div role="tabpanel" class="tab-pane in active" id="home_only_icon_title">
+                                            
+                                            <div id="tahun-ajaran-1">
+                                            <?php
+                                                $months = array(7 => 'Jul', 8 => 'Aug', 9 => 'Sep', 10 => 'Oct', 11 => 'Nov', 12 => 'Dec', 1 => 'Jan', 2 => 'Feb', 3 => 'Mar', 4 => 'Apr', 5 => 'May', 6 => 'Jun',);
+                                            ?>
+
+                                            <div class="options">
+                                            @foreach($months as $month)
+                                                <label class="option">
+                                                        <div class="checkBox" type="checkbox">
+                                                            {{ $month }}
+                                                            <svg width="140" height="65" viewBox="0 0 140 65" xmlns="http://www.w3.org/2000/svg">
+                                                                <rect x="10" class="button" width="128.8" height="63.9"/>
+                                                                <rect x="0" y="22.5" class="box" width="20" height="20"/>
+                                                                <polyline class="checkMark" points="4.5,32.6 8.7,36.8 16.5,29.1"/>
+                                                            </svg>
+                                                        </div>
+                                                        <div class="on-checked"></div>
+                                                </label>
+                                            @endforeach
+                                            </div>
                                         </div>
+
+                                        </div>
+                                        <div role="tabpanel" class="tab-pane" id="profile_only_icon_title">
+                                            <b>Profile Content</b>
+                                            <p> Lorem ipsum dolor sit amet, Pri ut tation electram moderatius. Per te suavitate democritum. Duis nemore probatus ne quo,
+                                                vide mentitum fabellas ne est, eu munere gubergren sadipscing mel. </p>
+                                        </div>
+                                        <div role="tabpanel" class="tab-pane" id="messages_only_icon_title">
+                                            <b>Message Content</b>
+                                            <p> Lorem ipsum dolor sit amet, ut duo atqui exerci dicunt, ius impedit mediocritatem an. Pri ut tation electram moderatius.
+                                                Per te suavitate pro. Et eos nusquam accumsan, vide mentitum fabellas ne est, eu munere gubergrensadipscing mel. </p>
+                                        </div>
+                                        
+                                    </div>
+                                        
+                                        
+                                        
 
 
                                     </div>
@@ -316,11 +336,12 @@
     var showAlert = true;
     $("#payment").hide();
 
+
     // for checkbox
-    $('input[type="checkbox"]').on('change', (event) => {
+    $('div[type="checkbox"]').on('change', (event) => {
         const name = event.target.name;
         const values = [];
-        $('input[name="' + name + '"]:checked').each((index, input) => {
+        $('div[name="' + name + '"]:checked').each((index, input) => {
             values.push($(input).val());
         });
         if(!showAlert) return;
@@ -362,6 +383,12 @@
         }
     });
 
+    function block(mClass, html) {
+        //extra html you want to store.
+        return '<li class="nav-item"><a class="nav-link" data-toggle="tab" href=#' + mClass + '>' + html + '</a></li>'
+   
+    }
+
     $("#searchStudent").change(function () {
         $.ajaxSetup({
             headers: {
@@ -383,6 +410,18 @@
                 $("#nis").text("Nis : " + response[0].nis);
                 $("#class").text("Class : " + response[0].kelas.kelas + " " + response[0].kelas.vocational.jurusan + " " + response[0].kelas.nama_kelas);
                 $("#payment").show();
+                
+                var ul = document.getElementById('tab-tahun');
+
+                var date = parseInt(response[0].tuition.tahun);
+                var date2 = date + 1;
+                var i;
+                for(i = date; i < date2 + 2; i++){
+                    console.log(i + ' - ' + (i + 1));
+                    ul.innerHTML += block(i, i +'-' +(i+1));
+                    
+                }
+                
             }
         });
     });

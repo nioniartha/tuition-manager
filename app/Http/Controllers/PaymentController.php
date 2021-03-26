@@ -23,8 +23,8 @@ class PaymentController extends Controller
     	if ($request->has('q')) {
     		$cari = $request->q;
     		$data = DB::table('siswa_nioni')->select('id_siswa', 'nisn', 'nama')
-                            ->where("nisn","LIKE",'%'.$request->cari.'%')
-                            ->orWhere("nama","LIKE",'%'.$request->cari.'%')
+                            ->where("nisn","LIKE",'%'.$cari.'%')
+                            ->orWhere("nama","LIKE",'%'.$cari.'%')
                             ->get();
     		return response()->json($data);
     	}
@@ -36,10 +36,6 @@ class PaymentController extends Controller
                             ->with('tuition')
                             ->where('id_siswa', $request->data)
                             ->get();
-
-
-        // return view ('payment.payment')
-        //         ->with('student_nioni',$student_nioni);
 
         return response()->json($student_nioni);
     }
