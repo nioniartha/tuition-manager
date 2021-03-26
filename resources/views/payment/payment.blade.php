@@ -11,6 +11,10 @@
     box-sizing: border-box;
     }
 
+    .total {
+        margin-top : 0;
+    }
+
     body {
     background: #FDFDFD;
     margin: 25px 0;
@@ -209,10 +213,7 @@
 <div class="row clearfix js-sweetalert">
     <div class="card">
         <div class="body">
-            <form action="">
-                <select class="cari form-control" id="searchStudent" name="cari"></select> 
-
-            </form>
+            <select class="cari form-control" id="searchStudent" name="cari"></select> 
         </div>
             
             
@@ -284,20 +285,27 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-md-12 col-lg-4 col-xl-4">
+                            <div class="col-md-12 col-lg-4 col-xl-4" style="margin-top: 11%;">
                                 <div class="card">
-                                    <h5>Detail</h5>
-                                        <ul class="list-unstyled mb-0 widget-categories">
-                                            <li><a href="#">Juli</a></li>
-                                            <li><a href="#">Agustus</a></li>
-                                        </ul>
-                                    <hr>
-                                    <ul class="list-unstyled">
-                                        <li><strong>Sub-Total :</strong> </li>
-                                    </ul>                                    
-                                    <h3 class="mb-0 text-danger">@currency(900000)</h3>
-                                    <a href="javascript:void(0);" class="btn btn-info"><i class="zmdi zmdi-print"></i></a>
-                                    <a href="javascript:void(0);" class="btn btn-primary">Submit</a>
+                                    <h5 >Detail</h5>
+                                    <form id="form_validation" action="" method="" enctype="multipart/form-data">
+                                            {{csrf_field()}}
+                                            
+                                            <div class="form-group form-float">
+                                                <input type="number" class="form-control" id="monthsToBePaid" placeholder="Months to be paid" name="monthsToBePaid" required value="{{}}">
+                                            </div>
+                                            <hr>
+                                                                                
+                                            <ul class="list-unstyled">
+                                                <li><strong>Sub-Total :</strong> </li>
+                                            </ul>
+                                            <h4 class="mb-0 text-danger total"></h4>
+
+                                            <div class="modal-footer">
+                                                <a href="javascript:void(0);" class="btn btn-info"><i class="zmdi zmdi-print"></i></a>
+                                                <button class="btn btn-raised btn-primary waves-effect" type="submit">Submit</button>
+                                            </div>
+                                    </form>
                                 
                                 </div>
                             </div>
@@ -334,6 +342,7 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/js/select2.min.js"></script>
 <script>
     var showAlert = true;
+    let nominal_nioni;
     $("#payment").hide();
 
 
@@ -411,6 +420,7 @@
                 $("#class").text("Class : " + response[0].kelas.kelas + " " + response[0].kelas.vocational.jurusan + " " + response[0].kelas.nama_kelas);
                 $("#payment").show();
                 
+                nominal_nioni = response[0].tuition.nominal;
                 var ul = document.getElementById('tab-tahun');
 
                 var date = parseInt(response[0].tuition.tahun);
@@ -425,7 +435,22 @@
             }
         });
     });
- 
+    $(document).ready(function(){
+        $("#monthsToBePaid").on("input", function() {
+            var qty_nioni =$(this).val();
+            var amount_nioni = (qty_nioni * nominal_nioni)
+            
+            $('.total').text(formatRupiah(amount_nioni));
 
+        });              
+    });
+
+    
+ 
+    const formatRupiah = (money) => {
+    return new Intl.NumberFormat('id-ID',
+            { style: 'currency', currency: 'IDR', minimumFractionDigits: 0 }
+        ).format(money);
+    }
 </script>
 @stop
