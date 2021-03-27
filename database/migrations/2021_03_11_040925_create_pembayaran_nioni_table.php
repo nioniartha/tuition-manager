@@ -16,7 +16,9 @@ class CreatePembayaranNioniTable extends Migration
         Schema::create('pembayaran_nioni', function (Blueprint $table) {
             $table->increments('id_pembayaran');
             $table->date('tgl_bayar');
-            $table->string('bulan_dibayar');
+            $table->integer('bulan_dibayar');
+            $table->integer('bulan_sudah_bayar');
+            $table->integer('sisa_bulan_bayar');
             $table->string('tahun_dibayar');
             $table->double('jumlah_bayar');
             $table->integer('officers_id_petugas')->unsigned();

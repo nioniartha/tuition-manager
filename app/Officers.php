@@ -24,4 +24,8 @@ class Officers extends Authenticatable
     protected $hidden = [
         'password', 'remember_token',
     ];
+    public function payment()
+    {
+        return $this->hasMany(Payment::class);
+    }
 }

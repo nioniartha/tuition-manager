@@ -27,11 +27,12 @@ Route::group(['middleware' => ['auth:admin']], function(){
     Route::get('dashboard/index', 'DashboardController@index')->name('dashboard.index');
 
     /* Payment */
-    Route::get('payment', function () { return redirect('dashboard/index'); });
+    Route::get('payment', function () { return redirect('payment/index'); });
     Route::get('payment/index', 'PaymentController@index')->name('payment.payment');
     Route::get('payment/autocomplete', 'PaymentController@autocomplete')->name('payment.autocomplete');
     Route::get('payment/cari', 'PaymentController@loadData')->name('payment.cari');
     Route::post('payment/search', 'PaymentController@search')->name('payment.search');
+    Route::post('payment', 'PaymentController@payment')->name('payment.bayar');
 
 
     /* Module */

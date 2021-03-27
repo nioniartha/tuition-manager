@@ -44,7 +44,6 @@
     text-transform: uppercase;
     text-align: center;
     position: relative;
-    cursor: pointer;
     }
 
     svg {
@@ -209,6 +208,39 @@
 </style>
 @stop
 @section('content')
+@if(count($errors) > 0)
+@foreach($errors->all() as $error) 
+<div class="alert alert-danger" role="alert">
+    <div class="container">
+            <div class="alert-icon">
+                <i class="zmdi zmdi-block"></i>
+            </div>
+            <strong>Oh snap!</strong> {{$error}}
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">
+                    <i class="zmdi zmdi-close"></i>
+                </span>
+            </button>
+    </div>
+</div>
+@endforeach
+@endif
+
+@if(session('success'))
+    <div class="alert alert-success" role="alert">
+        <div class="container">
+            <div class="alert-icon">
+                <i class="zmdi zmdi-thumb-up"></i>
+            </div>
+            <strong>Well done!</strong>  {{session('success')}}
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">
+                    <i class="zmdi zmdi-close"></i>
+                </span>
+            </button>
+        </div>
+    </div>
+@endif
 
 <div class="row clearfix js-sweetalert">
     <div class="card">
@@ -229,86 +261,238 @@
                     <li class="nav-item"><a class="nav-link " data-toggle="tab" href="#home">PAYMENT</a></li>
                 </ul>                        
                 
+                <hr>                        
+
                 <div class="tab-content">
                     <div role="tabpanel" class="tab-pane in " id="home">
                         <div class="row"  id="payment">                
                             <div class="col-md-12 col-lg-8 col-xl-8">
-                                <div class="card">
-                                    <div class="body">
+                               <!-- Nav tabs -->
+                                <ul class="nav nav-tabs p-0 mb-3 nav-tabs-warning">
+                                    <li class="nav-item"><a class="nav-link active" data-toggle="tab" href="#firstYear">First Year</a></li>
+                                    <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#secondYear">Second Year</a></li>
+                                    <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#thirdYear">Third Year</a></li>
+                                    <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#fourthYear">Fourth year</a></li>
+                                </ul>
 
-                                    <ul class="nav nav-tabs p-0 mb-3 nav-tabs-warning" id="tab-tahun">
-                                    </ul>                        
-                                    <!-- Tab panes -->
-                                    <div class="tab-content">
-                                        <div role="tabpanel" class="tab-pane in active" id="home_only_icon_title">
-                                            
-                                            <div id="tahun-ajaran-1">
-                                            <?php
-                                                $months = array(7 => 'Jul', 8 => 'Aug', 9 => 'Sep', 10 => 'Oct', 11 => 'Nov', 12 => 'Dec', 1 => 'Jan', 2 => 'Feb', 3 => 'Mar', 4 => 'Apr', 5 => 'May', 6 => 'Jun',);
-                                            ?>
+                                <!-- Tab panes -->
+                                <div class="tab-content">
+                                    <div role="tabpanel" class="tab-pane in active" id="firstYear">
+                                        <b>Home Content</b>
+                                        <div class="row" style="min-width: 800px;">
+                                            <div class="col-12 col-md-8">
+                                                <?php
+                                                    $months = array(7 => 'Jul', 8 => 'Aug', 9 => 'Sep', 10 => 'Oct', 11 => 'Nov', 12 => 'Dec', 1 => 'Jan', 2 => 'Feb', 3 => 'Mar', 4 => 'Apr', 5 => 'May', 6 => 'Jun',);
+                                                ?>
 
-                                            <div class="options">
-                                            @foreach($months as $month)
-                                                <label class="option">
-                                                        <div class="checkBox" type="checkbox">
-                                                            {{ $month }}
-                                                            <svg width="140" height="65" viewBox="0 0 140 65" xmlns="http://www.w3.org/2000/svg">
-                                                                <rect x="10" class="button" width="128.8" height="63.9"/>
-                                                                <rect x="0" y="22.5" class="box" width="20" height="20"/>
-                                                                <polyline class="checkMark" points="4.5,32.6 8.7,36.8 16.5,29.1"/>
+                                                <div class="options">
+                                                @foreach($months as $month)
+                                                    <label class="option">
+                                                        <div class="basicBox">
+                                                            {{$month}}
+                                                            <svg width="130" height="65" viewBox="0 0 130 65" xmlns="http://www.w3.org/2000/svg">
+                                                                <rect x='0' y='0' fill='none' width='130' height='65'/>
                                                             </svg>
                                                         </div>
-                                                        <div class="on-checked"></div>
-                                                </label>
-                                            @endforeach
+                                                    </label>
+                                                @endforeach
+                                                </div>
+                                            </div>
+                                            <div class="col-6 col-md-4">
+                                                <div class="card">
+                                                    <h5 >Detail</h5>
+                                                    <form id="form_validation" action="{{route('payment.bayar')}}" method="post" enctype="multipart/form-data">
+                                                            {{csrf_field()}}
+                                                            
+                                                            <div class="form-group form-float">
+                                                                <input type="number" class="form-control" id="monthsToBePaid" placeholder="Months to be paid" name="monthsToBePaid" required>
+                                                            </div>
+                                                            <input type="hidden" id="yearInput" name="yearInput"></input>
+                                                            <input type="hidden" id="jumlahBayar" name="jumlahBayar"></input>
+                                                            <input type="hidden" id="idPetugas" name="idPetugas" value="{{ Auth::guard('admin')->user()->id_petugas }}"></input>   
+                                                            <input type="hidden" id="idStudent" name="idStudent"></input> 
+                                                            <input type="hidden" id="idSpp" name="idSpp"></input> 
+
+                                                            <hr>
+                                                                                                
+                                                            <ul class="list-unstyled">
+                                                                <li><strong>Sub-Total :</strong> </li>
+                                                            </ul>
+                                                            <h4 class="mb-0 text-danger total"></h4>
+
+                                                            <div class="modal-footer">
+                                                                <a href="javascript:void(0);" class="btn btn-info"><i class="zmdi zmdi-print"></i></a>
+                                                                <button class="btn btn-raised btn-primary waves-effect" type="submit">Submit</button>
+                                                            </div>
+                                                    </form>
+                                                
+                                                </div>
                                             </div>
                                         </div>
-
-                                        </div>
-                                        <div role="tabpanel" class="tab-pane" id="profile_only_icon_title">
-                                            <b>Profile Content</b>
-                                            <p> Lorem ipsum dolor sit amet, Pri ut tation electram moderatius. Per te suavitate democritum. Duis nemore probatus ne quo,
-                                                vide mentitum fabellas ne est, eu munere gubergren sadipscing mel. </p>
-                                        </div>
-                                        <div role="tabpanel" class="tab-pane" id="messages_only_icon_title">
-                                            <b>Message Content</b>
-                                            <p> Lorem ipsum dolor sit amet, ut duo atqui exerci dicunt, ius impedit mediocritatem an. Pri ut tation electram moderatius.
-                                                Per te suavitate pro. Et eos nusquam accumsan, vide mentitum fabellas ne est, eu munere gubergrensadipscing mel. </p>
-                                        </div>
-                                        
                                     </div>
-                                        
-                                        
-                                        
+                                    <div role="tabpanel" class="tab-pane" id="secondYear">
+                                        <b>Profile Content</b>
+                                        <div class="row" style="min-width: 800px;">
+                                            <div class="col-12 col-md-8">
+                                                <?php
+                                                    $months = array(7 => 'Jul', 8 => 'Aug', 9 => 'Sep', 10 => 'Oct', 11 => 'Nov', 12 => 'Dec', 1 => 'Jan', 2 => 'Feb', 3 => 'Mar', 4 => 'Apr', 5 => 'May', 6 => 'Jun',);
+                                                ?>
 
+                                                <div class="options">
+                                                @foreach($months as $month)
+                                                    <label class="option">
+                                                        <div class="basicBox">
+                                                            {{$month}}
+                                                            <svg width="130" height="65" viewBox="0 0 130 65" xmlns="http://www.w3.org/2000/svg">
+                                                                <rect x='0' y='0' fill='none' width='130' height='65'/>
+                                                            </svg>
+                                                        </div>
+                                                    </label>
+                                                @endforeach
+                                                </div>
+                                            </div>
+                                            <div class="col-6 col-md-4">
+                                                <div class="card">
+                                                    <h5 >Detail</h5>
+                                                    <form id="form_validation" action="{{route('payment.bayar')}}" method="post" enctype="multipart/form-data">
+                                                            {{csrf_field()}}
+                                                            
+                                                            <div class="form-group form-float">
+                                                                <input type="number" class="form-control" id="monthsToBePaid" placeholder="Months to be paid" name="monthsToBePaid" required>
+                                                            </div>
+                                                            <input type="hidden" id="yearInput" name="yearInput"></input>
+                                                            <input type="hidden" id="jumlahBayar" name="jumlahBayar"></input>
+                                                            <input type="hidden" id="idPetugas" name="idPetugas" value="{{ Auth::guard('admin')->user()->id_petugas }}"></input>   
+                                                            <input type="hidden" id="idStudent" name="idStudent"></input> 
+                                                            <input type="hidden" id="idSpp" name="idSpp"></input> 
 
+                                                            <hr>
+                                                                                                
+                                                            <ul class="list-unstyled">
+                                                                <li><strong>Sub-Total :</strong> </li>
+                                                            </ul>
+                                                            <h4 class="mb-0 text-danger total"></h4>
+
+                                                            <div class="modal-footer">
+                                                                <a href="javascript:void(0);" class="btn btn-info"><i class="zmdi zmdi-print"></i></a>
+                                                                <button class="btn btn-raised btn-primary waves-effect" type="submit">Submit</button>
+                                                            </div>
+                                                    </form>
+                                                
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div role="tabpanel" class="tab-pane" id="thirdYear">
+                                        <b>Message Content</b>
+                                        <div class="row" style="min-width: 800px;">
+                                            <div class="col-12 col-md-8">
+                                                <?php
+                                                    $months = array(7 => 'Jul', 8 => 'Aug', 9 => 'Sep', 10 => 'Oct', 11 => 'Nov', 12 => 'Dec', 1 => 'Jan', 2 => 'Feb', 3 => 'Mar', 4 => 'Apr', 5 => 'May', 6 => 'Jun',);
+                                                ?>
+
+                                                <div class="options">
+                                                @foreach($months as $month)
+                                                    <label class="option">
+                                                        <div class="basicBox">
+                                                            {{$month}}
+                                                            <svg width="130" height="65" viewBox="0 0 130 65" xmlns="http://www.w3.org/2000/svg">
+                                                                <rect x='0' y='0' fill='none' width='130' height='65'/>
+                                                            </svg>
+                                                        </div>
+                                                    </label>
+                                                @endforeach
+                                                </div>
+                                            </div>
+                                            <div class="col-6 col-md-4">
+                                                <div class="card">
+                                                    <h5 >Detail</h5>
+                                                    <form id="form_validation" action="{{route('payment.bayar')}}" method="post" enctype="multipart/form-data">
+                                                            {{csrf_field()}}
+                                                            
+                                                            <div class="form-group form-float">
+                                                                <input type="number" class="form-control" id="monthsToBePaid" placeholder="Months to be paid" name="monthsToBePaid" required>
+                                                            </div>
+                                                            <input type="hidden" id="yearInput" name="yearInput"></input>
+                                                            <input type="hidden" id="jumlahBayar" name="jumlahBayar"></input>
+                                                            <input type="hidden" id="idPetugas" name="idPetugas" value="{{ Auth::guard('admin')->user()->id_petugas }}"></input>   
+                                                            <input type="hidden" id="idStudent" name="idStudent"></input> 
+                                                            <input type="hidden" id="idSpp" name="idSpp"></input> 
+
+                                                            <hr>
+                                                                                                
+                                                            <ul class="list-unstyled">
+                                                                <li><strong>Sub-Total :</strong> </li>
+                                                            </ul>
+                                                            <h4 class="mb-0 text-danger total"></h4>
+
+                                                            <div class="modal-footer">
+                                                                <a href="javascript:void(0);" class="btn btn-info"><i class="zmdi zmdi-print"></i></a>
+                                                                <button class="btn btn-raised btn-primary waves-effect" type="submit">Submit</button>
+                                                            </div>
+                                                    </form>
+                                                
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div role="tabpanel" class="tab-pane" id="fourthYear">
+                                        <b>Settings Content</b>
+                                        <div class="row" style="min-width: 800px;">
+                                            <div class="col-12 col-md-8">
+                                                <?php
+                                                    $months = array(7 => 'Jul', 8 => 'Aug', 9 => 'Sep', 10 => 'Oct', 11 => 'Nov', 12 => 'Dec', 1 => 'Jan', 2 => 'Feb', 3 => 'Mar', 4 => 'Apr', 5 => 'May', 6 => 'Jun',);
+                                                ?>
+
+                                                <div class="options">
+                                                @foreach($months as $month)
+                                                    <label class="option">
+                                                        <div class="basicBox">
+                                                            {{$month}}
+                                                            <svg width="130" height="65" viewBox="0 0 130 65" xmlns="http://www.w3.org/2000/svg">
+                                                                <rect x='0' y='0' fill='none' width='130' height='65'/>
+                                                            </svg>
+                                                        </div>
+                                                    </label>
+                                                @endforeach
+                                                </div>
+                                            </div>
+                                            <div class="col-6 col-md-4">
+                                                <div class="card">
+                                                    <h5 >Detail</h5>
+                                                    <form id="form_validation" action="{{route('payment.bayar')}}" method="post" enctype="multipart/form-data">
+                                                            {{csrf_field()}}
+                                                            
+                                                            <div class="form-group form-float">
+                                                                <input type="number" class="form-control" id="monthsToBePaid" placeholder="Months to be paid" name="monthsToBePaid" required>
+                                                            </div>
+                                                            <input type="hidden" id="yearInput" name="yearInput"></input>
+                                                            <input type="hidden" id="jumlahBayar" name="jumlahBayar"></input>
+                                                            <input type="hidden" id="idPetugas" name="idPetugas" value="{{ Auth::guard('admin')->user()->id_petugas }}"></input>   
+                                                            <input type="hidden" id="idStudent" name="idStudent"></input> 
+                                                            <input type="hidden" id="idSpp" name="idSpp"></input> 
+
+                                                            <hr>
+                                                                                                
+                                                            <ul class="list-unstyled">
+                                                                <li><strong>Sub-Total :</strong> </li>
+                                                            </ul>
+                                                            <h4 class="mb-0 text-danger total"></h4>
+
+                                                            <div class="modal-footer">
+                                                                <a href="javascript:void(0);" class="btn btn-info"><i class="zmdi zmdi-print"></i></a>
+                                                                <button class="btn btn-raised btn-primary waves-effect" type="submit">Submit</button>
+                                                            </div>
+                                                    </form>
+                                                
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-md-12 col-lg-4 col-xl-4" style="margin-top: 11%;">
-                                <div class="card">
-                                    <h5 >Detail</h5>
-                                    <form id="form_validation" action="" method="" enctype="multipart/form-data">
-                                            {{csrf_field()}}
-                                            
-                                            <div class="form-group form-float">
-                                                <input type="number" class="form-control" id="monthsToBePaid" placeholder="Months to be paid" name="monthsToBePaid" required value="{{}}">
-                                            </div>
-                                            <hr>
-                                                                                
-                                            <ul class="list-unstyled">
-                                                <li><strong>Sub-Total :</strong> </li>
-                                            </ul>
-                                            <h4 class="mb-0 text-danger total"></h4>
-
-                                            <div class="modal-footer">
-                                                <a href="javascript:void(0);" class="btn btn-info"><i class="zmdi zmdi-print"></i></a>
-                                                <button class="btn btn-raised btn-primary waves-effect" type="submit">Submit</button>
-                                            </div>
-                                    </form>
-                                
-                                </div>
-                            </div>
+                            
+                            
                         </div>
                     </div>
                     <div role="tabpanel" class="tab-pane active" id="profile">
@@ -413,34 +597,46 @@
             dataType: 'json',
             success: function(response) {
             // use console.log for debugging, and access the property of the deserialised object
-                console.log(response); 
-                $("#name").text(response[0].nama);
-                $("#nisn").text("Nisn : " + response[0].nisn);
-                $("#nis").text("Nis : " + response[0].nis);
-                $("#class").text("Class : " + response[0].kelas.kelas + " " + response[0].kelas.vocational.jurusan + " " + response[0].kelas.nama_kelas);
-                $("#payment").show();
-                
-                nominal_nioni = response[0].tuition.nominal;
-                var ul = document.getElementById('tab-tahun');
-
-                var date = parseInt(response[0].tuition.tahun);
-                var date2 = date + 1;
-                var i;
-                for(i = date; i < date2 + 2; i++){
-                    console.log(i + ' - ' + (i + 1));
-                    ul.innerHTML += block(i, i +'-' +(i+1));
+                console.log(response);
+                $.each(response['data-siswa'], function(index, element) {
+                    $("#name").text(element.nama);
+                 
+                    $("#nisn").text("Nisn : " + element.nisn);
+                    $("#nis").text("Nis : " + element.nis);
+                    $("#class").text("Class : " + element.kelas.kelas + " " + element.kelas.vocational.jurusan + " " + element.kelas.nama_kelas);
+                    $("#payment").show();
                     
-                }
-                
+                    document.getElementById("yearInput").value = element.tuition.tahun;
+                    document.getElementById("idStudent").value = element.id_siswa;
+                    document.getElementById("idSpp").value = element.tuition.id_spp;
+
+
+                    nominal_nioni = element.tuition.nominal;
+                    var ul = document.getElementById('tab-tahun');
+
+                    var date = parseInt(element.tuition.tahun);
+                    var date2 = date + 1;
+                    var i;
+                    for(i = date; i < date2 + 2; i++){
+                        console.log(i + ' - ' + (i + 1));
+                        // ul.innerHTML += block(i, i +'-' +(i+1));
+                        
+                    }// end for
+
+                    
+                });
             }
         });
     });
+    
     $(document).ready(function(){
         $("#monthsToBePaid").on("input", function() {
             var qty_nioni =$(this).val();
             var amount_nioni = (qty_nioni * nominal_nioni)
             
             $('.total').text(formatRupiah(amount_nioni));
+            document.getElementById("jumlahBayar").value = amount_nioni;
+
 
         });              
     });
