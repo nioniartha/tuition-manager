@@ -9,6 +9,7 @@
         <title>{{ config('app.name') }} - @yield('title')</title>
         <meta name="description" content="@yield('meta_description', config('app.name'))">
         <meta name="author" content="@yield('meta_author', config('app.name'))">
+        <meta name="base-url" content="{{ url('/').'/' }}">
         @yield('meta')
         {{-- See https://laravel.com/docs/5.5/blade#stacks for usage --}}
         @stack('before-styles')        
