@@ -34,6 +34,9 @@ Route::group(['middleware' => ['auth:admin']], function(){
     Route::post('payment/search', 'PaymentController@search')->name('payment.search');
     Route::post('payment', 'PaymentController@payment')->name('payment.bayar');
 
+    /* Payment */
+    Route::get('history', function () { return redirect('history/index'); });
+    Route::get('history/index', 'HistoryController@index')->name('history.history');
 
     /* Module */
     Route::get('module', function () { return redirect('module/officers'); });

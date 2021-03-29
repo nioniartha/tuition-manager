@@ -16,7 +16,14 @@
                 </div>
             </li>            
             <li class="{{ Request::segment(1) === 'dashboard' ? 'active open' : null }}"><a href="{{route('dashboard.index')}}"><i class="zmdi zmdi-home"></i><span>Dashboard</span></a></li>
-            <li class="{{ Request::segment(1) === 'payment' ? 'active open' : null }}"><a href="{{route('payment.payment')}}"><i class="zmdi zmdi-money-box"></i><span>Payment</span></a></li>
+            <li class="{{ Request::segment(1) === 'transaction' ? 'active open' : null }}">
+                <a href="#Transaction" class="menu-toggle"><i class="zmdi zmdi-money-box"></i> <span>Transaction</span></a>
+                <ul class="ml-menu">
+                    <li class="{{ Request::segment(2) === 'payment' ? 'active ' : null }}"><a href="{{route('payment.payment')}}"><span>Payment</span></a></li>
+                    <li class="{{ Request::segment(2) === 'history' ? 'active ' : null }}"><a href="{{route('history.history')}}"><span>History</span></a></li>
+                </ul>
+            </li>
+
             @if(Auth::guard('admin')->user()->level == 'admin')
             <li class="{{ Request::segment(1) === 'module' ? 'active open' : null }}">
                 <a href="#Module" class="menu-toggle"><i class="zmdi zmdi-apps"></i> <span>Modules</span></a>
