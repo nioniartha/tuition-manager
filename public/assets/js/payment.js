@@ -3,6 +3,14 @@
 var baseUrl = $('meta[name="base-url"]').attr('content');
 var showAlert = true;
 let nominal_nioni;
+var tahunBayarSppTerakhir;
+var sppSudahBayarNioni;
+var x_nioni, xi_nioni, xii_nioni;
+
+/* GET PARENT FORM */
+var form_parent_x = document.getElementById('form_parent_x');
+var form_parent_xi = document.getElementById('form_parent_xi');
+
 var arrayMonth = [
             'bulan',
             'Jul', 
@@ -88,6 +96,29 @@ var arrayMonth = [
    
     }
 
+    function showFormPayment() {
+        return '<form id="form_validation" action="{{route("payment.bayar")}}" method="post" enctype="multipart/form-data">' + 
+                    '{{csrf_field()}}' +
+                    '<div class="form-group form-float">' +
+                        '<input type="number" class="form-control" id="monthsToBePaid" placeholder="Months to be paid" name="monthsToBePaid" required>' +
+                    '</div>' +
+                    '<input type="hidden" id="yearInput" name="yearInput"></input>' +
+                    '<input type="hidden" id="jumlahBayar" name="jumlahBayar"></input>' +
+                    '<input type="hidden" id="idPetugas" name="idPetugas" value="{{ Auth::guard("admin")->user()->id_petugas }}"></input>'  + 
+                    '<input type="hidden" id="idStudent" name="idStudent"></input>' +
+                    '<input type="hidden" id="idSpp" name="idSpp"></input>' + 
+                    '<hr>' +               
+                    '<ul class="list-unstyled">' +
+                        '<li><strong>Sub-Total :</strong> </li>' +
+                    '</ul>' +
+                    '<h4 class="mb-0 text-danger total"></h4>' +
+                    '<div class="modal-footer">' +
+                        '<a href="javascript:void(0);" class="btn btn-info"><i class="zmdi zmdi-print"></i></a>' +
+                        '<button class="btn btn-raised btn-primary waves-effect" type="submit">Submit</button>' +
+                    '</div>' +
+            '</form>'
+    }
+
     $("#searchStudent").change(function () {
         $.ajaxSetup({
             headers: {
@@ -104,6 +135,10 @@ var arrayMonth = [
             success: function(response) {
             // use console.log for debugging, and access the property of the deserialised object
                 console.log(response);
+                var divCardSpp = document.getElementById('cardspp');
+                var history_x = document.getElementById('history_kelas_x');
+                var history_xi = document.getElementById('history_kelas_xi');
+
                 $.each(response['data-siswa'], function(index, element) {
 
                     /* SET TEXT PROFILE STUDENT */
@@ -114,10 +149,22 @@ var arrayMonth = [
                     $("#payment").show();
                     
                     /* SET VALUE INPUT TRANSACTION */
-                    document.getElementById("yearInput").value = element.tuition.tahun;
+                    if (response['transaksi'] != null) {
+                        sppSudahBayarNioni = response['transaksi'].bulan_sudah_bayar;
+                        tahunBayarSppTerakhir = parseInt(response['transaksi'].tahun_dibayar);
+                    } else {
+                        sppSudahBayarNioni = 0;
+                        tahunBayarSppTerakhir = parseInt(element.tuition.tahun);
+                    }
+
                     document.getElementById("idStudent").value = element.id_siswa;
                     document.getElementById("idSpp").value = element.tuition.id_spp;
                     nominal_nioni = element.tuition.nominal;
+                    document.getElementById("yearInput").value = tahunBayarSppTerakhir;
+
+                    x_nioni = parseInt(element.tuition.tahun);
+                    xi_nioni = parseInt(element.tuition.tahun) + 1;
+                    xii_nioni = parseInt(element.tuition.tahun) + 2;
 
                     var ul = document.getElementById('tab-tahun');
                     var date = parseInt(element.tuition.tahun);
@@ -128,28 +175,54 @@ var arrayMonth = [
                         // ul.innerHTML += block(i, i +'-' +(i+1));
                         
                     }// end for
-
-                    
+   
                 }); // end eachDataSiswa
                 
-                var divCardSpp = document.getElementById('cardspp');
-                var sppSudahBayarNioni = response['transaksi'].bulan_sudah_bayar;
-                console.log('Sisa bulan bayar' + response['transaksi'].bulan_sudah_bayar);
 
                 for (i = 0; i < arrayMonth.length; i++) {
                     if(i <= sppSudahBayarNioni) {
-                        console.log('ini i if' + i);
+                        // console.log('ini i if' + i);
                         if(arrayMonth[i] != 'bulan') {
+                            // console.log('sudah bayar' + arrayMonth[i]);
                             divCardSpp.innerHTML += itemSppBlue(arrayMonth[i]);
                         }
                     } else {
-                        console.log('ini i else' + i);
+                        // console.log('ini i else' + i);
                         divCardSpp.innerHTML += itemSppRed(arrayMonth[i]);
                     }
                 } // end for 
+                
+                /* SET HISTORY TRANSACTION */
+                var history_nioni = response['history'];
+                var item_history_per_tahun;
 
+                if(history_nioni != null) {
+                    $.each(history_nioni, function(index, element) {
+                        item_history_per_tahun = history_nioni[index];
+                        console.log('tahun history'+item_history_per_tahun.tahun_dibayar);
+                        if(item_history_per_tahun.tahun_dibayar == x_nioni) {
+                            console.log('true x');
+                            for (i = 0; i < arrayMonth.length; i++) {
+                                if(arrayMonth[i] != 'bulan') {
+                                    // console.log('sudah bayar' + arrayMonth[i]);
+                                    history_x.innerHTML += itemSppBlue(arrayMonth[i]);
+                                }
+                            } // end for
+                        }
 
-            }
+                        if(item_history_per_tahun.tahun_dibayar == xi_nioni) {
+                            console.log('true xi');
+                            for (i = 0; i < arrayMonth.length; i++) {
+                                if(arrayMonth[i] != 'bulan') {
+                                    // console.log('sudah bayar' + arrayMonth[i]);
+                                    history_xi.innerHTML += itemSppBlue(arrayMonth[i]);
+                                }
+                            } // end for
+                        }
+                    });
+                }
+
+            } // end succes
         });
     });
     

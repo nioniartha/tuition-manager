@@ -41,10 +41,17 @@ class PaymentController extends Controller
         $check_transaksi_siswa = Payment::where('students_id_siswa',$request->data)
                             ->latest('created_at')
                             ->first();
+        
+        $history_transaksi_siswa = Payment::where('students_id_siswa',$request->data)
+                                        ->where('bulan_sudah_bayar', 12)
+                                        ->orderBy('tahun_dibayar', 'desc')
+                                        ->having('tahun_dibayar', '<=', $check_transaksi_siswa->tahun_dibayar)
+                                        ->get();
 
         return response()->json([
                             'data-siswa'=> $student_nioni,
-                             'transaksi'=> $check_transaksi_siswa]);
+                            'transaksi'=> $check_transaksi_siswa,
+                            'history'=> $history_transaksi_siswa]);
     }
     
     public function payment(Request $request)
@@ -59,22 +66,30 @@ class PaymentController extends Controller
         $payment_nioni = new Payment;
         $payment_nioni->bulan_dibayar = $bulan_dibayar_nioni;
         $payment_nioni->tgl_bayar = date('Y-m-d H:i:s');
-        $payment_nioni->tahun_dibayar = $request->yearInput;
         $payment_nioni->jumlah_bayar = $request->jumlahBayar;
         $payment_nioni->officers_id_petugas = $request->idPetugas;
         $payment_nioni->students_id_siswa = $id_siswa_nioni;
         $payment_nioni->tuition_id_spp = $request->idSpp;
+        
+        
 
-        if($check_transaksi_siswa == null || $check_transaksi_siswa->tahun_dibayar != $request->yearInput) {
+        if($check_transaksi_siswa == null ) {
+            $payment_nioni->tahun_dibayar = $request->yearInput;
             $payment_nioni->bulan_sudah_bayar =  $bulan_dibayar_nioni;
             $payment_nioni->sisa_bulan_bayar = 12 -  $bulan_dibayar_nioni;
             $payment_nioni->save();
         } else {
-            if($check_transaksi_siswa->tahun_dibayar == $request->yearInput) {
+            if ($check_transaksi_siswa->sisa_bulan_bayar == 0) {
+                $payment_nioni->tahun_dibayar = (int)$check_transaksi_siswa->tahun_dibayar + 1;
+                $payment_nioni->bulan_sudah_bayar =  $bulan_dibayar_nioni;
+                $payment_nioni->sisa_bulan_bayar = 12 -  $bulan_dibayar_nioni;
+                $payment_nioni->save();
+            } else {
+                $payment_nioni->tahun_dibayar = $request->yearInput;
                 $payment_nioni->bulan_sudah_bayar = $check_transaksi_siswa->bulan_sudah_bayar + $bulan_dibayar_nioni;
                 $payment_nioni->sisa_bulan_bayar = $check_transaksi_siswa->sisa_bulan_bayar -  $bulan_dibayar_nioni;
                 $payment_nioni->save();
-            } 
+            }
         }
         
         return redirect('payment/index')->with('success', 'payment is successful');

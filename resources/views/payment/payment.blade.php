@@ -71,14 +71,14 @@
                                     <li class="nav-item"><a class="nav-link active" data-toggle="tab" href="#firstYear">X</a></li>
                                     <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#secondYear">XI</a></li>
                                     <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#thirdYear">XII</a></li>
-                                    <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#fourthYear">XIV</a></li>
+                                    <!-- <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#fourthYear">XII</a></li> -->
                                 </ul>
 
                                 <!-- Tab panes -->
                                 <div class="tab-content">
                                     <div role="tabpanel" class="tab-pane in active" id="firstYear">
                                         <b>#1 FirstYear</b>
-                                        <div class="row" style="min-width: 800px;">
+                                        <div class="row" id = "x" style="min-width: 800px;">
                                             <div class="col-12 col-md-8">
                                                 <?php
                                                     $months = array(7 => 'Jul', 8 => 'Aug', 9 => 'Sep', 10 => 'Oct', 11 => 'Nov', 12 => 'Dec', 1 => 'Jan', 2 => 'Feb', 3 => 'Mar', 4 => 'Apr', 5 => 'May', 6 => 'Jun',);
@@ -88,7 +88,7 @@
                                                 </div> 
                                             </div>
                                             <div class="col-6 col-md-4">
-                                                <div class="card">
+                                                <div class="card" id="form_parent_x">
                                                     <h5 >Detail</h5>
                                                     <form id="form_validation" action="{{route('payment.bayar')}}" method="post" enctype="multipart/form-data">
                                                             {{csrf_field()}}
@@ -121,52 +121,12 @@
                                     </div>
                                     <div role="tabpanel" class="tab-pane" id="secondYear">
                                         <b>Profile Content</b>
-                                        <div class="row" style="min-width: 800px;">
+                                        <div class="row" id = "xi" style="min-width: 800px;">
                                             <div class="col-12 col-md-8">
-                                                <?php
-                                                    $months = array(7 => 'Jul', 8 => 'Aug', 9 => 'Sep', 10 => 'Oct', 11 => 'Nov', 12 => 'Dec', 1 => 'Jan', 2 => 'Feb', 3 => 'Mar', 4 => 'Apr', 5 => 'May', 6 => 'Jun',);
-                                                ?>
-
-                                                <div class="options">
-                                                @foreach($months as $month)
-                                                    <label class="option">
-                                                        <div class="basicBox">
-                                                            {{$month}}
-                                                            <svg width="130" height="65" viewBox="0 0 130 65" xmlns="http://www.w3.org/2000/svg">
-                                                                <rect x='0' y='0' fill='none' width='130' height='65'/>
-                                                            </svg>
-                                                        </div>
-                                                    </label>
-                                                @endforeach
-                                                </div>
+                                                <div class="options" id='history_kelas_x'></div>
                                             </div>
                                             <div class="col-6 col-md-4">
-                                                <div class="card">
-                                                    <h5 >Detail</h5>
-                                                    <form id="form_validation" action="{{route('payment.bayar')}}" method="post" enctype="multipart/form-data">
-                                                            {{csrf_field()}}
-                                                            
-                                                            <div class="form-group form-float">
-                                                                <input type="number" class="form-control" id="monthsToBePaid" placeholder="Months to be paid" name="monthsToBePaid" required>
-                                                            </div>
-                                                            <input type="hidden" id="yearInput" name="yearInput"></input>
-                                                            <input type="hidden" id="jumlahBayar" name="jumlahBayar"></input>
-                                                            <input type="hidden" id="idPetugas" name="idPetugas" value="{{ Auth::guard('admin')->user()->id_petugas }}"></input>   
-                                                            <input type="hidden" id="idStudent" name="idStudent"></input> 
-                                                            <input type="hidden" id="idSpp" name="idSpp"></input> 
-
-                                                            <hr>
-                                                                                                
-                                                            <ul class="list-unstyled">
-                                                                <li><strong>Sub-Total :</strong> </li>
-                                                            </ul>
-                                                            <h4 class="mb-0 text-danger total"></h4>
-
-                                                            <div class="modal-footer">
-                                                                <a href="javascript:void(0);" class="btn btn-info"><i class="zmdi zmdi-print"></i></a>
-                                                                <button class="btn btn-raised btn-primary waves-effect" type="submit">Submit</button>
-                                                            </div>
-                                                    </form>
+                                                <div class="card" id="form_parent_xi">
                                                 
                                                 </div>
                                             </div>
@@ -174,52 +134,12 @@
                                     </div>
                                     <div role="tabpanel" class="tab-pane" id="thirdYear">
                                         <b>Message Content</b>
-                                        <div class="row" style="min-width: 800px;">
+                                        <div class="row" id = "xii" style="min-width: 800px;">
                                             <div class="col-12 col-md-8">
-                                                <?php
-                                                    $months = array(7 => 'Jul', 8 => 'Aug', 9 => 'Sep', 10 => 'Oct', 11 => 'Nov', 12 => 'Dec', 1 => 'Jan', 2 => 'Feb', 3 => 'Mar', 4 => 'Apr', 5 => 'May', 6 => 'Jun',);
-                                                ?>
-
-                                                <div class="options">
-                                                @foreach($months as $month)
-                                                    <label class="option">
-                                                        <div class="basicBox">
-                                                            {{$month}}
-                                                            <svg width="130" height="65" viewBox="0 0 130 65" xmlns="http://www.w3.org/2000/svg">
-                                                                <rect x='0' y='0' fill='none' width='130' height='65'/>
-                                                            </svg>
-                                                        </div>
-                                                    </label>
-                                                @endforeach
-                                                </div>
+                                                <div class="options" id='history_kelas_xi'></div>
                                             </div>
                                             <div class="col-6 col-md-4">
                                                 <div class="card">
-                                                    <h5 >Detail</h5>
-                                                    <form id="form_validation" action="{{route('payment.bayar')}}" method="post" enctype="multipart/form-data">
-                                                            {{csrf_field()}}
-                                                            
-                                                            <div class="form-group form-float">
-                                                                <input type="number" class="form-control" id="monthsToBePaid" placeholder="Months to be paid" name="monthsToBePaid" required>
-                                                            </div>
-                                                            <input type="hidden" id="yearInput" name="yearInput"></input>
-                                                            <input type="hidden" id="jumlahBayar" name="jumlahBayar"></input>
-                                                            <input type="hidden" id="idPetugas" name="idPetugas" value="{{ Auth::guard('admin')->user()->id_petugas }}"></input>   
-                                                            <input type="hidden" id="idStudent" name="idStudent"></input> 
-                                                            <input type="hidden" id="idSpp" name="idSpp"></input> 
-
-                                                            <hr>
-                                                                                                
-                                                            <ul class="list-unstyled">
-                                                                <li><strong>Sub-Total :</strong> </li>
-                                                            </ul>
-                                                            <h4 class="mb-0 text-danger total"></h4>
-
-                                                            <div class="modal-footer">
-                                                                <a href="javascript:void(0);" class="btn btn-info"><i class="zmdi zmdi-print"></i></a>
-                                                                <button class="btn btn-raised btn-primary waves-effect" type="submit">Submit</button>
-                                                            </div>
-                                                    </form>
                                                 
                                                 </div>
                                             </div>
@@ -227,13 +147,13 @@
                                     </div>
                                     <div role="tabpanel" class="tab-pane" id="fourthYear">
                                         <b>Settings Content</b>
-                                        <div class="row" style="min-width: 800px;">
+                                        <div class="row" id = "xiii" style="min-width: 800px;">
                                             <div class="col-12 col-md-8">
                                                 <?php
                                                     $months = array(7 => 'Jul', 8 => 'Aug', 9 => 'Sep', 10 => 'Oct', 11 => 'Nov', 12 => 'Dec', 1 => 'Jan', 2 => 'Feb', 3 => 'Mar', 4 => 'Apr', 5 => 'May', 6 => 'Jun',);
                                                 ?>
 
-                                                <div class="options">
+                                                <!-- <div class="options">
                                                 @foreach($months as $month)
                                                     <label class="option">
                                                         <div class="basicBox">
@@ -244,35 +164,11 @@
                                                         </div>
                                                     </label>
                                                 @endforeach
-                                                </div>
+                                                </div> -->
                                             </div>
                                             <div class="col-6 col-md-4">
                                                 <div class="card">
                                                     <h5 >Detail</h5>
-                                                    <form id="form_validation" action="{{route('payment.bayar')}}" method="post" enctype="multipart/form-data">
-                                                            {{csrf_field()}}
-                                                            
-                                                            <div class="form-group form-float">
-                                                                <input type="number" class="form-control" id="monthsToBePaid" placeholder="Months to be paid" name="monthsToBePaid" required>
-                                                            </div>
-                                                            <input type="hidden" id="yearInput" name="yearInput"></input>
-                                                            <input type="hidden" id="jumlahBayar" name="jumlahBayar"></input>
-                                                            <input type="hidden" id="idPetugas" name="idPetugas" value="{{ Auth::guard('admin')->user()->id_petugas }}"></input>   
-                                                            <input type="hidden" id="idStudent" name="idStudent"></input> 
-                                                            <input type="hidden" id="idSpp" name="idSpp"></input> 
-
-                                                            <hr>
-                                                                                                
-                                                            <ul class="list-unstyled">
-                                                                <li><strong>Sub-Total :</strong> </li>
-                                                            </ul>
-                                                            <h4 class="mb-0 text-danger total"></h4>
-
-                                                            <div class="modal-footer">
-                                                                <a href="javascript:void(0);" class="btn btn-info"><i class="zmdi zmdi-print"></i></a>
-                                                                <button class="btn btn-raised btn-primary waves-effect" type="submit">Submit</button>
-                                                            </div>
-                                                    </form>
                                                 
                                                 </div>
                                             </div>
