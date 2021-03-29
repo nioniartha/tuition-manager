@@ -68,22 +68,18 @@
                             <div class="col-md-12 col-lg-8 col-xl-8">
                                <!-- Nav tabs -->
                                 <ul class="nav nav-tabs p-0 mb-3 nav-tabs-warning">
-                                    <li class="nav-item"><a class="nav-link active" data-toggle="tab" href="#firstYear">X</a></li>
-                                    <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#secondYear">XI</a></li>
-                                    <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#thirdYear">XII</a></li>
+                                    <li class="nav-item"><a class="nav-link active" data-toggle="tab" href="#firstYear"><b id = "tab-harus-bayar"></b></a></li>
+                                    <li class="nav-item"><a class="nav-link" id = "tab-history_kelas_x" data-toggle="tab" href="#secondYear">XI</a></li>
+                                    <li class="nav-item"><a class="nav-link" id = "tab-history_kelas_xi" data-toggle="tab" href="#thirdYear">XII</a></li>
                                     <!-- <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#fourthYear">XII</a></li> -->
                                 </ul>
 
                                 <!-- Tab panes -->
                                 <div class="tab-content">
                                     <div role="tabpanel" class="tab-pane in active" id="firstYear">
-                                        <b>#1 FirstYear</b>
+                                        <b>Payment</b>
                                         <div class="row" id = "x" style="min-width: 800px;">
                                             <div class="col-12 col-md-8">
-                                                <?php
-                                                    $months = array(7 => 'Jul', 8 => 'Aug', 9 => 'Sep', 10 => 'Oct', 11 => 'Nov', 12 => 'Dec', 1 => 'Jan', 2 => 'Feb', 3 => 'Mar', 4 => 'Apr', 5 => 'May', 6 => 'Jun',);
-                                                ?>
-
                                                 <div class="options" id="cardspp">
                                                 </div> 
                                             </div>
@@ -94,7 +90,7 @@
                                                             {{csrf_field()}}
                                                             
                                                             <div class="form-group form-float">
-                                                                <input type="number" class="form-control" id="monthsToBePaid" placeholder="Months to be paid" name="monthsToBePaid" required>
+                                                                <input type="number" class="form-control" id="monthsToBePaid" min="0" max="12" placeholder="Months to be paid" name="monthsToBePaid" required>
                                                             </div>
                                                             <input type="hidden" id="yearInput" name="yearInput"></input>
                                                             <input type="hidden" id="jumlahBayar" name="jumlahBayar"></input>
@@ -120,7 +116,7 @@
                                         </div>
                                     </div>
                                     <div role="tabpanel" class="tab-pane" id="secondYear">
-                                        <b>Profile Content</b>
+                                        <b>History 1</b>
                                         <div class="row" id = "xi" style="min-width: 800px;">
                                             <div class="col-12 col-md-8">
                                                 <div class="options" id='history_kelas_x'></div>
@@ -133,7 +129,7 @@
                                         </div>
                                     </div>
                                     <div role="tabpanel" class="tab-pane" id="thirdYear">
-                                        <b>Message Content</b>
+                                        <b>History 2</b>
                                         <div class="row" id = "xii" style="min-width: 800px;">
                                             <div class="col-12 col-md-8">
                                                 <div class="options" id='history_kelas_xi'></div>
