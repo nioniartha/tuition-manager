@@ -41,13 +41,17 @@ class PaymentController extends Controller
         $check_transaksi_siswa = Payment::where('students_id_siswa',$request->data)
                             ->latest('created_at')
                             ->first();
-        
-        $history_transaksi_siswa = Payment::where('students_id_siswa',$request->data)
+
+        if($check_transaksi_siswa != null) {
+            $history_transaksi_siswa = Payment::where('students_id_siswa',$request->data)
                                         ->where('bulan_sudah_bayar', 12)
                                         ->orderBy('tahun_dibayar', 'desc')
                                         ->having('tahun_dibayar', '<=', $check_transaksi_siswa->tahun_dibayar)
                                         ->get();
-
+        } else {
+            $history_transaksi_siswa = null;
+        }
+        
         return response()->json([
                             'data-siswa'=> $student_nioni,
                             'transaksi'=> $check_transaksi_siswa,

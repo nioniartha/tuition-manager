@@ -165,29 +165,40 @@ var arrayMonth = [
                     xi_nioni = parseInt(element.tuition.tahun) + 1;
                     xii_nioni = parseInt(element.tuition.tahun) + 2;
 
-                    if(tahunBayarSppTerakhir == xi_nioni || xii_nioni && response['transaksi'].bulan_sudah_bayar == 12) {
-                        $("#tab-harus-bayar").text((parseInt(tahunBayarSppTerakhir) + 1) + '-' + (parseInt(tahunBayarSppTerakhir) + 2));
+                    if(response['transaksi'] != null) {
+                        if(tahunBayarSppTerakhir == xi_nioni || xii_nioni && response['transaksi'].bulan_sudah_bayar == 12) {
+                            $("#tab-harus-bayar").text((parseInt(tahunBayarSppTerakhir) + 1) + '-' + (parseInt(tahunBayarSppTerakhir) + 2));
+                            for (i = 0; i < arrayMonth.length; i++) {
+                                if(arrayMonth[i] != 'bulan') {
+                                    // console.log('sudah bayar' + arrayMonth[i]);
+                                    divCardSpp.innerHTML += itemSppRed(arrayMonth[i]);
+                                }
+                            } // end for
+                        } else {
+                            $("#tab-harus-bayar").text(tahunBayarSppTerakhir + '-' + (parseInt(tahunBayarSppTerakhir) + 1));
+                            for (i = 0; i < arrayMonth.length; i++) {
+                                if(i <= sppSudahBayarNioni) {
+                                    // console.log('ini i if' + i);
+                                    if(arrayMonth[i] != 'bulan') {
+                                        // console.log('sudah bayar' + arrayMonth[i]);
+                                        divCardSpp.innerHTML += itemSppBlue(arrayMonth[i]);
+                                    }
+                                } else {
+                                    // console.log('ini i else' + i);
+                                    divCardSpp.innerHTML += itemSppRed(arrayMonth[i]);
+                                }
+                            } // end for 
+                        }
+                    } else {
+                        $("#tab-harus-bayar").text(tahunBayarSppTerakhir + '-' + (parseInt(tahunBayarSppTerakhir) + 1));
                         for (i = 0; i < arrayMonth.length; i++) {
                             if(arrayMonth[i] != 'bulan') {
                                 // console.log('sudah bayar' + arrayMonth[i]);
                                 divCardSpp.innerHTML += itemSppRed(arrayMonth[i]);
                             }
                         } // end for
-                    } else {
-                        $("#tab-harus-bayar").text(tahunBayarSppTerakhir + '-' + (parseInt(tahunBayarSppTerakhir) + 1));
-                        for (i = 0; i < arrayMonth.length; i++) {
-                            if(i <= sppSudahBayarNioni) {
-                                // console.log('ini i if' + i);
-                                if(arrayMonth[i] != 'bulan') {
-                                    // console.log('sudah bayar' + arrayMonth[i]);
-                                    divCardSpp.innerHTML += itemSppBlue(arrayMonth[i]);
-                                }
-                            } else {
-                                // console.log('ini i else' + i);
-                                divCardSpp.innerHTML += itemSppRed(arrayMonth[i]);
-                            }
-                        } // end for 
                     }
+                    
 
                     var ul = document.getElementById('tab-tahun');
                     var date = parseInt(element.tuition.tahun);
@@ -238,6 +249,14 @@ var arrayMonth = [
                             } // end for
                         }
                     });
+                } else {
+                    $("#tab-harus-bayar").text(tahunBayarSppTerakhir + '-' + (parseInt(tahunBayarSppTerakhir) + 1));
+                    for (i = 0; i < arrayMonth.length; i++) {
+                        if(arrayMonth[i] != 'bulan') {
+                            // console.log('sudah bayar' + arrayMonth[i]);
+                            history_xi.innerHTML += itemSppRed(arrayMonth[i]);
+                        }
+                    } // end for
                 }
 
             } // end succes
