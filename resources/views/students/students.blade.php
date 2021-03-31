@@ -184,7 +184,7 @@
                         </div>
                      </div>
                 </div>
-             </div>
+        </div>
 
 @stop
 @section('page-script')

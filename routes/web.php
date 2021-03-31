@@ -46,5 +46,13 @@ Route::group(['middleware' => ['auth:admin']], function(){
     Route::resource('module/tuition', 'TuitionController');
     Route::resource('module/students', 'StudentsController');
 
+    /* Report */
+    Route::get('report', function () { return redirect('report/index'); });
+    Route::get('report/income', 'IncomeController@index')->name('report.income');
+    Route::get('report/income/filter', 'IncomeController@filter')->name('report.income.filter');
+
+
+    Route::get('report/latePayment', 'LatePaymentController@index')->name('report.latePayment');
+
 });
 

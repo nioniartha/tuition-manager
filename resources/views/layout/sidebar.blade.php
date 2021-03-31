@@ -36,6 +36,15 @@
                 </ul>
             </li>
             @endif
+
+            <li class="{{ Request::segment(1) === 'report' ? 'active open' : null }}">
+                <a href="#Report" class="menu-toggle"><i class="zmdi zmdi-print"></i> <span>Report</span></a>
+                <ul class="ml-menu">
+                    <li class="{{ Request::segment(2) === 'income' ? 'active ' : null }}"><a href="{{route('report.income')}}"><span>Income</span></a></li>
+                    <li class="{{ Request::segment(2) === 'late payment' ? 'active ' : null }}"><a href="{{route('report.latePayment')}}"><span>Late Payment</span></a></li>
+                </ul>
+            </li>
+
         </ul>
     </div>
 </aside>

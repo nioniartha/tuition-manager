@@ -3,9 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Tuition;
 
-class TuitionController extends Controller
+class LatePaymentController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -14,9 +13,7 @@ class TuitionController extends Controller
      */
     public function index()
     {
-        $tuition_nioni = Tuition::orderBy('created_at','desc')->get();
-
-        return view ('tuition.tuition')->with('tuitions_nioni',$tuition_nioni);
+        return view ('latePayment.latePayment');
     }
 
     /**
@@ -37,19 +34,7 @@ class TuitionController extends Controller
      */
     public function store(Request $request)
     {
-        $angka_nominal_nioni = str_replace(".", "", $request->nominal);
-    
-        $this->validate($request,[
-            'tahun' => 'required|unique:spp_nioni',
-            'nominal' => 'required'
-        ]);
-
-        $tuition_nioni = new Tuition;
-        $tuition_nioni->tahun = $request->tahun;
-        $tuition_nioni->nominal = $angka_nominal_nioni;
-        $tuition_nioni->save();
-
-        return redirect('/module/tuition')->with('success', 'New Tuition have been added successfully');
+        //
     }
 
     /**
@@ -71,8 +56,7 @@ class TuitionController extends Controller
      */
     public function edit($id)
     {
-        $tuition_nioni = Tuition::find($id);
-        return view ('tuition.tuition_edit')->with('tuitions_nioni',$tuition_nioni);
+        //
     }
 
     /**
@@ -84,19 +68,7 @@ class TuitionController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $this->validate($request,[
-            'tahun' => 'required',
-            'nominal' => 'required'
-        ]);
-
-        $angka_nominal_nioni = str_replace(".", "", $request->nominal);
-    
-        Tuition::find($id)->update([
-            'tahun' => $request->tahun,
-            'nominal' => $angka_nominal_nioni
-        ]);
-
-        return redirect('/module/tuition')->with('success', 'Tuition updated');
+        //
     }
 
     /**
@@ -107,8 +79,6 @@ class TuitionController extends Controller
      */
     public function destroy($id)
     {
-        $tuition_nioni = Tuition::find($id);
-        $tuition_nioni->delete();
-        return redirect('/module/tuition')->with('success', 'Tuition Deleted');
+        //
     }
 }

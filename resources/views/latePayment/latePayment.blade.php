@@ -1,6 +1,6 @@
 @extends('layout.master')
-@section('title', 'History')
-@section('parentPageTitle', 'Transaction')
+@section('title', 'Late Payment')
+@section('parentPageTitle', 'Report')
 @section('page-style')
 <link rel="stylesheet" href="{{asset('assets/plugins/jquery-datatable/dataTables.bootstrap4.min.css')}}"/>
 @stop
@@ -11,7 +11,7 @@
     <div class="col-lg-12">
         <div class="card">
             <div class="header">
-                <h2><strong>Transaction</strong> History </h2>
+                <h2><strong>Late Payment</strong> Report </h2>
             </div>
             <div class="body">
                 <div class="table-responsive">
@@ -39,18 +39,7 @@
                             </tr>
                         </tfoot>
                         <tbody>
-                        @foreach($history_nioni as $value_nioni)
-                            <tr>
-                                <td>{{ $value_nioni->students->nisn}}</td>
-                                <td>{{ $value_nioni->students->nama}}</td>
-                                <td>@currency($value_nioni->tuition->nominal)</td>
-                                <td>{{ $value_nioni->bulan_dibayar}}</td>
-                                <td>@currency($value_nioni->jumlah_bayar)</td>
-                                <td>{{ $value_nioni->created_at}}</td>
-                                <td>{{ $value_nioni->tahun_dibayar}}</td>
-                                
-                            </tr>
-                            @endforeach
+                        
                         </tbody>
                     </table>
                 </div>
