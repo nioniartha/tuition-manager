@@ -148,7 +148,11 @@ var arrayMonth = [
                     
                     /* SET VALUE INPUT TRANSACTION */
                     if (response['transaksi'] != null) {
-                        sppSudahBayarNioni = response['transaksi'].bulan_sudah_bayar;
+                        if(response['transaksi'].bulan_sudah_bayar != 12) {
+                            sppSudahBayarNioni = response['transaksi'].bulan_sudah_bayar;
+                        } else {
+                            sppSudahBayarNioni = 0;
+                        }
                         tahunBayarSppTerakhir = parseInt(response['transaksi'].tahun_dibayar);
                     } else {
                         sppSudahBayarNioni = 0;
@@ -167,13 +171,20 @@ var arrayMonth = [
 
                     if(response['transaksi'] != null) {
                         if(tahunBayarSppTerakhir == xi_nioni || xii_nioni && response['transaksi'].bulan_sudah_bayar == 12) {
+                            console.log('ini if loh');  
                             $("#tab-harus-bayar").text((parseInt(tahunBayarSppTerakhir) + 1) + '-' + (parseInt(tahunBayarSppTerakhir) + 2));
                             for (i = 0; i < arrayMonth.length; i++) {
-                                if(arrayMonth[i] != 'bulan') {
-                                    // console.log('sudah bayar' + arrayMonth[i]);
+                                if(i <= sppSudahBayarNioni) {
+                                    // console.log('ini i if' + i);
+                                    if(arrayMonth[i] != 'bulan') {
+                                        // console.log('sudah bayar' + arrayMonth[i]);
+                                        divCardSpp.innerHTML += itemSppBlue(arrayMonth[i]);
+                                    }
+                                } else {
+                                    // console.log('ini i else' + i);
                                     divCardSpp.innerHTML += itemSppRed(arrayMonth[i]);
                                 }
-                            } // end for
+                            } // end for 
                         } else {
                             $("#tab-harus-bayar").text(tahunBayarSppTerakhir + '-' + (parseInt(tahunBayarSppTerakhir) + 1));
                             for (i = 0; i < arrayMonth.length; i++) {
