@@ -16,9 +16,7 @@ class IncomeController extends Controller
      */
     public function index()
     {
-        $income_nioni = Payment::with('officers')
-                                    ->with('students')
-                                    ->with('tuition')
+        $income_nioni = Payment::with('officers', 'students', 'tuition')
                                     ->get();
         
         $class_nioni = Kelas::with('vocational')

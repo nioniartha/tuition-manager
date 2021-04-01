@@ -190,6 +190,7 @@ var arrayMonth = [
                             } // end for 
                         }
                     } else {
+                        console.log('masuk zona merah');
                         $("#tab-harus-bayar").text(tahunBayarSppTerakhir + '-' + (parseInt(tahunBayarSppTerakhir) + 1));
                         for (i = 0; i < arrayMonth.length; i++) {
                             if(arrayMonth[i] != 'bulan') {
@@ -230,7 +231,7 @@ var arrayMonth = [
 
                             for (i = 0; i < arrayMonth.length; i++) {
                                 if(arrayMonth[i] != 'bulan') {
-                                    // console.log('sudah bayar' + arrayMonth[i]);
+                                    console.log('sudah bayar' + arrayMonth[i]);
                                     history_x.innerHTML += itemSppBlue(arrayMonth[i]);
                                 }
                             } // end for
