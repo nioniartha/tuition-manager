@@ -16,6 +16,7 @@
                 </div>
             </li>            
             <li class="{{ Request::segment(1) === 'dashboard' ? 'active open' : null }}"><a href="{{route('dashboard.index')}}"><i class="zmdi zmdi-home"></i><span>Dashboard</span></a></li>
+            <li class="{{ Request::segment(1) === 'mainsite' ? 'active open' : null }}"><a href="{{route('mainsite.index')}}"><i class="zmdi zmdi-home"></i><span>Main Site</span></a></li>
             <li class="{{ Request::segment(1) === 'transaction' ? 'active open' : null }}">
                 <a href="#Transaction" class="menu-toggle"><i class="zmdi zmdi-money-box"></i> <span>Transaction</span></a>
                 <ul class="ml-menu">

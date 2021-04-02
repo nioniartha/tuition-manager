@@ -6,6 +6,19 @@
 @stop
 @section('content')
 
+<?php
+
+
+// foreach ($latePayment_nioni as $year => $students) {
+//  echo "<h2>$year</h2>";
+//  echo "<ul>";
+//    foreach ($students as $student) {
+//      echo "<li>".$student->bulan_sudah_bayar."</li>";
+//    }
+//  echo "</ul>";
+// }
+
+?>
 <!-- Exportable Table -->
 <div class="row clearfix">
     <div class="col-lg-12">

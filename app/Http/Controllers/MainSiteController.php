@@ -3,11 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Payment;
-use App\Kelas;
-use App\Tuition;
 
-class LatePaymentController extends Controller
+class MainSiteController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -16,22 +13,7 @@ class LatePaymentController extends Controller
      */
     public function index()
     {
-        $get_record_payment = Payment::all()
-                            ->groupBy('students_id_siswa')
-                            ->sortByDesc('tgl_bayar');
-        
-        $month = (int) date('m');
-
-        $class_nioni = Kelas::with('vocational')
-                            ->get();
-        
-        $tuition_nioni = Tuition::orderBy('created_at','desc')->get();
-
-        // dd($request->query->all());
-        return view ('latePayment.latePayment')
-                ->with('latePayment_nioni',$get_record_payment)
-                ->with('class_nioni',$class_nioni)
-                ->with('tuition_nioni',$tuition_nioni);
+        return view('mainsite.index');
     }
 
     /**
