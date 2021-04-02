@@ -57,3 +57,4 @@ Route::group(['middleware' => ['auth:admin']], function(){
 });
 
 Route::get('mainsite', 'MainSiteController@index')->name('mainsite.index');
+Route::get('/mainsite/login', function () {return view('mainsite.login');});
