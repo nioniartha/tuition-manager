@@ -47,8 +47,7 @@ body.blog .btn.back:hover,
 .resume-card-name {
 	color: #e47297 !important;
 }
-body.blog .btn.back ,
-.personal-info a.btn.btn-blog {
+body.blog .btn.back  {
 	border:1px solid #e47297;
 }
 .bl-main>section.topleft:before {

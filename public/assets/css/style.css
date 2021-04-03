@@ -696,7 +696,7 @@ section.bl-expand .bl-icon-close {
 }
 
 .personal-info a.btn.btn-blog  {
-	margin-left:25px;
+	margin-left:50%;
     background: transparent;
 	transition:.1s;
 }
