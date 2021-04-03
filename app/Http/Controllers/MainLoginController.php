@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use DB;
+use Auth;
+use Alert;
 
 class MainLoginController extends Controller
 {
@@ -13,40 +15,19 @@ class MainLoginController extends Controller
 
     public function postLogin(Request $request)
     {
-        // dd($request->all());
          // Validate the form data
         $this->validate($request, [
           'nisn' => 'required'
         ]);
-        $student_nioni = DB::table('siswa_nioni')->where('nisn',$request->nisn)->first();
-        // dd($student_nioni);
-        if($student_nioni == null){
+          
+          //Attempt to log the user in
+        if (Auth::guard('student')->attempt(['nisn' => $request->nisn, 'password' => $request->password])) {
+            // if successful, then redirect to their intended location
+            Alert::success('Success', 'Login Succes');
+            return redirect()->intended('mainsite');
+        } 
         
-            return redirect('mainsite/login')->with('error', 'Nisn not found');
- 
-         } else {
-            if($request->nisn == $student_nioni->nisn){
-             
-                // Session::put('login', 'Selamat anda berhasil login');
-                return view('mainsite.index');
-     
-             } else {
-                  
-                return redirect('mainsite/login')->with('error', 'Nisn not found');
-       
-             }
-
-         }
-        
-         
-          // Attempt to log the user in
-        // if (Auth::guard('student')->attempt(['nisn' => $request->nisn])) {
-        //     // if successful, then redirect to their intended location
-        //     Alert::success('Success', 'Login Succes');
-        //     return redirect()->intended('mainsite');
-        // } 
-        
-        // return redirect('mainsite/login')->with('error', 'Nisn not found');
+        return redirect('mainsite/login')->with('error', 'Nisn not found');
     }
 
     public function logout()

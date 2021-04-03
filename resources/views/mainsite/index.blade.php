@@ -292,7 +292,7 @@
                                         <li><span class="font-weight-600">Tuition Nominal : </span>French - German</li>
                                     </ul>
                                 </div>
-                                <a href="" class="col s12 m12 l4 xl4 btn btn-blog font-weight-500">
+                                <a href="{{ action('MainLoginController@logout') }}" class="col s12 m12 l4 xl4 btn btn-blog font-weight-500" onclick="return confirm('Are you sure to logout?')">
 									Sign Out <i class="fa fa-power-off"></i>
 								</a>
                             </div>
@@ -408,7 +408,7 @@
                                         <div class="resume-card resume-card-2" data-index="2">
 											<!-- Skills Header Title Starts -->
                                             <div class="resume-card-header">
-                                                <div class="resume-card-name"><i class="fa fa-graduation-cap"></i> Skills</div>
+                                                <div class="resume-card-name"><i class="fa fa-graduation-cap"></i> Third Year</div>
                                             </div>
 											<!-- Skills Header Title Starts -->
                                             <div class="resume-card-body skills">

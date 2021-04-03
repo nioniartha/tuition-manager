@@ -4,7 +4,7 @@ var baseUrl = $('meta[name="base-url"]').attr('content');
 var showAlert = true;
 let nominal_nioni;
 var tahunBayarSppTerakhir;
-var sppSudahBayarNioni;
+var sppSudahBayarNioni, sppBelumBayarNioni;
 var x_nioni, xi_nioni, xii_nioni;
 
 $("#tab-history_kelas_x").hide();
@@ -34,10 +34,16 @@ var arrayMonth = [
         /* SET TEXT JUMLAH BAYAR */
         $("#monthsToBePaid").on("input", function() {
             var qty_nioni =$(this).val();
-            var amount_nioni = (qty_nioni * nominal_nioni)
-            
-            $('.total').text(formatRupiah(amount_nioni));
-            document.getElementById("jumlahBayar").value = amount_nioni;
+            console.log(sppBelumBayarNioni + 'uda bayar ');
+
+            if(qty_nioni <= sppBelumBayarNioni) {
+                var amount_nioni = (qty_nioni * nominal_nioni)
+                $('.total').text(formatRupiah(amount_nioni));
+                document.getElementById("jumlahBayar").value = amount_nioni;
+            } else {
+                alert('Max payment ' + sppBelumBayarNioni + ' month');
+            }
+
         }); 
     });
 
@@ -150,12 +156,15 @@ var arrayMonth = [
                     if (response['transaksi'] != null) {
                         if(response['transaksi'].bulan_sudah_bayar != 12) {
                             sppSudahBayarNioni = response['transaksi'].bulan_sudah_bayar;
+                            sppBelumBayarNioni = response['transaksi'].sisa_bulan_bayar;
                         } else {
                             sppSudahBayarNioni = 0;
+                            sppBelumBayarNioni = 12;
                         }
                         tahunBayarSppTerakhir = parseInt(response['transaksi'].tahun_dibayar);
                     } else {
                         sppSudahBayarNioni = 0;
+                        sppBelumBayarNioni = 12;
                         tahunBayarSppTerakhir = parseInt(element.tuition.tahun);
                     }
 
@@ -170,8 +179,21 @@ var arrayMonth = [
                     xii_nioni = parseInt(element.tuition.tahun) + 2;
 
                     if(response['transaksi'] != null) {
-                        if(tahunBayarSppTerakhir == xi_nioni || xii_nioni && response['transaksi'].bulan_sudah_bayar == 12) {
-                            console.log('ini if loh');  
+                        if(tahunBayarSppTerakhir == xii_nioni && response['transaksi'].bulan_sudah_bayar == 12) {
+                            console.log('ini if yang xii == 12');  
+                            $("#tab-harus-bayar").text((parseInt(tahunBayarSppTerakhir) + 1) + '-' + (parseInt(tahunBayarSppTerakhir) + 2));
+                            for (i = 0; i < arrayMonth.length; i++) {
+                                // console.log('ini i if' + i);
+                                if(arrayMonth[i] != 'bulan') {
+                                    // console.log('sudah bayar' + arrayMonth[i]);
+                                    divCardSpp.innerHTML += itemSppBlue(arrayMonth[i]);
+                                }
+                                
+                            } // end for
+                            $('#form_parent_x').hide();
+                        }
+                        else if(tahunBayarSppTerakhir == xi_nioni && response['transaksi'].bulan_sudah_bayar == 12) {
+                            console.log('ini if xi == 12');  
                             $("#tab-harus-bayar").text((parseInt(tahunBayarSppTerakhir) + 1) + '-' + (parseInt(tahunBayarSppTerakhir) + 2));
                             for (i = 0; i < arrayMonth.length; i++) {
                                 if(i <= sppSudahBayarNioni) {
@@ -187,15 +209,16 @@ var arrayMonth = [
                             } // end for 
                         } else {
                             $("#tab-harus-bayar").text(tahunBayarSppTerakhir + '-' + (parseInt(tahunBayarSppTerakhir) + 1));
+                            console.log('history else kan' + sppSudahBayarNioni);
                             for (i = 0; i < arrayMonth.length; i++) {
                                 if(i <= sppSudahBayarNioni) {
                                     // console.log('ini i if' + i);
                                     if(arrayMonth[i] != 'bulan') {
-                                        // console.log('sudah bayar' + arrayMonth[i]);
+                                        console.log('sudah bayar blue' + arrayMonth[i]);
                                         divCardSpp.innerHTML += itemSppBlue(arrayMonth[i]);
                                     }
                                 } else {
-                                    // console.log('ini i else' + i);
+                                    console.log('ini i else red' + i);
                                     divCardSpp.innerHTML += itemSppRed(arrayMonth[i]);
                                 }
                             } // end for 
@@ -263,6 +286,7 @@ var arrayMonth = [
                     });
                 } else {
                     $("#tab-harus-bayar").text(tahunBayarSppTerakhir + '-' + (parseInt(tahunBayarSppTerakhir) + 1));
+                    console.log('history else');
                     for (i = 0; i < arrayMonth.length; i++) {
                         if(arrayMonth[i] != 'bulan') {
                             // console.log('sudah bayar' + arrayMonth[i]);
