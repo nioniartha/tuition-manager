@@ -95,7 +95,8 @@
 										If you have any suggestion, project or even you want to say Hello.. please fill out the form below and I will reply you shortly.
 									</p>
 								</div>
-                                <form class="contactform" method="post" action="">
+                                <form method="post" action="{{ action('MainLoginController@postLogin') }}">
+                                {{csrf_field()}}
                                     <!-- Name Field Starts -->
                                     <div class="input-field second-font">
                                         <i class="fa fa-user prefix"></i>

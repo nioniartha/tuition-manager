@@ -16,6 +16,7 @@ class AuthenticationController extends Controller
 
     public function postLogin(Request $request)
     {
+      // dd($request->all());
          // Validate the form data
         $this->validate($request, [
           'username' => 'required',

@@ -21,7 +21,7 @@ class Authenticate extends Middleware
       
           } else if (Auth::guard('student')->check()) {
       
-            return redirect('/student');
+            return redirect('mainsite');
             
         }
     }

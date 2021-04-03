@@ -18,6 +18,10 @@ Route::get('/login', 'AuthenticationController@login')->name('login')->middlewar
 Route::post('/login', 'AuthenticationController@postLogin');
 Route::get('/logout', 'AuthenticationController@logout');;
 
+/* Student Login */
+Route::get('mainsite/login', 'MainLoginController@login')->name('main.site.login');
+Route::post('mainsite/login', 'MainLoginController@postLogin');
+
 Route::group(['middleware' => ['auth:admin']], function(){
    
     Route::get('/', function () { return redirect('dashboard/index'); });
@@ -56,5 +60,9 @@ Route::group(['middleware' => ['auth:admin']], function(){
 
 });
 
-Route::get('mainsite', 'MainSiteController@index')->name('mainsite.index');
-Route::get('/mainsite/login', function () {return view('mainsite.login');});
+Route::group(['middleware' => ['auth:admin,student']], function(){
+    Route::get('mainsite', 'MainSiteController@index')->name('mainsite.index');
+});
+
+Route::group(['middleware' => ['auth:student']], function(){
+});
