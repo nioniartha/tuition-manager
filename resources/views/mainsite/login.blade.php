@@ -103,12 +103,6 @@
                                         <input id="nisn" name="nisn" type="text" class="validate" required>
                                         <label class="font-weight-400" for="nisn">Your nisn</label>
                                     </div>
-
-                                    <div class="input-field second-font">
-                                        <i class="fa fa-user prefix"></i>
-                                        <input id="password" name="password" type="password" class="validate" required>
-                                        <label class="font-weight-400" for="password">Your password</label>
-                                    </div>
                                     <!-- Name Field Ends -->
 									<!-- Submit Form Button Starts -->
                                     <div class="col s12 m12 l4 xl4 submit-form">

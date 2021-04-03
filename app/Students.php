@@ -15,7 +15,6 @@ class Students extends Authenticatable
     protected $primaryKey = 'id_siswa';
     protected $fillable = [
         'nisn',
-        'password',
         'nis',
         'nama',
         'no_telp',

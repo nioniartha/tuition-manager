@@ -226,6 +226,7 @@
 </head>
 
 <body class="dark">
+    <?php $student_info = Session::get('student_nioni')?>
     <!-- Preloader Start -->
     <div id="loader-wrapper">
         <div id="loader"></div>
@@ -278,18 +279,18 @@
                                 <h6 class="uppercase"><i class="fa fa-user"></i> Personal Informations</h6>
                                 <div class="col s12 m12 l6 p-none">
                                     <ul class="second-font list-1">
-                                        <li><span class="font-weight-600">Nisn : </span>Lina</li>
-                                        <li><span class="font-weight-600">Full Name : </span>Marzouki</li>
-                                        <li><span class="font-weight-600">Number Phone: </span>21 june 1990 </li>
-                                        <li><span class="font-weight-600">Address : </span>Spanish</li>
+                                        <li><span class="font-weight-600">Nisn : </span>{{$student_info->nisn}}</li>
+                                        <li><span class="font-weight-600">Full Name : </span>{{$student_info->nama}}</li>
+                                        <li><span class="font-weight-600">Number Phone: </span>{{$student_info->no_telp}}</li>
+                                        <li><span class="font-weight-600">Address : </span>{{$student_info->alamat}}</li>
                                     </ul>
                                 </div>
                                 <div class="col s12 m12 l6 p-none">
                                     <ul class="second-font list-2">
-                                        <li><span class="font-weight-600">Class : </span>+34 21 18 40 10</li>
-                                        <li><span class="font-weight-600">Vocational : </span>Madrid, Spain</li>
-                                        <li><span class="font-weight-600">School Year : </span>you@yourwebsite.com</li>
-                                        <li><span class="font-weight-600">Tuition Nominal : </span>French - German</li>
+                                        <li><span class="font-weight-600">Class : </span>{{$student_info->kelas->kelas}} {{$student_info->kelas->vocational->jurusan}} {{$student_info->kelas->nama_kelas}}</li>
+                                        <li><span class="font-weight-600">Vocational : </span>{{$student_info->kelas->vocational->jurusan}}</li>
+                                        <li><span class="font-weight-600">Entry year : </span>{{$student_info->tuition->tahun}}</li>
+                                        <li><span class="font-weight-600">Tuition Nominal : </span>@currency($student_info->tuition->nominal)</li>
                                     </ul>
                                 </div>
                                 <a href="{{ action('MainLoginController@logout') }}" class="col s12 m12 l4 xl4 btn btn-blog font-weight-500" onclick="return confirm('Are you sure to logout?')">
