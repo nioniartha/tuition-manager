@@ -21,7 +21,7 @@ Route::get('/logout', 'AuthenticationController@logout');;
 /* Student Login */
 Route::get('mainsite/login', 'MainLoginController@login')->name('main.site.login');
 Route::post('mainsite/login', 'MainLoginController@postLogin');
-Route::get('mainsite/logout', 'MainLoginController@logout');;
+Route::get('mainsite/logout', 'MainLoginController@logout');
 
 
 Route::group(['middleware' => ['auth:admin']], function(){

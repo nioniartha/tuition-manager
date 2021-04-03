@@ -47,7 +47,7 @@
     position: relative;
     }
 
-    .red {
+    .redspp {
     color: #dc4343;
     fill: none;
     stroke: #dc4343;
@@ -226,7 +226,19 @@
 </head>
 
 <body class="dark">
-    <?php $student_info = Session::get('student_nioni')?>
+    <?php 
+        $months = array('bulan','Jul', 'Aug', 'Sep', 'Oct','Nov', 'Dec', 'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun');
+        $student_info = Session::get('student_nioni');
+        $history_transaksi_siswa = Session::get('history_transaksi_siswa');
+        
+        $first_year= (int)$student_info->tuition->tahun; 
+        $scndYear = $first_year + 1;
+        $thirdYear = $scndYear + 1;
+        $end_year = $thirdYear + 1;
+
+        $done = 0; $latePayment = 0; 
+            
+    ?>
     <!-- Preloader Start -->
     <div id="loader-wrapper">
         <div id="loader"></div>
@@ -303,12 +315,12 @@
 					<!-- Resume Starts -->
 					<div class="resume-container">
                         <div class="container">
-                            <div class="valign-wrapper row">
+                            <div class="valign-wrapper row" style="margin-bottom: 5%;">
 								<!-- Resume Menu Starts -->
                                 <div class="resume-list col l4">
                                     <div class="resume-list-item is-active" data-index="0" id="resume-list-item-0">
                                         <div class="resume-list-item-inner">
-                                            <h6 class="resume-list-item-title uppercase"><i class="fa fa-graduation-cap"></i> First Year</h6>
+                                            <h6 class="resume-list-item-title uppercase"><i class="fa fa-graduation-cap"></i> First Year </h6>
                                         </div>
                                     </div>
                                     <div class="resume-list-item" data-index="1" id="resume-list-item-1">
@@ -330,7 +342,7 @@
                                         <div class="resume-card resume-card-0" data-index="0">
 											<!-- Experience Header Title Starts -->
                                             <div class="resume-card-header">
-                                                <div class="resume-card-name"><i class="fa fa-graduation-cap"></i> First Year</div>
+                                                <div class="resume-card-name"><i class="fa fa-graduation-cap"></i> {{$first_year}} - {{$scndYear}}</div>
                                             </div>
 											<!-- Experience Header Title Ends -->
 											<!-- Experience Content Starts -->
@@ -338,23 +350,44 @@
                                                 <div class="resume-card-body-container second-font">
 													<!-- Single Experience Starts -->
                                                     <div class="resume-content">
-                                                        <?php
-                                                            $months = array(7 => 'Jul', 8 => 'Aug', 9 => 'Sep', 10 => 'Oct', 11 => 'Nov', 12 => 'Dec', 1 => 'Jan', 2 => 'Feb', 3 => 'Mar', 4 => 'Apr', 5 => 'May', 6 => 'Jun',);
-                                                        ?>
                                                         <div class="container-fluid">
                                                             <div class="row">
                                                                 <div class="col-xs-12 col-md-4 col-sm-2">
                                                                     <div class="options">
-                                                                        @foreach($months as $month)
-                                                                            <label class="option">
-                                                                                <div class="basicBox">
-                                                                                {{$month}}
-                                                                                <svg width="130" height="65" viewBox="0 0 130 65" xmlns="http://www.w3.org/2000/svg">
-                                                                                    <rect x='0' y='0' fill='none' width='130' height='65'/>
-                                                                                </svg>
-                                                                                </div>
-                                                                            </label>
-                                                                        @endforeach
+                                                                        
+                                                                        @if($history_transaksi_siswa != null) 
+                                                                            @foreach($history_transaksi_siswa as $key => $value)
+                                                                                @if($key == 0) 
+                                                                                    <?php $done += $value->bulan_sudah_bayar?>
+                                                                                    @for ($i = 0; $i <= $value->bulan_sudah_bayar; $i++)
+                                                                                        @if($months[$i] != 'bulan')
+                                                                                            <label class="option">
+                                                                                                <div class="basicBox">
+                                                                                                {{$months[$i]}}
+                                                                                                <svg width="130" height="65" viewBox="0 0 130 65" xmlns="http://www.w3.org/2000/svg">
+                                                                                                    <rect x='0' y='0' fill='none' width='130' height='65'/>
+                                                                                                </svg>
+                                                                                                </div>
+                                                                                            </label>
+                                                                                        @endif
+                                                                                    @endfor
+
+                                                                                    @for ($i = 0; $i <= $value->sisa_bulan_bayar; $i++)
+                                                                                        @if($months[$i] != 'bulan')
+                                                                                            <label class="option">
+                                                                                                <div class="basicBox redspp">
+                                                                                                {{$months[$i]}}
+                                                                                                <svg width="130" height="65" viewBox="0 0 130 65" xmlns="http://www.w3.org/2000/svg">
+                                                                                                    <rect class="redspp" x='0' y='0' fill='none' width='130' height='65'/>
+                                                                                                </svg>
+                                                                                                </div>
+                                                                                            </label>
+                                                                                        @endif
+                                                                                    @endfor
+                                                                                @endif
+                                                                            @endforeach
+                                                                        @endif
+
                                                                     </div>
                                                                 </div>
                                                             </div>
@@ -370,30 +403,52 @@
                                         <div class="resume-card resume-card-1" data-index="1">
 											<!-- Education Header Title Starts -->
                                             <div class="resume-card-header">
-                                                <div class="resume-card-name"><i class="fa fa-graduation-cap"></i> Second Year</div>
+                                                <div class="resume-card-name"><i class="fa fa-graduation-cap"></i> {{$scndYear}} - {{$thirdYear}}</div>
                                             </div>
 											<!-- Education Header Title Starts -->
                                             <div class="resume-card-body education">
                                                 <div class="resume-card-body-container second-font">
 													<!-- Single Education Starts -->
                                                    <div class="resume-content">
-                                                        <?php
-                                                            $months = array(7 => 'Jul', 8 => 'Aug', 9 => 'Sep', 10 => 'Oct', 11 => 'Nov', 12 => 'Dec', 1 => 'Jan', 2 => 'Feb', 3 => 'Mar', 4 => 'Apr', 5 => 'May', 6 => 'Jun',);
-                                                        ?>
+                                                        
                                                         <div class="container-fluid">
                                                             <div class="row">
                                                                 <div class="col-xs-12 col-md-4 col-sm-2">
-                                                                    <div class="options">
-                                                                        @foreach($months as $month)
-                                                                            <label class="option">
-                                                                                <div class="basicBox">
-                                                                                {{$month}}
-                                                                                <svg width="130" height="65" viewBox="0 0 130 65" xmlns="http://www.w3.org/2000/svg">
-                                                                                    <rect x='0' y='0' fill='none' width='130' height='65'/>
-                                                                                </svg>
-                                                                                </div>
-                                                                            </label>
-                                                                        @endforeach
+                                                                <div class="options">
+                                                                        
+                                                                        @if($history_transaksi_siswa != null) 
+                                                                            @foreach($history_transaksi_siswa as $key => $value)
+                                                                                @if($key == 1) 
+                                                                                    <?php $done += $value->bulan_sudah_bayar?>
+                                                                                    @for ($i = 0; $i <= $value->bulan_sudah_bayar; $i++)
+                                                                                        @if($months[$i] != 'bulan')
+                                                                                            <label class="option">
+                                                                                                <div class="basicBox">
+                                                                                                {{$months[$i]}}
+                                                                                                <svg width="130" height="65" viewBox="0 0 130 65" xmlns="http://www.w3.org/2000/svg">
+                                                                                                    <rect x='0' y='0' fill='none' width='130' height='65'/>
+                                                                                                </svg>
+                                                                                                </div>
+                                                                                            </label>
+                                                                                        @endif
+                                                                                    @endfor
+
+                                                                                    @for ($i = 0; $i <= $value->sisa_bulan_bayar; $i++)
+                                                                                        @if($months[$i] != 'bulan')
+                                                                                            <label class="option">
+                                                                                                <div class="basicBox redspp">
+                                                                                                {{$months[$i]}}
+                                                                                                <svg width="130" height="65" viewBox="0 0 130 65" xmlns="http://www.w3.org/2000/svg">
+                                                                                                    <rect class="redspp" x='0' y='0' fill='none' width='130' height='65'/>
+                                                                                                </svg>
+                                                                                                </div>
+                                                                                            </label>
+                                                                                        @endif
+                                                                                    @endfor
+                                                                                @endif
+                                                                            @endforeach
+                                                                        @endif
+
                                                                     </div>
                                                                 </div>
                                                             </div>
@@ -409,29 +464,51 @@
                                         <div class="resume-card resume-card-2" data-index="2">
 											<!-- Skills Header Title Starts -->
                                             <div class="resume-card-header">
-                                                <div class="resume-card-name"><i class="fa fa-graduation-cap"></i> Third Year</div>
+                                                <div class="resume-card-name"><i class="fa fa-graduation-cap"></i> {{$thirdYear}} - {{$end_year}}</div>
                                             </div>
 											<!-- Skills Header Title Starts -->
                                             <div class="resume-card-body skills">
                                                 <div class="resume-card-body-container second-font">
                                                 <div class="resume-content">
-                                                        <?php
-                                                            $months = array(7 => 'Jul', 8 => 'Aug', 9 => 'Sep', 10 => 'Oct', 11 => 'Nov', 12 => 'Dec', 1 => 'Jan', 2 => 'Feb', 3 => 'Mar', 4 => 'Apr', 5 => 'May', 6 => 'Jun',);
-                                                        ?>
+                                                    
                                                         <div class="container-fluid">
                                                             <div class="row">
                                                                 <div class="col-xs-12 col-md-4 col-sm-2">
-                                                                    <div class="options">
-                                                                        @foreach($months as $month)
-                                                                            <label class="option">
-                                                                                <div class="basicBox">
-                                                                                {{$month}}
-                                                                                <svg width="130" height="65" viewBox="0 0 130 65" xmlns="http://www.w3.org/2000/svg">
-                                                                                    <rect x='0' y='0' fill='none' width='130' height='65'/>
-                                                                                </svg>
-                                                                                </div>
-                                                                            </label>
-                                                                        @endforeach
+                                                                <div class="options">
+                                                                        
+                                                                        @if($history_transaksi_siswa != null) 
+                                                                            @foreach($history_transaksi_siswa as $key => $value)
+                                                                                @if($key == 2) 
+                                                                                <?php $done += $value->bulan_sudah_bayar?>
+                                                                                    @for ($i = 0; $i <= $value->bulan_sudah_bayar; $i++)
+                                                                                        @if($months[$i] != 'bulan')
+                                                                                            <label class="option">
+                                                                                                <div class="basicBox">
+                                                                                                {{$months[$i]}}
+                                                                                                <svg width="130" height="65" viewBox="0 0 130 65" xmlns="http://www.w3.org/2000/svg">
+                                                                                                    <rect x='0' y='0' fill='none' width='130' height='65'/>
+                                                                                                </svg>
+                                                                                                </div>
+                                                                                            </label>
+                                                                                        @endif
+                                                                                    @endfor
+
+                                                                                    @for ($i = 0; $i <= $value->sisa_bulan_bayar; $i++)
+                                                                                        @if($months[$i] != 'bulan')
+                                                                                            <label class="option">
+                                                                                                <div class="basicBox redspp">
+                                                                                                {{$months[$i]}}
+                                                                                                <svg width="130" height="65" viewBox="0 0 130 65" xmlns="http://www.w3.org/2000/svg">
+                                                                                                    <rect class="redspp" x='0' y='0' fill='none' width='130' height='65'/>
+                                                                                                </svg>
+                                                                                                </div>
+                                                                                            </label>
+                                                                                        @endif
+                                                                                    @endfor
+                                                                                @endif
+                                                                            @endforeach
+                                                                        @endif
+
                                                                     </div>
                                                                 </div>
                                                             </div>
@@ -455,9 +532,9 @@
                             <div class="col s12 m4 l4 center-align">
                                 <h3>
                                     <i class="fa fa-graduation-cap"></i>
-									<span class="font-weight-700">2020 - 2021</span>
+									<span class="font-weight-700">{{$first_year}} - {{$scndYear}}</span>
                                 </h3>
-                                <h6 class="uppercase font-weight-500">School Year</h6>
+                                <h6 class="uppercase font-weight-500">Entry Year</h6>
                             </div>
                             <!-- Fact Badge Item Ends -->
                             <!-- Fact Badge Item Starts -->
@@ -473,7 +550,7 @@
                             <div class="col s12 m4 l4 center-align">
                                  <h3>
                                     <i class="fa fa-check-square"></i>
-									<span class="font-weight-700">10</span>
+									<span class="font-weight-700">{{$done}}</span>
                                 </h3>
                                 <h6 class="uppercase font-weight-500">Done</h6>
                             </div>

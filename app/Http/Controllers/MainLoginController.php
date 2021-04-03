@@ -44,12 +44,20 @@ class MainLoginController extends Controller
                                   ->with('tuition')
                                   ->where('nisn', $request->nisn)
                                   ->first();
-        // dd($student_nioni);
+        
         if($student_nioni == null){
             return redirect('mainsite/login')->with('alert', 'Nisn not found');
          } else {
             if($request->nisn == $student_nioni->nisn){
-                Session::put('student_nioni',$student_nioni->nisn);
+                $history_transaksi_siswa = Payment::where('students_id_siswa',$student_nioni->id_siswa)
+                            ->orderBy('tahun_dibayar', 'asc')
+                            ->get();
+
+                
+                // dd($history_transaksi_siswa);
+                
+                Session::put('student_nioni',$student_nioni);
+                Session::put('history_transaksi_siswa',$history_transaksi_siswa);
                 Session::put('login',TRUE);
                 return redirect('mainsite');
              } else {
@@ -57,13 +65,6 @@ class MainLoginController extends Controller
              }
 
          }
-          //Attempt to log the user in
-        // if (Auth::guard('student')->attempt(['nisn' => $request->nisn, 'password' => $request->password])) {
-        //     // if successful, then redirect to their intended location
-            
-        //     Alert::success('Success', 'Login Succes');
-        //     return redirect()->intended('mainsite');
-        // } 
         
         return redirect('mainsite/login')->with('error', 'Nisn not found');
     }
