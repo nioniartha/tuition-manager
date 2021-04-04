@@ -106,7 +106,6 @@
                                                             <h4 class="mb-0 text-danger total"></h4>
 
                                                             <div class="modal-footer">
-                                                                <a href="javascript:void(0);" class="btn btn-info"><i class="zmdi zmdi-print"></i></a>
                                                                 <button class="btn btn-raised btn-primary waves-effect" type="submit">Submit</button>
                                                             </div>
                                                     </form>

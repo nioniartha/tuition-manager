@@ -45,6 +45,7 @@ Route::group(['middleware' => ['auth:admin']], function(){
     /* Payment */
     Route::get('history', function () { return redirect('history/index'); });
     Route::get('history/index', 'HistoryController@index')->name('history.history');
+    Route::get('payment/detail', function () {return view('payment.payment_detail');});
 
     /* Module */
     Route::get('module', function () { return redirect('module/officers'); });
@@ -61,6 +62,7 @@ Route::group(['middleware' => ['auth:admin']], function(){
 
 
     Route::get('report/latePayment', 'LatePaymentController@index')->name('report.latePayment');
+    Route::get('report/latePayment/filter', 'LatePaymentController@filter')->name('report.latePayment.filter');
 
 });
 

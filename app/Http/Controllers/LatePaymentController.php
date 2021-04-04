@@ -15,48 +15,61 @@ class LatePaymentController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
         $siswa_nunggak = [];
         $get_record_payment = Payment::all()
                             ->groupBy('students_id_siswa')
                             ->sortByDesc('tgl_bayar');
-        
+        // dd($get_record_payment);
         if($get_record_payment != null) {
             foreach($get_record_payment as $keyId => $value) {
                 foreach($value as $key => $val) {
                     $check_transaksi_siswa = Payment::where('students_id_siswa',$keyId)
                             ->latest('created_at')
                             ->first();
+
+                    $tahun_dibayar = (int)$check_transaksi_siswa->tahun_dibayar;
+                    $bulan_dibayar = $check_transaksi_siswa->bulan_sudah_bayar;
+                            // if(!empty($request->kelas)) {
+                            //     $check_transaksi_siswa = $check_transaksi_siswa->whereHas('students', function($query) use($request){
+                            //                                 return $query->where('kelas_id_kelas', $request->kelas);
+                            //                             })
+                            //                             ->where('jumlah_bayar', '!=', 0)
+                            //                             ->first();
+                            //     // dd($check_transaksi_siswa);
+                            //     $tahun_dibayar = (int)$check_transaksi_siswa['tahun_dibayar'];
+                            //     $bulan_dibayar = $check_transaksi_siswa['bulan_sudah_bayar'];
+                            // }
                     
                             $month_now = (int) date('m');
                             $year_now = date("Y");
-                            $year_now = (int)$check_transaksi_siswa->tahun_dibayar + 1;
+                            $year_now = (int)$tahun_dibayar + 1;
                             $done = 0; $latePayment = 0; 
 
-                            $done += $check_transaksi_siswa->bulan_sudah_bayar;
-                            if($year_now == $check_transaksi_siswa->tahun_dibayar || $year_now) {
+                            $done += $bulan_dibayar;
+                            if($year_now == $tahun_dibayar || $year_now) {
                                 if($month_now <= 6) {
                                     $month_now = $month_now + 6;
-                                    if($check_transaksi_siswa->bulan_sudah_bayar < 6) {
-                                        $latePayment = $month_now - (+$check_transaksi_siswa->bulan_sudah_bayar);
+                                    if($bulan_dibayar < 6) {
+                                        $latePayment = $month_now - (+$bulan_dibayar);
                                         $latePayment = (-$latePayment);
                                     } else {
-                                        $latePayment = $month_now - $check_transaksi_siswa->bulan_sudah_bayar;
+                                        $latePayment = $month_now - $bulan_dibayar;
                                     }
                                 } else {
                                     $month_now = $month_now - 6;
-                                    if($check_transaksi_siswa->bulan_sudah_bayar != 12) {
-                                        if($check_transaksi_siswa->bulan_sudah_bayar > 6) {
-                                            $latePayment = $month_now - (+$check_transaksi_siswa->bulan_sudah_bayar);
+                                    if($bulan_dibayar != 12) {
+                                        if($bulan_dibayar > 6) {
+                                            $latePayment = $month_now - (+$bulan_dibayar);
                                             $latePayment = (-$latePayment);
                                         } else {
-                                            $latePayment = $month_now - $check_transaksi_siswa->bulan_sudah_bayar;
+                                            $latePayment = $month_now - $bulan_dibayar;
                                         }  
-                                    }                                                                                              $latePayment = $month_now - (+$check_transaksi_siswa->bulan_sudah_bayar);
+                                }  
 
                                 }
-                                if($latePayment > 1 || $check_transaksi_siswa->bulan_sudah_bayar == 12) {
+                                if($latePayment > 1 || $bulan_dibayar == 12) {
                                     $latePayment = 0;
                                 }
                                 
@@ -69,7 +82,6 @@ class LatePaymentController extends Controller
                                                                             ->with('kelas.vocational')
                                                                             ->with('tuition')
                                                                             ->first();
-                                    $siswa_nunggak[] = array_merge(['payment'=>$check_transaksi_siswa->toArray()], ['tunggakan' => $latePayment], ['data_siswa' =>$data_siswa->toArray()]);
                                 }
                                 
                                 
@@ -77,6 +89,8 @@ class LatePaymentController extends Controller
                             }
                     
                 }// end foreach
+                $siswa_nunggak[] = array_merge(['payment'=>$check_transaksi_siswa->toArray()], ['tunggakan' => $latePayment], ['data_siswa' =>$data_siswa->toArray()]);
+
             }
             // dd($siswa_nunggak);
         }
@@ -95,6 +109,11 @@ class LatePaymentController extends Controller
                 ->with('tuition_nioni',$tuition_nioni);
     }
 
+    public function filter(Request $request)
+    {
+        // dd($request->query->all());
+                   
+    }
     /**
      * Show the form for creating a new resource.
      *

@@ -39,6 +39,7 @@ class PaymentController extends Controller
                             ->get();
 
         $check_transaksi_siswa = Payment::where('students_id_siswa',$request->data)
+                            ->where('jumlah_bayar', '!=', 0)
                             ->latest('created_at')
                             ->first();
 
@@ -96,7 +97,7 @@ class PaymentController extends Controller
             }
         }
         
-        return redirect('payment/index')->with('success', 'payment is successful');
+        return view('payment.payment_detail')->with('check_transaksi_siswa',$check_transaksi_siswa);
 
     }
 

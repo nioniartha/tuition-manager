@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="utf-8" />
-    <title>Lina - Creative vCard, Resume, CV</title>
+    <title>{{ config('app.name') }} - Mainsite User</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link href="https://fonts.googleapis.com/css?family=Poppins:400,400i,500,500i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet">
@@ -21,6 +21,39 @@
 </head>
 
 <body class="dark">
+@if(count($errors) > 0)
+@foreach($errors->all() as $error) 
+<div class="alert alert-danger" role="alert">
+    <div class="container">
+            <div class="alert-icon">
+                <i class="zmdi zmdi-block"></i>
+            </div>
+            <strong>Oh snap!</strong> {{$error}}
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">
+                    <i class="zmdi zmdi-close"></i>
+                </span>
+            </button>
+    </div>
+</div>
+@endforeach
+@endif
+
+@if(session('success'))
+    <div class="alert alert-success" role="alert">
+        <div class="container">
+            <div class="alert-icon">
+                <i class="zmdi zmdi-thumb-up"></i>
+            </div>
+            <strong>Well done!</strong>  {{session('success')}}
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">
+                    <i class="zmdi zmdi-close"></i>
+                </span>
+            </button>
+        </div>
+    </div>
+@endif
     <!-- Preloader Start -->
     <div id="loader-wrapper">
         <div id="loader"></div>
@@ -92,7 +125,7 @@
                                     <!-- Name Field Starts -->
                                     <div class="input-field second-font" style="width: 60%;">
                                         <i class="fa fa-user prefix"></i>
-                                        <input id="nisn" name="nisn" type="text" class="validate" required>
+                                        <input id="nisn" name="nisn" type="number" class="validate" required>
                                         <label class="font-weight-400" for="nisn">Your nisn</label>
                                     </div>
                                     <!-- Name Field Ends -->
