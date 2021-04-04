@@ -229,7 +229,11 @@
     <?php 
         $months = array('bulan','Jul', 'Aug', 'Sep', 'Oct','Nov', 'Dec', 'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun');
         $student_info = Session::get('student_nioni');
-        $history_transaksi_siswa = Session::get('history_transaksi_siswa');
+        // $history_transaksi_siswa = Session::get('history_transaksi_siswa');
+        
+        // late payment
+        $month_now = (int) date('m');
+        $year_now = date("Y");
         
         $first_year= (int)$student_info->tuition->tahun; 
         $scndYear = $first_year + 1;
@@ -358,23 +362,31 @@
                                                                         @if($history_transaksi_siswa != null) 
                                                                             @foreach($history_transaksi_siswa as $key => $value)
                                                                                 @if($key == 0) 
-                                                                                    <?php $done += $value->bulan_sudah_bayar?>
-                                                                                    @for ($i = 0; $i <= $value->bulan_sudah_bayar; $i++)
-                                                                                        @if($months[$i] != 'bulan')
-                                                                                            <label class="option">
-                                                                                                <div class="basicBox">
-                                                                                                {{$months[$i]}}
-                                                                                                <svg width="130" height="65" viewBox="0 0 130 65" xmlns="http://www.w3.org/2000/svg">
-                                                                                                    <rect x='0' y='0' fill='none' width='130' height='65'/>
-                                                                                                </svg>
-                                                                                                </div>
-                                                                                            </label>
-                                                                                        @endif
-                                                                                    @endfor
-
-                                                                                    @for ($i = 0; $i <= $value->sisa_bulan_bayar; $i++)
-                                                                                        @if($months[$i] != 'bulan')
-                                                                                            <label class="option">
+                                                                                    <?php 
+                                                                                        $done += $value->bulan_sudah_bayar;
+                                                                                        if($year_now == $value->tahun_dibayar || $year_now == (int)$value->tahun_dibayar + 1) {
+                                                                                            if($month_now <= 6) {
+                                                                                                $month_now = $month_now + 6;
+                                                                                            } else {
+                                                                                                $month_now = $month_now - 6;
+                                                                                            }
+                                                                                            $latePayment = $month_now - $value->bulan_sudah_bayar;
+                                                                                        }
+                                                                                    ?>
+                                                                                    @for ($i = 0; $i <= 12; $i++)
+                                                                                        @if($i <= $value->bulan_sudah_bayar)
+                                                                                            @if($months[$i] != 'bulan')
+                                                                                                <label class="option">
+                                                                                                    <div class="basicBox">
+                                                                                                    {{$months[$i]}}
+                                                                                                    <svg width="130" height="65" viewBox="0 0 130 65" xmlns="http://www.w3.org/2000/svg">
+                                                                                                        <rect x='0' y='0' fill='none' width='130' height='65'/>
+                                                                                                    </svg>
+                                                                                                    </div>
+                                                                                                </label>
+                                                                                            @endif
+                                                                                        @else
+                                                                                        <label class="option">
                                                                                                 <div class="basicBox redspp">
                                                                                                 {{$months[$i]}}
                                                                                                 <svg width="130" height="65" viewBox="0 0 130 65" xmlns="http://www.w3.org/2000/svg">
@@ -384,8 +396,21 @@
                                                                                             </label>
                                                                                         @endif
                                                                                     @endfor
+
                                                                                 @endif
                                                                             @endforeach
+                                                                        @else
+                                                                            <?php 
+                                                                                $done += 0;
+                                                                                if($year_now == $student_info->tuition->tahun || $year_now == (int)$student_info->tuition->tahun + 1) {
+                                                                                    if($month_now <= 6) {
+                                                                                        $month_now = $month_now + 6;
+                                                                                    } else {
+                                                                                        $month_now = $month_now - 6;
+                                                                                    }
+                                                                                    $latePayment = $month_now - 0;
+                                                                                }
+                                                                            ?>
                                                                         @endif
 
                                                                     </div>
@@ -416,26 +441,34 @@
                                                                 <div class="col-xs-12 col-md-4 col-sm-2">
                                                                 <div class="options">
                                                                         
-                                                                        @if($history_transaksi_siswa != null) 
+                                                                @if($history_transaksi_siswa != null) 
                                                                             @foreach($history_transaksi_siswa as $key => $value)
                                                                                 @if($key == 1) 
-                                                                                    <?php $done += $value->bulan_sudah_bayar?>
-                                                                                    @for ($i = 0; $i <= $value->bulan_sudah_bayar; $i++)
-                                                                                        @if($months[$i] != 'bulan')
-                                                                                            <label class="option">
-                                                                                                <div class="basicBox">
-                                                                                                {{$months[$i]}}
-                                                                                                <svg width="130" height="65" viewBox="0 0 130 65" xmlns="http://www.w3.org/2000/svg">
-                                                                                                    <rect x='0' y='0' fill='none' width='130' height='65'/>
-                                                                                                </svg>
-                                                                                                </div>
-                                                                                            </label>
-                                                                                        @endif
-                                                                                    @endfor
-
-                                                                                    @for ($i = 0; $i <= $value->sisa_bulan_bayar; $i++)
-                                                                                        @if($months[$i] != 'bulan')
-                                                                                            <label class="option">
+                                                                                    <?php 
+                                                                                        $done += $value->bulan_sudah_bayar;
+                                                                                        if($year_now == $value->tahun_dibayar || $year_now == (int)$value->tahun_dibayar + 1) {
+                                                                                            if($month_now <= 6) {
+                                                                                                $month_now = $month_now + 6;
+                                                                                            } else {
+                                                                                                $month_now = $month_now - 6;
+                                                                                            }
+                                                                                            $latePayment = $month_now - $value->bulan_sudah_bayar;
+                                                                                        }
+                                                                                    ?>
+                                                                                    @for ($i = 0; $i <= 12; $i++)
+                                                                                        @if($i <= $value->bulan_sudah_bayar)
+                                                                                            @if($months[$i] != 'bulan')
+                                                                                                <label class="option">
+                                                                                                    <div class="basicBox">
+                                                                                                    {{$months[$i]}}
+                                                                                                    <svg width="130" height="65" viewBox="0 0 130 65" xmlns="http://www.w3.org/2000/svg">
+                                                                                                        <rect x='0' y='0' fill='none' width='130' height='65'/>
+                                                                                                    </svg>
+                                                                                                    </div>
+                                                                                                </label>
+                                                                                            @endif
+                                                                                        @else
+                                                                                        <label class="option">
                                                                                                 <div class="basicBox redspp">
                                                                                                 {{$months[$i]}}
                                                                                                 <svg width="130" height="65" viewBox="0 0 130 65" xmlns="http://www.w3.org/2000/svg">
@@ -445,6 +478,7 @@
                                                                                             </label>
                                                                                         @endif
                                                                                     @endfor
+
                                                                                 @endif
                                                                             @endforeach
                                                                         @endif
@@ -476,26 +510,34 @@
                                                                 <div class="col-xs-12 col-md-4 col-sm-2">
                                                                 <div class="options">
                                                                         
-                                                                        @if($history_transaksi_siswa != null) 
+                                                                @if($history_transaksi_siswa != null) 
                                                                             @foreach($history_transaksi_siswa as $key => $value)
                                                                                 @if($key == 2) 
-                                                                                <?php $done += $value->bulan_sudah_bayar?>
-                                                                                    @for ($i = 0; $i <= $value->bulan_sudah_bayar; $i++)
-                                                                                        @if($months[$i] != 'bulan')
-                                                                                            <label class="option">
-                                                                                                <div class="basicBox">
-                                                                                                {{$months[$i]}}
-                                                                                                <svg width="130" height="65" viewBox="0 0 130 65" xmlns="http://www.w3.org/2000/svg">
-                                                                                                    <rect x='0' y='0' fill='none' width='130' height='65'/>
-                                                                                                </svg>
-                                                                                                </div>
-                                                                                            </label>
-                                                                                        @endif
-                                                                                    @endfor
-
-                                                                                    @for ($i = 0; $i <= $value->sisa_bulan_bayar; $i++)
-                                                                                        @if($months[$i] != 'bulan')
-                                                                                            <label class="option">
+                                                                                    <?php 
+                                                                                        $done += $value->bulan_sudah_bayar;
+                                                                                        if($year_now == $value->tahun_dibayar || $year_now == (int)$value->tahun_dibayar + 1) {
+                                                                                            if($month_now <= 6) {
+                                                                                                $month_now = $month_now + 6;
+                                                                                            } else {
+                                                                                                $month_now = $month_now - 6;
+                                                                                            }
+                                                                                            $latePayment = $month_now - $value->bulan_sudah_bayar;
+                                                                                        }
+                                                                                    ?>
+                                                                                    @for ($i = 0; $i <= 12; $i++)
+                                                                                        @if($i <= $value->bulan_sudah_bayar)
+                                                                                            @if($months[$i] != 'bulan')
+                                                                                                <label class="option">
+                                                                                                    <div class="basicBox">
+                                                                                                    {{$months[$i]}}
+                                                                                                    <svg width="130" height="65" viewBox="0 0 130 65" xmlns="http://www.w3.org/2000/svg">
+                                                                                                        <rect x='0' y='0' fill='none' width='130' height='65'/>
+                                                                                                    </svg>
+                                                                                                    </div>
+                                                                                                </label>
+                                                                                            @endif
+                                                                                        @else
+                                                                                        <label class="option">
                                                                                                 <div class="basicBox redspp">
                                                                                                 {{$months[$i]}}
                                                                                                 <svg width="130" height="65" viewBox="0 0 130 65" xmlns="http://www.w3.org/2000/svg">
@@ -505,6 +547,7 @@
                                                                                             </label>
                                                                                         @endif
                                                                                     @endfor
+
                                                                                 @endif
                                                                             @endforeach
                                                                         @endif
@@ -541,7 +584,7 @@
                             <div class="col s12 m4 l4 center-align">
                                 <h3>
                                     <i class="fa fa-minus-square"></i>
-									<span class="font-weight-700">-1</span>
+									<span class="font-weight-700">{{$latePayment}}</span>
                                 </h3>
                                 <h6 class="uppercase font-weight-500">Late Payment</h6>
                             </div>

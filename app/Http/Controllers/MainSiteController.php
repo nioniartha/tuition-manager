@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Payment;
+use Session;
 
 class MainSiteController extends Controller
 {
@@ -13,7 +15,13 @@ class MainSiteController extends Controller
      */
     public function index()
     {
-        return view('mainsite.index');
+        $student_info = Session::get('student_nioni');
+        $history_transaksi_siswa = Payment::where('students_id_siswa',$student_info->id_siswa)
+                            ->orderBy('tahun_dibayar', 'desc')
+                            ->latest('tgl_bayar')
+                            ->get();
+        // dd($history_transaksi_siswa);
+        return view('mainsite.index')->with('history_transaksi_siswa', $history_transaksi_siswa);
     }
 
     /**

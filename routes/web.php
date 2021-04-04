@@ -22,6 +22,8 @@ Route::get('/logout', 'AuthenticationController@logout');;
 Route::get('mainsite/login', 'MainLoginController@login')->name('main.site.login');
 Route::post('mainsite/login', 'MainLoginController@postLogin');
 Route::get('mainsite/logout', 'MainLoginController@logout');
+Route::get('mainsite', 'MainSiteController@index')->name('mainsite.index');
+
 
 
 Route::group(['middleware' => ['auth:admin']], function(){
@@ -63,7 +65,6 @@ Route::group(['middleware' => ['auth:admin']], function(){
 });
 
 Route::group(['middleware' => ['auth:admin,student']], function(){
-    Route::get('mainsite', 'MainSiteController@index')->name('mainsite.index');
 });
 
 Route::group(['middleware' => ['auth:student']], function(){

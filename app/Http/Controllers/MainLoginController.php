@@ -49,15 +49,7 @@ class MainLoginController extends Controller
             return redirect('mainsite/login')->with('alert', 'Nisn not found');
          } else {
             if($request->nisn == $student_nioni->nisn){
-                $history_transaksi_siswa = Payment::where('students_id_siswa',$student_nioni->id_siswa)
-                            ->orderBy('tahun_dibayar', 'asc')
-                            ->get();
-
-                
-                // dd($history_transaksi_siswa);
-                
                 Session::put('student_nioni',$student_nioni);
-                Session::put('history_transaksi_siswa',$history_transaksi_siswa);
                 Session::put('login',TRUE);
                 return redirect('mainsite');
              } else {
@@ -71,8 +63,8 @@ class MainLoginController extends Controller
 
     public function logout()
     {
-      Session::flush();
-      return redirect('mainsite/login')->with('alert','Logout Success');
+        Session::put('login',FALSE);
+        return redirect('mainsite/login')->with('alert','Logout Success');
   
     }
 }
