@@ -16,12 +16,23 @@ class MainSiteController extends Controller
     public function index()
     {
         $student_info = Session::get('student_nioni');
-        $history_transaksi_siswa = Payment::where('students_id_siswa',$student_info->id_siswa)
-                            ->orderBy('tahun_dibayar', 'desc')
-                            ->latest('tgl_bayar')
-                            ->get();
-        // dd($history_transaksi_siswa);
-        return view('mainsite.index')->with('history_transaksi_siswa', $history_transaksi_siswa);
+
+        $check_transaksi_siswa = Payment::where('students_id_siswa',$student_info->id_siswa)
+                            ->latest('created_at')
+                            ->first();
+        if($check_transaksi_siswa != null) {
+            $history_transaksi_siswa = Payment::where('students_id_siswa',$student_info->id_siswa)
+                                                    ->where('bulan_sudah_bayar', 12)
+                                                    ->orderBy('tahun_dibayar', 'asc')
+                                                    ->having('tahun_dibayar', '<=', $check_transaksi_siswa->tahun_dibayar)
+                                                    ->get();
+        } else {
+            $history_transaksi_siswa = null;
+        }
+        // dd($check_transaksi_siswa);
+        return view('mainsite.index')
+                            ->with('check_transaksi_siswa', $check_transaksi_siswa)
+                            ->with('history_transaksi_siswa', $history_transaksi_siswa);
     }
 
     /**

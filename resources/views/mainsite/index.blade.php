@@ -229,16 +229,31 @@
     <?php 
         $months = array('bulan','Jul', 'Aug', 'Sep', 'Oct','Nov', 'Dec', 'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun');
         $student_info = Session::get('student_nioni');
-        // $history_transaksi_siswa = Session::get('history_transaksi_siswa');
         
         // late payment
         $month_now = (int) date('m');
         $year_now = date("Y");
-        
-        $first_year= (int)$student_info->tuition->tahun; 
+
+        $first_year = (int)$student_info->tuition->tahun;
         $scndYear = $first_year + 1;
-        $thirdYear = $scndYear + 1;
-        $end_year = $thirdYear + 1;
+
+        $h1_year = 0; 
+        $h2_year = 0;
+        $h3_year = 0;
+        $h4_year = 0;
+
+        foreach($history_transaksi_siswa as $key => $value) {
+            if($key == 0) {
+                $h1_year = (int) $value->tahun_dibayar;
+                $h2_year = $h1_year + 1;
+            } 
+            if($key == 1) {
+                $h3_year = (int) $value->tahun_dibayar;
+                $h4_year = $h3_year + 1;                                                                  
+            }
+        }
+
+        $year_now = (int)$check_transaksi_siswa->tahun_dibayar + 1;
 
         $done = 0; $latePayment = 0; 
             
@@ -324,7 +339,7 @@
                                 <div class="resume-list col l4">
                                     <div class="resume-list-item is-active" data-index="0" id="resume-list-item-0">
                                         <div class="resume-list-item-inner">
-                                            <h6 class="resume-list-item-title uppercase"><i class="fa fa-graduation-cap"></i> First Year </h6>
+                                            <h6 class="resume-list-item-title uppercase"><i class="fa fa-graduation-cap"></i> Current Payment </h6>
                                         </div>
                                     </div>
                                     <div class="resume-list-item" data-index="1" id="resume-list-item-1">
@@ -346,7 +361,7 @@
                                         <div class="resume-card resume-card-0" data-index="0">
 											<!-- Experience Header Title Starts -->
                                             <div class="resume-card-header">
-                                                <div class="resume-card-name"><i class="fa fa-graduation-cap"></i> {{$first_year}} - {{$scndYear}}</div>
+                                                <div class="resume-card-name"><i class="fa fa-graduation-cap"></i> {{$check_transaksi_siswa->tahun_dibayar}} - {{$year_now}}</div>
                                             </div>
 											<!-- Experience Header Title Ends -->
 											<!-- Experience Content Starts -->
@@ -358,23 +373,35 @@
                                                             <div class="row">
                                                                 <div class="col-xs-12 col-md-4 col-sm-2">
                                                                     <div class="options">
-                                                                        
-                                                                        @if($history_transaksi_siswa != null) 
-                                                                            @foreach($history_transaksi_siswa as $key => $value)
-                                                                                @if($key == 0) 
                                                                                     <?php 
-                                                                                        $done += $value->bulan_sudah_bayar;
-                                                                                        if($year_now == $value->tahun_dibayar || $year_now == (int)$value->tahun_dibayar + 1) {
+                                                                                        $done += $check_transaksi_siswa->bulan_sudah_bayar;
+                                                                                        if($year_now == $check_transaksi_siswa->tahun_dibayar || $year_now) {
                                                                                             if($month_now <= 6) {
                                                                                                 $month_now = $month_now + 6;
+                                                                                                if($check_transaksi_siswa->bulan_sudah_bayar < 6) {
+                                                                                                    $latePayment = $month_now - (+$check_transaksi_siswa->bulan_sudah_bayar);
+                                                                                                    $latePayment = (-$latePayment);
+                                                                                                } else {
+                                                                                                    $latePayment = $month_now - $check_transaksi_siswa->bulan_sudah_bayar;
+                                                                                                }
                                                                                             } else {
                                                                                                 $month_now = $month_now - 6;
+                                                                                                if($check_transaksi_siswa->bulan_sudah_bayar > 6) {
+                                                                                                    $latePayment = $month_now - (+$check_transaksi_siswa->bulan_sudah_bayar);
+                                                                                                    $latePayment = (-$latePayment);
+                                                                                                } else {
+                                                                                                    $latePayment = $month_now - $check_transaksi_siswa->bulan_sudah_bayar;
+                                                                                                }                                                                                                $latePayment = $month_now - (+$check_transaksi_siswa->bulan_sudah_bayar);
+
                                                                                             }
-                                                                                            $latePayment = $month_now - $value->bulan_sudah_bayar;
+                                                                                            if($latePayment > 1) {
+                                                                                                $latePayment = 0;
+                                                                                            }
+                                                                                            
                                                                                         }
                                                                                     ?>
                                                                                     @for ($i = 0; $i <= 12; $i++)
-                                                                                        @if($i <= $value->bulan_sudah_bayar)
+                                                                                        @if($i <= $check_transaksi_siswa->bulan_sudah_bayar)
                                                                                             @if($months[$i] != 'bulan')
                                                                                                 <label class="option">
                                                                                                     <div class="basicBox">
@@ -397,21 +424,6 @@
                                                                                         @endif
                                                                                     @endfor
 
-                                                                                @endif
-                                                                            @endforeach
-                                                                        @else
-                                                                            <?php 
-                                                                                $done += 0;
-                                                                                if($year_now == $student_info->tuition->tahun || $year_now == (int)$student_info->tuition->tahun + 1) {
-                                                                                    if($month_now <= 6) {
-                                                                                        $month_now = $month_now + 6;
-                                                                                    } else {
-                                                                                        $month_now = $month_now - 6;
-                                                                                    }
-                                                                                    $latePayment = $month_now - 0;
-                                                                                }
-                                                                            ?>
-                                                                        @endif
 
                                                                     </div>
                                                                 </div>
@@ -428,7 +440,7 @@
                                         <div class="resume-card resume-card-1" data-index="1">
 											<!-- Education Header Title Starts -->
                                             <div class="resume-card-header">
-                                                <div class="resume-card-name"><i class="fa fa-graduation-cap"></i> {{$scndYear}} - {{$thirdYear}}</div>
+                                                <div class="resume-card-name"><i class="fa fa-graduation-cap"></i> {{$h1_year}} - {{$h2_year}}</div>
                                             </div>
 											<!-- Education Header Title Starts -->
                                             <div class="resume-card-body education">
@@ -443,18 +455,8 @@
                                                                         
                                                                 @if($history_transaksi_siswa != null) 
                                                                             @foreach($history_transaksi_siswa as $key => $value)
-                                                                                @if($key == 1) 
-                                                                                    <?php 
-                                                                                        $done += $value->bulan_sudah_bayar;
-                                                                                        if($year_now == $value->tahun_dibayar || $year_now == (int)$value->tahun_dibayar + 1) {
-                                                                                            if($month_now <= 6) {
-                                                                                                $month_now = $month_now + 6;
-                                                                                            } else {
-                                                                                                $month_now = $month_now - 6;
-                                                                                            }
-                                                                                            $latePayment = $month_now - $value->bulan_sudah_bayar;
-                                                                                        }
-                                                                                    ?>
+                                                                                @if($key == 0) 
+                                                                                    <?php $done += $value->bulan_sudah_bayar?>
                                                                                     @for ($i = 0; $i <= 12; $i++)
                                                                                         @if($i <= $value->bulan_sudah_bayar)
                                                                                             @if($months[$i] != 'bulan')
@@ -498,7 +500,7 @@
                                         <div class="resume-card resume-card-2" data-index="2">
 											<!-- Skills Header Title Starts -->
                                             <div class="resume-card-header">
-                                                <div class="resume-card-name"><i class="fa fa-graduation-cap"></i> {{$thirdYear}} - {{$end_year}}</div>
+                                                <div class="resume-card-name"><i class="fa fa-graduation-cap"></i> {{$h3_year}} - {{$h4_year}}</div>
                                             </div>
 											<!-- Skills Header Title Starts -->
                                             <div class="resume-card-body skills">
@@ -512,18 +514,8 @@
                                                                         
                                                                 @if($history_transaksi_siswa != null) 
                                                                             @foreach($history_transaksi_siswa as $key => $value)
-                                                                                @if($key == 2) 
-                                                                                    <?php 
-                                                                                        $done += $value->bulan_sudah_bayar;
-                                                                                        if($year_now == $value->tahun_dibayar || $year_now == (int)$value->tahun_dibayar + 1) {
-                                                                                            if($month_now <= 6) {
-                                                                                                $month_now = $month_now + 6;
-                                                                                            } else {
-                                                                                                $month_now = $month_now - 6;
-                                                                                            }
-                                                                                            $latePayment = $month_now - $value->bulan_sudah_bayar;
-                                                                                        }
-                                                                                    ?>
+                                                                                @if($key == 1)
+                                                                                <?php $done += $value->bulan_sudah_bayar?>
                                                                                     @for ($i = 0; $i <= 12; $i++)
                                                                                         @if($i <= $value->bulan_sudah_bayar)
                                                                                             @if($months[$i] != 'bulan')
