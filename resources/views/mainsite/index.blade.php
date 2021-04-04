@@ -261,14 +261,22 @@
 
         $done = 0; $latePayment = 0; 
 
-        
-        if($check_transaksi_siswa != null) {
-            $bulan_sudah_bayar = $check_transaksi_siswa->bulan_sudah_bayar;
-            $tahun_dibayar = $check_transaksi_siswa->tahun_dibayar;
+        if ($check_transaksi_siswa != null) {
+            if($check_transaksi_siswa->bulan_sudah_bayar != 12) {
+                $bulan_sudah_bayar = $check_transaksi_siswa->bulan_sudah_bayar;
+                $sppBelumBayarNioni = $check_transaksi_siswa->sisa_bulan_bayar;
+                $tahun_dibayar = (int)$check_transaksi_siswa->tahun_dibayar;
+            } else {
+                $bulan_sudah_bayar = 0;
+                $sppBelumBayarNioni = 12;
+                $tahun_dibayar = (int)$check_transaksi_siswa->tahun_dibayar + 1;
+            }
         } else {
             $bulan_sudah_bayar = 0;
+            $sppBelumBayarNioni = 12;
             $tahun_dibayar = (int)$student_info->tuition->tahun;
         }
+
         $scndYear = $tahun_dibayar + 1;
             
     ?>

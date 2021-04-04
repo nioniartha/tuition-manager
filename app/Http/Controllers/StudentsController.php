@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Students;
 use App\Kelas;
 use App\Tuition;
+use App\Payment;
 
 class StudentsController extends Controller
 {
@@ -65,6 +66,18 @@ class StudentsController extends Controller
         $student_nioni->alamat = $request->address;
         $student_nioni->tuition_id_spp = $request->tuition_id_spp;
         $student_nioni->save();
+        
+        $payment_nioni = new Payment;
+        $payment_nioni->bulan_dibayar = 0;
+        $payment_nioni->tgl_bayar = date('Y-m-d H:i:s');
+        $payment_nioni->jumlah_bayar = 0;
+        $payment_nioni->officers_id_petugas = auth()->user()->id_petugas;
+        $payment_nioni->students_id_siswa = $student_nioni->id_siswa;
+        $payment_nioni->tuition_id_spp = $request->tuition_id_spp;
+        $payment_nioni->tahun_dibayar = $student_nioni->tuition->tahun;
+        $payment_nioni->bulan_sudah_bayar =  0;
+        $payment_nioni->sisa_bulan_bayar = 12;
+        $payment_nioni->save();
 
         return redirect('/module/students')->with('success', 'New Student have been added successfully');
     }
