@@ -18,6 +18,7 @@ class HistoryController extends Controller
     public function index()
     {
         $history_nioni = Payment::where('officers_id_petugas',auth()->user()->id_petugas)
+                                    ->where('jumlah_bayar', '!=', 0)
                                     ->with('officers')
                                     ->with('students')
                                     ->with('tuition')

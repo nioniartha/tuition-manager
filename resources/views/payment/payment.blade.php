@@ -115,27 +115,27 @@
                                         </div>
                                     </div>
                                     <div role="tabpanel" class="tab-pane" id="secondYear">
-                                        <b>History 1</b>
+                                        
                                         <div class="row" id = "xi" style="min-width: 800px;">
                                             <div class="col-12 col-md-8">
                                                 <div class="options" id='history_kelas_x'></div>
                                             </div>
                                             <div class="col-6 col-md-4">
                                                 <div class="card" id="form_parent_xi">
-                                                
+                                                    <h4 class="text-success">This year's payment has been paid off..</h4>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
                                     <div role="tabpanel" class="tab-pane" id="thirdYear">
-                                        <b>History 2</b>
+                                        
                                         <div class="row" id = "xii" style="min-width: 800px;">
                                             <div class="col-12 col-md-8">
                                                 <div class="options" id='history_kelas_xi'></div>
                                             </div>
                                             <div class="col-6 col-md-4">
                                                 <div class="card">
-                                                
+                                                <h4 class="text-success">This year's payment has been paid off</h4>
                                                 </div>
                                             </div>
                                         </div>
@@ -177,19 +177,36 @@
                     </div>
                     <div role="tabpanel" class="tab-pane active" id="profile">
                         <div class="row">                
-                            <div class="col-md-12 col-lg-8 col-xl-8">
+                            
                                 <?php $student_nioni = null ?>
                                 <div class="card">
                                     <div class="body">  
-                                        <p id = "nisn"></p>
-                                        <p id = "nis"></p>
-                                        <p id = "name"></p>
-                                        <p id = "class"></p>
-                                        <p id = "telp"></p>           
+                                    <div class="col-lg-12 col-md-12">
+                                        <div class="card">
+                                            <div class="body datasiswa">
+                                                <small class="text-muted">Nisn : </small>
+                                                <p  id = "nisn"></p>
+                                                <hr>
+                                                <small class="text-muted">Nis : </small>
+                                                <p  id = "nis"></p>
+                                                <hr>
+                                                <small class="text-muted">Name : </small>
+                                                <p  id = "name"></p>
+                                                <hr>
+                                                <small class="text-muted">Class : </small>
+                                                <p  id = "class"></p>
+                                                <hr>
+                                                <small class="text-muted">Number phone : </small>
+                                                <p  id = "telp"></p>
+                                                <hr>
+                                                <span class="text-danger">*Tuition fees paid are non-refundable</span>
+                                            </div>
+                                        </div>                    
+                                    </div>          
                                     </div>
                                 </div>
                                 
-                            </div>
+                            
                         </div>
                             
                     </div>

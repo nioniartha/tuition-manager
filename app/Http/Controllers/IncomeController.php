@@ -64,7 +64,7 @@ class IncomeController extends Controller
                                     
         } 
 
-        $income_nioni = $income_nioni->orderBy('tgl_bayar','desc')->get();
+        $income_nioni = $income_nioni->orderBy('tgl_bayar','desc')->where('jumlah_bayar', '!=', 0)->get();
         
         $class_nioni = Kelas::with('vocational')
                                 ->get();

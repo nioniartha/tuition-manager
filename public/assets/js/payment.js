@@ -6,6 +6,7 @@ let nominal_nioni;
 var tahunBayarSppTerakhir;
 var sppSudahBayarNioni, sppBelumBayarNioni;
 var x_nioni, xi_nioni, xii_nioni;
+$('.datasiswa').hide();
 
 $("#tab-history_kelas_x").hide();
 $("#tab-history_kelas_xi").hide();
@@ -144,12 +145,13 @@ var arrayMonth = [
                 var history_xi = document.getElementById('history_kelas_xi');
 
                 $.each(response['data-siswa'], function(index, element) {
-
+                    $('.datasiswa').show();
                     /* SET TEXT PROFILE STUDENT */
                     $("#name").text(element.nama);
-                    $("#nisn").text("Nisn : " + element.nisn);
-                    $("#nis").text("Nis : " + element.nis);
-                    $("#class").text("Class : " + element.kelas.kelas + " " + element.kelas.vocational.jurusan + " " + element.kelas.nama_kelas);
+                    $("#nisn").text(element.nisn);
+                    $("#nis").text(element.nis);
+                    $("#telp").text(element.no_telp);
+                    $("#class").text(element.kelas.kelas + " " + element.kelas.vocational.jurusan + " " + element.kelas.nama_kelas);
                     $("#payment").show();
                     
                     /* SET VALUE INPUT TRANSACTION */

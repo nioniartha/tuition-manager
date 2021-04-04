@@ -97,7 +97,7 @@ class PaymentController extends Controller
             }
         }
         
-        return view('payment.payment_detail')->with('check_transaksi_siswa',$check_transaksi_siswa);
+        return view('payment.payment_detail')->with('check_transaksi_siswa',$payment_nioni);
 
     }
 

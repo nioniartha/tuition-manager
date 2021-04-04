@@ -76,13 +76,13 @@ class LatePaymentController extends Controller
                                
                                 // $check_transaksi_siswa->put('latePayment', $latePayment);
 
-                                if($latePayment != 0) {
+                                
                                     $data_siswa = $students_nioni = Students::where('id_siswa', $check_transaksi_siswa->students_id_siswa)
                                                                             ->with('kelas')
                                                                             ->with('kelas.vocational')
                                                                             ->with('tuition')
                                                                             ->first();
-                                }
+                                
                                 
                                 
                                 

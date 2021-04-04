@@ -36,7 +36,7 @@
                     <li class="{{ Request::segment(2) === 'students' ? 'active' : null }}"><a href="{{route('students.index')}}">Students</a></li>
                 </ul>
             </li>
-            @endif
+            
 
             <li class="{{ Request::segment(1) === 'report' ? 'active open' : null }}">
                 <a href="#Report" class="menu-toggle"><i class="zmdi zmdi-print"></i> <span>Report</span></a>
@@ -45,7 +45,7 @@
                     <li class="{{ Request::segment(2) === 'late payment' ? 'active ' : null }}"><a href="{{route('report.latePayment')}}"><span>Late Payment</span></a></li>
                 </ul>
             </li>
-
+            @endif
         </ul>
     </div>
 </aside>
