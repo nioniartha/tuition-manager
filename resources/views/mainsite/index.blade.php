@@ -234,28 +234,42 @@
         $month_now = (int) date('m');
         $year_now = date("Y");
 
-        $first_year = (int)$student_info->tuition->tahun;
-        $scndYear = $first_year + 1;
+        $tahun_masuk = (int)$student_info->tuition->tahun;
+        $tahun_masuk2 = $tahun_masuk + 1;
 
         $h1_year = 0; 
         $h2_year = 0;
         $h3_year = 0;
         $h4_year = 0;
 
-        foreach($history_transaksi_siswa as $key => $value) {
-            if($key == 0) {
-                $h1_year = (int) $value->tahun_dibayar;
-                $h2_year = $h1_year + 1;
-            } 
-            if($key == 1) {
-                $h3_year = (int) $value->tahun_dibayar;
-                $h4_year = $h3_year + 1;                                                                  
+        if($history_transaksi_siswa != null) {
+            foreach($history_transaksi_siswa as $key => $value) {
+                if($key == 0) {
+                    $h1_year = (int) $value->tahun_dibayar;
+                    $h2_year = $h1_year + 1;
+                } 
+                if($key == 1) {
+                    $h3_year = (int) $value->tahun_dibayar;
+                    $h4_year = $h3_year + 1;                                                                  
+                    $h4_year = $h3_year + 1;                                                                  
+                    $h4_year = $h3_year + 1;                                                                  
+                }
             }
-        }
+        }        
 
-        $year_now = (int)$check_transaksi_siswa->tahun_dibayar + 1;
+        $year_now_genap = (int)$year_now + 1;
 
         $done = 0; $latePayment = 0; 
+
+        
+        if($check_transaksi_siswa != null) {
+            $bulan_sudah_bayar = $check_transaksi_siswa->bulan_sudah_bayar;
+            $tahun_dibayar = $check_transaksi_siswa->tahun_dibayar;
+        } else {
+            $bulan_sudah_bayar = 0;
+            $tahun_dibayar = (int)$student_info->tuition->tahun;
+        }
+        $scndYear = $tahun_dibayar + 1;
             
     ?>
     <!-- Preloader Start -->
@@ -361,7 +375,7 @@
                                         <div class="resume-card resume-card-0" data-index="0">
 											<!-- Experience Header Title Starts -->
                                             <div class="resume-card-header">
-                                                <div class="resume-card-name"><i class="fa fa-graduation-cap"></i> {{$check_transaksi_siswa->tahun_dibayar}} - {{$year_now}}</div>
+                                                <div class="resume-card-name"><i class="fa fa-graduation-cap"></i> {{$tahun_dibayar}} - {{$scndYear}}</div>
                                             </div>
 											<!-- Experience Header Title Ends -->
 											<!-- Experience Content Starts -->
@@ -374,34 +388,36 @@
                                                                 <div class="col-xs-12 col-md-4 col-sm-2">
                                                                     <div class="options">
                                                                                     <?php 
-                                                                                        $done += $check_transaksi_siswa->bulan_sudah_bayar;
-                                                                                        if($year_now == $check_transaksi_siswa->tahun_dibayar || $year_now) {
+                                                                                        $done += $bulan_sudah_bayar;
+                                                                                        if($tahun_dibayar <= $year_now|| $tahun_dibayar <= $year_now_genap) {
                                                                                             if($month_now <= 6) {
                                                                                                 $month_now = $month_now + 6;
-                                                                                                if($check_transaksi_siswa->bulan_sudah_bayar < 6) {
-                                                                                                    $latePayment = $month_now - (+$check_transaksi_siswa->bulan_sudah_bayar);
+                                                                                                if($bulan_sudah_bayar < 6) {
+                                                                                                    $latePayment = $month_now - (+$bulan_sudah_bayar);
                                                                                                     $latePayment = (-$latePayment);
                                                                                                 } else {
-                                                                                                    $latePayment = $month_now - $check_transaksi_siswa->bulan_sudah_bayar;
+                                                                                                    $latePayment = $month_now - $bulan_sudah_bayar;
                                                                                                 }
                                                                                             } else {
                                                                                                 $month_now = $month_now - 6;
-                                                                                                if($check_transaksi_siswa->bulan_sudah_bayar > 6) {
-                                                                                                    $latePayment = $month_now - (+$check_transaksi_siswa->bulan_sudah_bayar);
-                                                                                                    $latePayment = (-$latePayment);
-                                                                                                } else {
-                                                                                                    $latePayment = $month_now - $check_transaksi_siswa->bulan_sudah_bayar;
-                                                                                                }                                                                                                $latePayment = $month_now - (+$check_transaksi_siswa->bulan_sudah_bayar);
-
+                                                                                                if($bulan_sudah_bayar != 12) {
+                                                                                                    if($bulan_sudah_bayar > 6) {
+                                                                                                        $latePayment = $month_now - (+$bulan_sudah_bayar);
+                                                                                                        $latePayment = (-$latePayment);
+                                                                                                    } else {
+                                                                                                        $latePayment = $month_now - $bulan_sudah_bayar;
+                                                                                                    }  
+                                                                                                }  
+                                                            
                                                                                             }
-                                                                                            if($latePayment > 1) {
+                                                                                            if($latePayment > 1 || $bulan_sudah_bayar == 12) {
                                                                                                 $latePayment = 0;
                                                                                             }
                                                                                             
                                                                                         }
                                                                                     ?>
                                                                                     @for ($i = 0; $i <= 12; $i++)
-                                                                                        @if($i <= $check_transaksi_siswa->bulan_sudah_bayar)
+                                                                                        @if($i <= $bulan_sudah_bayar)
                                                                                             @if($months[$i] != 'bulan')
                                                                                                 <label class="option">
                                                                                                     <div class="basicBox">
@@ -567,7 +583,7 @@
                             <div class="col s12 m4 l4 center-align">
                                 <h3>
                                     <i class="fa fa-graduation-cap"></i>
-									<span class="font-weight-700">{{$first_year}} - {{$scndYear}}</span>
+									<span class="font-weight-700">{{$tahun_masuk}} - {{$tahun_masuk2}}</span>
                                 </h3>
                                 <h6 class="uppercase font-weight-500">Entry Year</h6>
                             </div>

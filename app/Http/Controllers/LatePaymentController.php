@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Payment;
 use App\Kelas;
 use App\Tuition;
+use App\Students;
 
 class LatePaymentController extends Controller
 {
@@ -16,11 +17,71 @@ class LatePaymentController extends Controller
      */
     public function index()
     {
+        $siswa_nunggak = [];
         $get_record_payment = Payment::all()
                             ->groupBy('students_id_siswa')
                             ->sortByDesc('tgl_bayar');
         
-        $month = (int) date('m');
+        if($get_record_payment != null) {
+            foreach($get_record_payment as $keyId => $value) {
+                foreach($value as $key => $val) {
+                    $check_transaksi_siswa = Payment::where('students_id_siswa',$keyId)
+                            ->latest('created_at')
+                            ->first();
+                    
+                            $month_now = (int) date('m');
+                            $year_now = date("Y");
+                            $year_now = (int)$check_transaksi_siswa->tahun_dibayar + 1;
+                            $done = 0; $latePayment = 0; 
+
+                            $done += $check_transaksi_siswa->bulan_sudah_bayar;
+                            if($year_now == $check_transaksi_siswa->tahun_dibayar || $year_now) {
+                                if($month_now <= 6) {
+                                    $month_now = $month_now + 6;
+                                    if($check_transaksi_siswa->bulan_sudah_bayar < 6) {
+                                        $latePayment = $month_now - (+$check_transaksi_siswa->bulan_sudah_bayar);
+                                        $latePayment = (-$latePayment);
+                                    } else {
+                                        $latePayment = $month_now - $check_transaksi_siswa->bulan_sudah_bayar;
+                                    }
+                                } else {
+                                    $month_now = $month_now - 6;
+                                    if($check_transaksi_siswa->bulan_sudah_bayar != 12) {
+                                        if($check_transaksi_siswa->bulan_sudah_bayar > 6) {
+                                            $latePayment = $month_now - (+$check_transaksi_siswa->bulan_sudah_bayar);
+                                            $latePayment = (-$latePayment);
+                                        } else {
+                                            $latePayment = $month_now - $check_transaksi_siswa->bulan_sudah_bayar;
+                                        }  
+                                    }                                                                                              $latePayment = $month_now - (+$check_transaksi_siswa->bulan_sudah_bayar);
+
+                                }
+                                if($latePayment > 1 || $check_transaksi_siswa->bulan_sudah_bayar == 12) {
+                                    $latePayment = 0;
+                                }
+                                
+                               
+                                // $check_transaksi_siswa->put('latePayment', $latePayment);
+
+                                if($latePayment != 0) {
+                                    $data_siswa = $students_nioni = Students::where('id_siswa', $check_transaksi_siswa->students_id_siswa)
+                                                                            ->with('kelas')
+                                                                            ->with('kelas.vocational')
+                                                                            ->with('tuition')
+                                                                            ->first();
+                                    $siswa_nunggak[] = array_merge(['payment'=>$check_transaksi_siswa->toArray()], ['tunggakan' => $latePayment], ['data_siswa' =>$data_siswa->toArray()]);
+                                }
+                                
+                                
+                                
+                            }
+                    
+                }// end foreach
+            }
+            // dd($siswa_nunggak);
+        }
+        
+        
 
         $class_nioni = Kelas::with('vocational')
                             ->get();
@@ -29,7 +90,7 @@ class LatePaymentController extends Controller
 
         // dd($request->query->all());
         return view ('latePayment.latePayment')
-                ->with('latePayment_nioni',$get_record_payment)
+                ->with('siswa_nunggak',$siswa_nunggak)
                 ->with('class_nioni',$class_nioni)
                 ->with('tuition_nioni',$tuition_nioni);
     }

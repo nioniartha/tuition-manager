@@ -33,26 +33,37 @@
                             <tr>
                                 <th>NISN</th>
                                 <th>Name</th>
+                                <th>Class</th>
                                 <th>Per Month</th>
-                                <th>Paid (month)</th>
+                                <th>Late Payment (month)</th>
                                 <th>Nominal</th>
-                                <th>Payment Date</th>
-                                <th>School Year</th>
                             </tr>
                         </thead>
                         <tfoot>
                             <tr>
                                 <th>NISN</th>
                                 <th>Name</th>
+                                <th>Class</th>
                                 <th>Per Month</th>
-                                <th>Paid (month)</th>
+                                <th>Late Payment (month)</th>
                                 <th>Nominal</th>
-                                <th>Payment Date</th>
-                                <th>School Year</th>
                             </tr>
                         </tfoot>
                         <tbody>
-                        
+                            @foreach($siswa_nunggak as $key => $value)
+                                <tr>
+                                    <td>{{ $value['data_siswa']['nisn']}}</td>
+                                    <td>{{ $value['data_siswa']['nama']}}</td>
+                                    <td>{{ $value['data_siswa']['kelas']['kelas']}} {{ $value['data_siswa']['kelas']['vocational']['jurusan']}} {{ $value['data_siswa']['kelas']['nama_kelas']}}</td>
+                                    <td>@currency($value['data_siswa']['tuition']['nominal'])</td>
+                                    <td>{{ $value['tunggakan']}}</td>
+                                    <?php 
+                                        $nominal =  (int)$value['data_siswa']['tuition']['nominal'] * $value['tunggakan'];
+                                        $nominal = $nominal * -1;
+                                    ?>
+                                    <td>@currency($nominal)</td>
+                                </tr>
+                            @endforeach
                         </tbody>
                     </table>
                 </div>
