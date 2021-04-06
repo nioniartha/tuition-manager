@@ -77,11 +77,12 @@
                                 <!-- Tab panes -->
                                 <div class="tab-content">
                                     <div role="tabpanel" class="tab-pane in active" id="firstYear">
-                                        <b>Payment</b>
+                                        <b>Payment</b>                                        
                                         <div class="row" id = "x" style="min-width: 800px;">
                                             <div class="col-12 col-md-8">
                                                 <div class="options" id="cardspp">
                                                 </div> 
+                                                <p> <span class="text-danger">*Red</span> unpaid months <br> <span class="text-primary">*Blue</span> paid months</p>
                                             </div>
                                             <div class="col-6 col-md-4">
                                                 <div class="card" id="form_parent_x">
@@ -97,7 +98,9 @@
                                                             <input type="hidden" id="idPetugas" name="idPetugas" value="{{ Auth::guard('admin')->user()->id_petugas }}"></input>   
                                                             <input type="hidden" id="idStudent" name="idStudent"></input> 
                                                             <input type="hidden" id="idSpp" name="idSpp"></input> 
-
+                                                            <div class="form-group form-float">
+                                                               
+                                                            </div>
                                                             <hr>
                                                                                                 
                                                             <ul class="list-unstyled">
