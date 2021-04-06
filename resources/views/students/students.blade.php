@@ -156,7 +156,7 @@
                                             </div>
 
                                             <div class="form-group form-float">
-                                                <input type="number" class="form-control" placeholder="Phone Number" name="notelp" required value="{{old('notelp')}}" >
+                                                <input type="number" class="form-control"  placeholder="Phone Number" name="notelp" required value="{{old('notelp')}}" >
                                             </div>
 
                                             <div class="form-group form-float">

@@ -6,6 +6,7 @@ use Illuminate\Routing\Controller as BaseController;
 use Illuminate\Http\Request;
 use Auth;
 use Alert;
+Use Redirect;
 
 class AuthenticationController extends Controller
 {
@@ -30,8 +31,12 @@ class AuthenticationController extends Controller
             Alert::success('Success', 'Login Succes');
             return redirect()->intended('dashboard');
         } 
-
-        return redirect('/login')->with('error', 'Wrong username/password');
+        return Redirect::back()->withErrors(
+          [
+              'username' => 'Wrong username/password'
+          ]
+      );
+        // return redirect('/login')->with('error', 'Wrong username/password');
     }
 
     public function logout()

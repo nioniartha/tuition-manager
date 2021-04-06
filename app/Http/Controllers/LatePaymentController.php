@@ -92,10 +92,17 @@ class LatePaymentController extends Controller
                 $siswa_nunggak[] = array_merge(['payment'=>$check_transaksi_siswa->toArray()], ['tunggakan' => $latePayment], ['data_siswa' =>$data_siswa->toArray()]);
 
             }
-            // dd($siswa_nunggak);
+                // $a=[];
+                // // organize the array by cusip
+                // foreach($siswa_nunggak as $k=>$v){                  
+                //     foreach ($v as $inival) {
+                //         dd($v['data_siswa']);
+                //     }
+                // }
+               
         }
         
-        
+        // dd($siswa_nunggak);
 
         $class_nioni = Kelas::with('vocational')
                             ->get();

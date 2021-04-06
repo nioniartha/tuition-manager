@@ -26,16 +26,17 @@
                     <div class="input-group-append">
                         <span class="input-group-text"><i class="zmdi zmdi-account-circle"></i></span>
                     </div>
+                    @if ($errors->has('username'))
+                        <span class="invalid-feedback">
+                            <strong>{{ $errors->first('username') }}</strong>
+                        </span>
+                    @endif
                 </div>
                 <div class="input-group mb-3">
                     <input type="password" class="form-control" placeholder="Password" name ="password" required>
                     <div class="input-group-append">                                
                         <span class="input-group-text"><i class="zmdi zmdi-lock"></i></span>
                     </div>                            
-                </div>
-                <div class="checkbox">
-                    <input id="remember_me" type="checkbox">
-                    <label for="remember_me">Remember Me</label>
                 </div>
                 <button class="btn btn-primary btn-block waves-effect waves-light" type="submit">Sign In</button>
                 <!-- <a href="{{route('dashboard.index')}}" class="btn btn-primary btn-block waves-effect waves-light">SIGN IN</a>                         -->

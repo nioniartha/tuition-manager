@@ -61,7 +61,7 @@
                 </div>
             </div>
             <div class="body">
-                <div id="chart-area-spline-sracked" class="c3_chart d_sales"></div>
+                <!-- <div id="chart-area-spline-sracked" class="c3_chart d_sales"></div> -->
             </div>
         </div>
     </div>

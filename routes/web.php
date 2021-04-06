@@ -59,6 +59,7 @@ Route::group(['middleware' => ['auth:admin']], function(){
     Route::get('report', function () { return redirect('report/index'); });
     Route::get('report/income', 'IncomeController@index')->name('report.income');
     Route::get('report/income/filter', 'IncomeController@filter')->name('report.income.filter');
+    Route::get('report/classreport', 'ClassReportController@filter')->name('report.class');
 
 
     Route::get('report/latePayment', 'LatePaymentController@index')->name('report.latePayment');
