@@ -48,35 +48,36 @@ class LatePaymentController extends Controller
                             $done = 0; $latePayment = 0; 
 
                             $done += $bulan_dibayar;
-                            if($year_now == $tahun_dibayar || $year_now) {
+                            if($month_now >= 6 && $month_now <= 12 || $month_now >= 1 && $month_now <= 6) {
                                 if($month_now <= 6) {
                                     $month_now = $month_now + 6;
-                                    if($bulan_dibayar < 6) {
-                                        $latePayment = $month_now - (+$bulan_dibayar);
-                                        $latePayment = (-$latePayment);
-                                    } else {
-                                        $latePayment = $month_now - $bulan_dibayar;
+                                    if($bulan_dibayar >= 1 && $bulan_dibayar <= 12) {
+                                        if($bulan_dibayar > 6) {
+                                            $latePayment = $month_now - (+$bulan_dibayar);
+                                            $latePayment = -1 * $latePayment;
+                                        } else {
+                                            $latePayment = $month_now - $bulan_dibayar;
+                                            $latePayment = -1 * $latePayment;
+                                        }  
                                     }
                                 } else {
                                     $month_now = $month_now - 6;
-                                    if($bulan_dibayar != 12) {
+                                    if($bulan_dibayar >= 1 && $bulan_dibayar <= 12) {
                                         if($bulan_dibayar > 6) {
                                             $latePayment = $month_now - (+$bulan_dibayar);
-                                            $latePayment = (-$latePayment);
+                                            $latePayment = -1 * $latePayment;
+                                            
                                         } else {
                                             $latePayment = $month_now - $bulan_dibayar;
                                         }  
-                                }  
+                                    }
 
                                 }
-                                if($latePayment > 1 || $bulan_dibayar == 12) {
+                                if($latePayment > 0 || $latePayment == 12) {
                                     $latePayment = 0;
                                 }
                                 
-                               
-                                // $check_transaksi_siswa->put('latePayment', $latePayment);
-
-                                
+                            }                                
                                     $data_siswa = $students_nioni = Students::where('id_siswa', $check_transaksi_siswa->students_id_siswa)
                                                                             ->with('kelas')
                                                                             ->with('kelas.vocational')
@@ -86,7 +87,7 @@ class LatePaymentController extends Controller
                                 
                                 
                                 
-                            }
+                            
                     
                 }// end foreach
                 $siswa_nunggak[] = array_merge(['payment'=>$check_transaksi_siswa->toArray()], ['tunggakan' => $latePayment], ['data_siswa' =>$data_siswa->toArray()]);

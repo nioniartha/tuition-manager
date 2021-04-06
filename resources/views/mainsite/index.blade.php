@@ -404,28 +404,32 @@
                                                                     <div class="options">
                                                                                     <?php 
                                                                                         $done += $bulan_sudah_bayar;
-                                                                                        if($tahun_dibayar <= $year_now|| $tahun_dibayar <= $year_now_genap) {
+                                                                                        if($month_now >= 6 && $month_now <= 12 || $month_now >= 1 && $month_now <= 6) {
                                                                                             if($month_now <= 6) {
                                                                                                 $month_now = $month_now + 6;
-                                                                                                if($bulan_sudah_bayar < 6) {
-                                                                                                    $latePayment = $month_now - (+$bulan_sudah_bayar);
-                                                                                                    $latePayment = (-$latePayment);
-                                                                                                } else {
-                                                                                                    $latePayment = $month_now - $bulan_sudah_bayar;
+                                                                                                if($bulan_sudah_bayar >= 1 && $bulan_sudah_bayar <= 12) {
+                                                                                                    if($bulan_sudah_bayar > 6) {
+                                                                                                        $latePayment = $month_now - (+$bulan_sudah_bayar);
+                                                                                                        $latePayment = -1 * $latePayment;
+                                                                                                    } else {
+                                                                                                        $latePayment = $month_now - $bulan_sudah_bayar;
+                                                                                                        $latePayment = -1 * $latePayment;
+                                                                                                    }  
                                                                                                 }
                                                                                             } else {
                                                                                                 $month_now = $month_now - 6;
-                                                                                                if($bulan_sudah_bayar != 12) {
+                                                                                                if($bulan_sudah_bayar >= 1 && $bulan_sudah_bayar <= 12) {
                                                                                                     if($bulan_sudah_bayar > 6) {
                                                                                                         $latePayment = $month_now - (+$bulan_sudah_bayar);
-                                                                                                        $latePayment = (-$latePayment);
+                                                                                                        $latePayment = -1 * $latePayment;
+                                                                                                        
                                                                                                     } else {
                                                                                                         $latePayment = $month_now - $bulan_sudah_bayar;
                                                                                                     }  
-                                                                                                }  
+                                                                                                }
                                                             
                                                                                             }
-                                                                                            if($latePayment > 1 || $bulan_sudah_bayar <= 12) {
+                                                                                            if($latePayment > 0 || $latePayment == 12) {
                                                                                                 $latePayment = 0;
                                                                                             }
                                                                                             
