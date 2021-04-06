@@ -29,9 +29,9 @@
                 <h2><strong>Late Payment</strong> Report </h2>
             </div>
             <div class="body">
-                <!-- <button type="button" class="btn btn-primary float-right btn-sm" data-toggle="modal" data-target="#exampleModal">
+                <button type="button" class="btn btn-primary float-right btn-sm" data-toggle="modal" data-target="#exampleModal">
                     Filter
-                </button>  -->
+                </button> 
                 <div class="table-responsive">
                     <table class="table table-bordered table-striped table-hover dataTable js-exportable">
                         <thead>
@@ -98,7 +98,7 @@
                                                 <select name = "kelas" class="form-control show-tick">
                                                     <option value="">-- Please select class--</option>
                                                     @foreach ($class_nioni as $id_nioni => $v_nioni)
-                                                        <option value="{{ $v_nioni->id_kelas }}">{{ $v_nioni->kelas}} {{ $v_nioni->vocational->jurusan}}</option>
+                                                        <option value="{{ $v_nioni->id_kelas }}">{{ $v_nioni->kelas}} {{ $v_nioni->vocational->jurusan}} {{ $v_nioni->nama_kelas}}</option>
                                                     @endforeach
                                                 </select>
                                             </div>

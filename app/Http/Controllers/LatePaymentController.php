@@ -78,20 +78,35 @@ class LatePaymentController extends Controller
                                 }
                                 
                             }                                
+
+                                if($request->kelas) {
                                     $data_siswa = $students_nioni = Students::where('id_siswa', $check_transaksi_siswa->students_id_siswa)
-                                                                            ->with('kelas')
-                                                                            ->with('kelas.vocational')
-                                                                            ->with('tuition')
-                                                                            ->first();
-                                
+                                    ->where('kelas_id_kelas', $request->kelas)
+                                    ->with('kelas')
+                                    ->with('kelas.vocational')
+                                    ->with('tuition')
+                                    ->first();
+                                    
+
+                                } else {
+                                    $data_siswa = $students_nioni = Students::where('id_siswa', $check_transaksi_siswa->students_id_siswa)
+                                    ->with('kelas')
+                                    ->with('kelas.vocational')
+                                    ->with('tuition')
+                                    ->first();
+                                    // $siswa_nunggak[] = array_merge(['payment'=>$check_transaksi_siswa->toArray()], ['tunggakan' => $latePayment], ['data_siswa' =>$data_siswa->toArray()]);
+                                }
+                                    
                                 
                                 
                                 
                             
                     
                 }// end foreach
-                $siswa_nunggak[] = array_merge(['payment'=>$check_transaksi_siswa->toArray()], ['tunggakan' => $latePayment], ['data_siswa' =>$data_siswa->toArray()]);
-
+                if($data_siswa != null) {
+                    $siswa_nunggak[] = array_merge(['payment'=>$check_transaksi_siswa->toArray()], ['tunggakan' => $latePayment], ['data_siswa' =>$data_siswa->toArray()]);
+                    
+                }
             }
                 // $a=[];
                 // // organize the array by cusip
@@ -120,6 +135,18 @@ class LatePaymentController extends Controller
     public function filter(Request $request)
     {
         // dd($request->query->all());
+
+        if($request->kelas) {
+            $students_nioni = Students::with('payment')
+                                    ->where('kelas_id_kelas', $request->kelas)
+                                    ->get();
+        }else {
+            $students_nioni = Students::with('payment')->get();
+        }
+        
+
+        return view ('latePayment.latePayment')
+                ->with('tuition_nioni',$tuition_nioni);
                    
     }
     /**
